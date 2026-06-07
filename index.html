@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laced Baddies | The Glueless Crown for Real Baddies</title>
+  <!-- Google Fonts: Syne & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="index.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/swell-js@5.6.1/dist/swell.umd.min.js"></script>
+  <script defer src="ecommerce.js"></script>
+</head>
+<body>
+
+  <!-- Announcement Bar -->
+  <div class="announcement-bar" id="top-announcement">
+    <span id="reservation-timer">✨ YOUR ORDER IS RESERVED FOR 10:00 MINS ✨</span>
+  </div>
+
+  <!-- Header / Navigation -->
+  <header class="main-header">
+    <div class="logo">
+      <span>LACED BADDIES</span>
+    </div>
+    <nav class="nav-links">
+      <a href="#lace-tech">Lace Tech</a>
+      <a href="#hair-texture">Hair Texture</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#reviews">Reviews</a>
+    </nav>
+    <a href="#product-purchase" class="btn-nav-cta" onclick="handleShopNow(event)">Shop Now</a>
+  </header>
+
+  <a href="#product-purchase" class="floating-shop-cta" onclick="handleShopNow(event)" aria-label="Shop now and jump to product options">
+    <span>Shop Now</span>
+    <span class="cta-arrow">↑</span>
+  </a>
+
+  <!-- Main Container: 2-Column Product Section -->
+  <main class="product-container" id="product-purchase">
+    
+    <!-- Left Column: Sticky Image Gallery -->
+    <div class="gallery-column">
+      <div class="main-image-wrapper">
+        <img id="active-gallery-img" src="assets/main_model.png" alt="Laced Baddies Main Model" class="gallery-main-img">
+      </div>
+      <div class="thumbnail-row">
+        <div class="thumbnail active" onclick="switchImage('assets/main_model.png', this)">
+          <img src="assets/main_model.png" alt="Main Model Thumb">
+        </div>
+        <div class="thumbnail" onclick="switchImage('assets/model_2.png', this)">
+          <img src="assets/model_2.png" alt="Model 2 Thumb">
+        </div>
+        <div class="thumbnail" onclick="switchImage('assets/kit.png', this)">
+          <img src="assets/kit.png" alt="Kit Bundle Thumb">
+        </div>
+        <div class="thumbnail" onclick="switchImage('assets/wig-ultra-hd-lace-tech-themed-v2.png', this, 'contain')">
+          <img src="assets/wig-ultra-hd-lace-tech-themed-v2.png" alt="Ultra HD Lace Tech Comparison Thumb">
+        </div>
+        <div class="thumbnail" onclick="switchImage('assets/wig-human-hair-texture-themed.png', this, 'contain')">
+          <img src="assets/wig-human-hair-texture-themed.png" alt="Real Human Hair Texture Comparison Thumb">
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Product Detail & Purchase Area (Sticky) -->
+    <div class="details-column">
+      
+      <!-- Review Star Rating -->
+      <div class="stars-rating">
+        <span class="stars">★★★★★</span>
+        <span class="rating-text">Over 10,000 5-Star Reviews</span>
+      </div>
+
+      <!-- Title & Tagline -->
+      <h1 class="product-title">THE 13x6 BODY WAVE CROWN</h1>
+      <p class="product-tagline">Premium HD Glueless Lace Frontal Wig</p>
+
+      <!-- Simple Pitch (10-Year-Old Explanation) -->
+      <div class="kid-friendly-pitch">
+        <p>This is the ultimate dream wig! It gives you a massive 13x6 ear-to-ear parted hairline, gorgeous bouncy body waves, and our exclusive Ultra HD Lace Tech for that melted look. The best part? Absolutely zero sticky glue, zero edge damage, and no scissors needed. Just slip it on, tighten the velvet band, and you have a perfect install in under a minute!</p>
+      </div>
+
+      <!-- Key Badges -->
+      <div class="benefit-badges">
+        <div class="badge">Exclusive Ultra HD Lace Tech</div>
+        <div class="badge">Silky Real Human Hair</div>
+        <div class="badge">🔥 13x6 Ear-to-Ear Lace</div>
+        <div class="badge">🌊 Silk Body Wave Style</div>
+        <div class="badge">🌱 Protects Your Edges</div>
+        <div class="badge">💨 Pre-Cut HD Swiss Lace</div>
+      </div>
+
+      <!-- Subscription / Purchase Selection Form (Inspired by IM8 Health Layout) -->
+      <form class="purchase-form" onsubmit="handleCheckout(event)">
+        
+        <!-- Select Length Title -->
+        <h3 class="section-sub-title">SELECT HAIR LENGTH</h3>
+        <div class="length-selector">
+          <label class="length-pill selected" onclick="selectLength('26')">
+            <input type="radio" name="hair_length" value="26" checked style="display: none;">
+            <span>26"</span>
+          </label>
+          <label class="length-pill" onclick="selectLength('28')">
+            <input type="radio" name="hair_length" value="28" style="display: none;">
+            <span>28"</span>
+          </label>
+          <label class="length-pill" onclick="selectLength('30')">
+            <input type="radio" name="hair_length" value="30" style="display: none;">
+            <span>30"</span>
+          </label>
+        </div>
+
+        <!-- Select Plan Title -->
+        <h3 class="section-sub-title">SELECT YOUR ROTATION</h3>
+
+        <!-- Plan Option 1: 30-Day Subscription (Best Value) -->
+        <label class="plan-option selected" id="plan-30-label">
+          <input type="radio" name="selling_plan" value="30-day" checked onclick="selectPlan('30-day')">
+          <div class="plan-details">
+            <div class="plan-header">
+              <span class="plan-title">30-Day Baddie Club</span>
+              <span class="best-value-pill">BEST VALUE</span>
+            </div>
+            <p class="plan-description">A fresh, hand-customized 13x6 Body Wave frontal wig delivered every 30 days. Includes a VIP storage box, melting band, edge control gel, styling comb, edge brush, a FREE bald cap, FREE lace cutting scissors, and a FREE premium silk cap!</p>
+          </div>
+          <div class="plan-pricing">
+            <span class="price-value">$99</span>
+            <span class="price-period">/ month</span>
+            <span class="pricing-bill-note">Billed monthly</span>
+          </div>
+        </label>
+
+        <!-- Plan Option 2: One-Time Purchase -->
+        <label class="plan-option-onetime" id="plan-onetime-label">
+          <input type="radio" name="selling_plan" value="onetime" onclick="selectPlan('onetime')">
+          <div class="onetime-content">
+            <span class="onetime-title">Buy Once (No Subscription)</span>
+            <span class="onetime-desc">Just the 13x6 Body Wave Glueless Wig itself. No styling accessories included.</span>
+          </div>
+          <div class="onetime-pricing">
+            <span class="onetime-price-val">$150</span>
+          </div>
+        </label>
+
+        <!-- Buy Button -->
+        <button type="submit" class="btn-checkout" id="submit-btn">
+          SLAP IT ON (30-DAY CLUB)
+        </button>
+      </form>
+
+      <!-- Trust Badges directly beneath CTA -->
+      <div class="trust-list">
+        <span>📦 Free 3-Day Shipping</span>
+        <span>🤎 Proudly Black-Owned</span>
+        <span>🔒 Secure Checkout</span>
+      </div>
+
+      <div class="storefront-status" id="storefront-status" data-tone="muted" role="status">
+        <span class="storefront-status-dot"></span>
+        <span id="storefront-status-text">Preparing headless checkout...</span>
+      </div>
+
+      <!-- Bulleted list of "What's Included" -->
+      <div class="whats-included-box" id="whats-inside">
+        <h4 class="box-subtitle">What Baddies Get in the Box:</h4>
+        <ul class="included-list">
+          <li><strong>✨ 13x6 HD Lace Body Wave Wig:</strong> Flowing, premium 100% human Remy hair with a pre-plucked hairline and pre-bleached knots.</li>
+          <li><strong>📦 Branded Storage Box:</strong> Keep your body wave bouncy and dust-free in our signature pink magnetic box.</li>
+          <li><strong>💧 Velvet Melting Band:</strong> Lay your lace flat with zero glue using our adjustable elastic head band.</li>
+          <li><strong>🪮 Styling Comb & Edge Brush:</strong> Wide-tooth detangling comb and double-sided brush for seamless baby hair styling.</li>
+          <li><strong>🍯 Sleek Edge Control Gel:</strong> High-shine, long-lasting hold styling gel to keep your edges neat.</li>
+          <li><strong>💇‍♀️ FREE Nylon Bald Cap:</strong> Nude-colored stocking cap to protect natural hair and create a seamless scalp foundation.</li>
+          <li><strong>✂️ FREE Lace Cutting Scissors:</strong> Professional-grade mini shears to easily and precisely trim excess HD lace.</li>
+          <li><strong>👒 FREE Premium Silk Cap:</strong> Luxurious pink silk bonnet to protect your waves and keep them shiny while you sleep.</li>
+        </ul>
+      </div>
+
+      <!-- Sleek Specifications Table (A-List Inspired conversion booster) -->
+      <div class="product-specs-box">
+        <h4 class="box-subtitle">Product Specifications:</h4>
+        <table class="specs-table">
+          <tr>
+            <td class="spec-label">Hair Texture</td>
+            <td class="spec-value">Luxury Body Wave</td>
+          </tr>
+          <tr>
+            <td class="spec-label">Hair Type</td>
+            <td class="spec-value">100% Virgin Brazilian Human Hair</td>
+          </tr>
+          <tr>
+            <td class="spec-label">Hair Density</td>
+            <td class="spec-value">150% (Full & Voluminous)</td>
+          </tr>
+          <tr>
+            <td class="spec-label">Lace Type</td>
+            <td class="spec-value">HD Swiss Lace (Undetectable, Melted)</td>
+          </tr>
+          <tr>
+            <td class="spec-label">Hairline</td>
+            <td class="spec-value">Pre-Plucked & Pre-Bleached</td>
+          </tr>
+          <tr>
+            <td class="spec-label">Glueless?</td>
+            <td class="spec-value">Yes, Absolutely (Grip Band System)</td>
+          </tr>
+          <tr>
+            <td class="spec-label">Cap Size</td>
+            <td class="spec-value">Standard Medium (22.5" circumference)</td>
+          </tr>
+          <tr>
+            <td class="spec-label">Elastic Strap</td>
+            <td class="spec-value">Wide 2-inch Velvet-Grip Band</td>
+          </tr>
+          <tr>
+            <td class="spec-label">Can it be dyed?</td>
+            <td class="spec-value">Yes, 100% dye-friendly</td>
+          </tr>
+        </table>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Section: Ultra HD Lace Tech -->
+  <section class="lace-tech-section" id="lace-tech">
+    <div class="lace-tech-layout">
+      <div class="lace-tech-copy">
+        <span class="tech-eyebrow">Exclusive to Laced Baddies</span>
+        <h2 class="section-title">Our Ultra HD Lace Tech</h2>
+        <p class="section-desc">This is not regular lace with a cute name. Our Ultra HD Lace Tech is built to look softer, flatter, and more invisible on camera and in real life, so your crown gives scalp without the glue routine.</p>
+
+        <div class="tech-benefits-grid">
+          <div class="tech-benefit-card">
+            <span class="tech-benefit-number">01</span>
+            <h3>Screen-Melt Finish</h3>
+            <p>Ultra-fine lace blends down so the hairline reads clean in selfies, videos, and bright lighting.</p>
+          </div>
+          <div class="tech-benefit-card">
+            <span class="tech-benefit-number">02</span>
+            <h3>Finer Than HD Lace</h3>
+            <p>The mesh is made to look lighter than traditional lace, with less grid visibility at the front.</p>
+          </div>
+          <div class="tech-benefit-card">
+            <span class="tech-benefit-number">03</span>
+            <h3>Glueless Confidence</h3>
+            <p>Pair it with the velvet grip system for a laid look without sticky glue, white residue, or edge stress.</p>
+          </div>
+          <div class="tech-benefit-card">
+            <span class="tech-benefit-number">04</span>
+            <h3>Pre-Customized Hairline</h3>
+            <p>Pre-plucked, pre-bleached, and ready to wear so the tech works straight out of the box.</p>
+          </div>
+        </div>
+
+        <div class="section-shop-wrap align-left">
+          <a href="#product-purchase" class="section-shop-cta" onclick="handleShopNow(event)">
+            <span>Shop Now</span>
+            <span class="cta-arrow">↑</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="lace-tech-visual">
+        <img src="assets/wig-ultra-hd-lace-tech-themed-v2.png" alt="Laced Baddies Ultra HD Lace Tech comparison showing regular lace, HD lace, and Ultra HD Lace Tech">
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Hair Texture -->
+  <section class="hair-texture-section" id="hair-texture">
+    <div class="lace-tech-layout hair-texture-layout">
+      <div class="lace-tech-visual hair-texture-visual">
+        <img src="assets/wig-human-hair-texture-themed.png" alt="Laced Baddies Real Human Hair Texture comparison showing silky smooth hair, real human hair, and easy styling">
+      </div>
+
+      <div class="lace-tech-copy">
+        <span class="tech-eyebrow">Body Wave Quality</span>
+        <h2 class="section-title">Silky, Real Human Hair</h2>
+        <p class="section-desc">The Crown is made to feel soft, smooth, and style-ready. These body waves hold a polished look while still moving like real hair, so you can brush, curl, and wear it without that stiff synthetic feel.</p>
+
+        <div class="tech-benefits-grid">
+          <div class="tech-benefit-card">
+            <span class="tech-benefit-number">01</span>
+            <h3>Silky Smooth Finish</h3>
+            <p>Glossy body waves feel soft to the touch and give the hair that fresh salon shine.</p>
+          </div>
+          <div class="tech-benefit-card">
+            <span class="tech-benefit-number">02</span>
+            <h3>Real Human Hair Look</h3>
+            <p>Natural strand detail, realistic density, and movement that does not read plastic or costume-y.</p>
+          </div>
+          <div class="tech-benefit-card">
+            <span class="tech-benefit-number">03</span>
+            <h3>Easy To Style</h3>
+            <p>Brush it, wrap it, curl it, or smooth it down for everyday wear and going-out looks.</p>
+          </div>
+          <div class="tech-benefit-card">
+            <span class="tech-benefit-number">04</span>
+            <h3>Body Wave Bounce</h3>
+            <p>The wave pattern gives fullness and shape without needing a full salon routine.</p>
+          </div>
+        </div>
+
+        <div class="section-shop-wrap align-left">
+          <a href="#product-purchase" class="section-shop-cta" onclick="handleShopNow(event)">
+            <span>Shop Now</span>
+            <span class="cta-arrow">↑</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Pain Points We Solve -->
+  <section class="pain-points-section" id="pain-points">
+    <h2 class="section-title">The Frontal Struggle is Over</h2>
+    <p class="section-desc">Traditional lace frontals require glue, hours of customization, and destroy your edges. Here's how Laced Baddies solves all of your hair pain points:</p>
+    
+    <div class="pain-points-grid">
+      <!-- Pain Point 1 -->
+      <div class="pain-card">
+        <div class="pain-badge traditional">THE TRADITIONAL STRUGGLE</div>
+        <h3>Traction Alopecia & Broken Edges</h3>
+        <p class="pain-issue">Heavy glues and tapes rip out delicate baby hairs, thinning your hairline and damaging hair follicles permanently.</p>
+        <div class="solution-divider"></div>
+        <div class="pain-badge solved">THE LACED BADDIES WAY</div>
+        <h3 class="sol-title">🌱 100% Glueless Protection</h3>
+        <p class="pain-sol">Secured by our adjustable Velvet-Grip Band. Sits comfortably behind your ears. Zero glue, zero damage, maximum safety for your edges.</p>
+      </div>
+
+      <!-- Pain Point 2 -->
+      <div class="pain-card">
+        <div class="pain-badge traditional">THE TRADITIONAL STRUGGLE</div>
+        <h3>Hours of Plucking & Bleaching</h3>
+        <p class="pain-issue">Wigs look fake straight out of the box. You have to bleach the dark knots and pluck the hairline for hours to make it look like a scalp.</p>
+        <div class="solution-divider"></div>
+        <div class="pain-badge solved">THE LACED BADDIES WAY</div>
+        <h3 class="sol-title">✨ Pre-Customized Scalp Realism</h3>
+        <p class="pain-sol">We do the work for you. Knots are pre-bleached, the gradient hairline is pre-plucked, and the HD lace is pre-cut in a natural wave. Open and wear!</p>
+      </div>
+
+      <!-- Pain Point 3 -->
+      <div class="pain-card">
+        <div class="pain-badge traditional">THE TRADITIONAL STRUGGLE</div>
+        <h3>Sweat & Humidity "Lifting"</h3>
+        <p class="pain-issue">One workout session or a hot summer day turns wig glue white, sticky, and makes your frontal slide backward in public.</p>
+        <div class="solution-divider"></div>
+        <div class="pain-badge solved">THE LACED BADDIES WAY</div>
+        <h3 class="sol-title">🏃‍♀️ Sweat-Proof Grip Security</h3>
+        <p class="pain-sol">No glue means nothing to melt! Our velvet grip uses friction to stay locked in place. Run, dance, sweat—your lace stays flat and invisible.</p>
+      </div>
+
+      <!-- Pain Point 4 -->
+      <div class="pain-card">
+        <div class="pain-badge traditional">THE TRADITIONAL STRUGGLE</div>
+        <h3>Trapped Sweat & Itchy Scalps</h3>
+        <p class="pain-issue">Sewn-in or glued frontals trap moisture and sweat underneath for weeks, causing severe itchiness, product buildup, and scalp odor.</p>
+        <div class="solution-divider"></div>
+        <div class="pain-badge solved">THE LACED BADDIES WAY</div>
+        <h3 class="sol-title">🌬️ 2-Second Nightly Removal</h3>
+        <p class="pain-sol">Slide the wig off in 2 seconds before bed. Let your scalp breathe, massage your natural hair, wash your head, and slip it back on in the morning.</p>
+      </div>
+    </div>
+
+    <div class="section-shop-wrap">
+      <a href="#product-purchase" class="section-shop-cta" onclick="handleShopNow(event)">
+        <span>Shop Now</span>
+        <span class="cta-arrow">↑</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Section: Baddies in Action (UGC Video) -->
+  <section class="ugc-video-section" id="ugc-video">
+    <h2 class="section-title">Baddies in Action</h2>
+    <p class="section-desc">See why over 10,000 girls transitioned to Laced Baddies. Zero glue. Zero stress. Pure hair magic.</p>
+    
+    <div class="ugc-container">
+      <div class="ugc-video-card" onclick="openVideoModal()">
+        <img src="assets/ugc_video_thumb.png" alt="UGC Video Thumbnail" class="ugc-thumb">
+        <div class="play-overlay">
+          <div class="play-btn-circle">
+            <span class="play-arrow">▶</span>
+          </div>
+          <span class="play-label">Watch 30-Sec Install</span>
+        </div>
+        <div class="ugc-card-info">
+          <span class="ugc-creator">@tiff_luxury</span>
+          <span class="ugc-views">🔥 1.2M views</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-shop-wrap">
+      <a href="#product-purchase" class="section-shop-cta" onclick="handleShopNow(event)">
+        <span>Shop Now</span>
+        <span class="cta-arrow">↑</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Video Modal -->
+  <div class="video-modal" id="videoModal">
+    <div class="video-modal-content">
+      <button class="close-modal-btn" onclick="closeVideoModal()">&times;</button>
+      <div class="video-player-wrapper">
+        <video id="ugcVideoPlayer" class="modal-video" controls poster="assets/ugc_video_thumb.png">
+          <source src="https://assets.mixkit.co/videos/preview/mixkit-young-woman-touching-her-hair-41619-large.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: How It Works -->
+  <section class="how-it-works-section" id="how-it-works">
+    <h2 class="section-title">A Flawless Install in 3 Easy Steps</h2>
+    <p class="section-desc">Get the ultimate 13x6 frontal look in under a minute. No stylist, no messy glue, and no salon bills:</p>
+    
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <h3>Position & Slip On</h3>
+        <p>Cornrow or wrap your natural hair flat. Place the velvet grip band around your hairline, then slide the 13x6 cap over your head from front to back.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <h3>Adjust the Band</h3>
+        <p>Tighten the inner elastic strap in the back for a customized, snug fit. Position the pre-cut HD lace along your forehead so it sits flat.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <h3>Melt & Style</h3>
+        <p>Pat the front down with your fingers. The ultra-thin Swiss HD lace melts seamlessly into your skin. Part the body waves anywhere you want and step out!</p>
+      </div>
+    </div>
+
+    <div class="section-shop-wrap">
+      <a href="#product-purchase" class="section-shop-cta" onclick="handleShopNow(event)">
+        <span>Shop Now</span>
+        <span class="cta-arrow">↑</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Section: Before & After Transformation -->
+  <section class="before-after-section" id="before-after">
+    <h2 class="section-title">The Ultimate Glow Up</h2>
+    <p class="section-desc">See the 30-second transformation. From protective braids to melted scalp perfection.</p>
+    
+    <div class="before-after-container">
+      <div class="ba-card">
+        <div class="ba-badge before">BEFORE</div>
+        <div class="ba-image-wrapper">
+          <img src="assets/before_install.png" alt="Hair before Laced Baddies Installation" class="ba-image">
+        </div>
+        <p class="ba-caption">Flat, neat cornrows (protective foundation ready for install)</p>
+      </div>
+      
+      <div class="ba-arrow">➔</div>
+      
+      <div class="ba-card highlight">
+        <div class="ba-badge after">AFTER</div>
+        <div class="ba-image-wrapper">
+          <img src="assets/after_install.png" alt="Hair after Laced Baddies Installation" class="ba-image">
+        </div>
+        <p class="ba-caption">Melted 13x6 HD Lace & bouncing Body Wave style</p>
+      </div>
+    </div>
+
+    <div class="section-shop-wrap">
+      <a href="#product-purchase" class="section-shop-cta" onclick="handleShopNow(event)">
+        <span>Shop Now</span>
+        <span class="cta-arrow">↑</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Section 3: Reviews -->
+  <section class="reviews-section" id="reviews">
+    <h2 class="section-title">Loved by Real Baddies</h2>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-image-wrapper">
+          <img src="assets/review_user_1.png" alt="Jordan T. Review" class="review-user-img">
+        </div>
+        <div class="review-header">
+          <span class="review-stars">★★★★★</span>
+          <span class="reviewer-name">Jordan T.</span>
+        </div>
+        <p>"Literally took me less than a minute. I got the 13x6 Body Wave, and the parting space is huge. I woke up late, threw this on, and everyone thought I spent $300 at the salon. And my edges are completely safe!"</p>
+      </div>
+      <div class="review-card">
+        <div class="review-image-wrapper">
+          <img src="assets/review_user_2.png" alt="Keisha M. Review" class="review-user-img">
+        </div>
+        <div class="review-header">
+          <span class="review-stars">★★★★★</span>
+          <span class="reviewer-name">Keisha M.</span>
+        </div>
+        <p>"The 30-day subscription is a cheat code. A fresh, bouncy Body Wave wig arrives right when my old one starts shedding. The HD lace blends so well I don't even need foundation!"</p>
+      </div>
+      <div class="review-card">
+        <div class="review-image-wrapper">
+          <img src="assets/review_user_3.png" alt="Tanisha R. Review" class="review-user-img">
+        </div>
+        <div class="review-header">
+          <span class="review-stars">★★★★★</span>
+          <span class="reviewer-name">Tanisha R.</span>
+        </div>
+        <p>"I was skeptical about a glueless 13x6, but the velvet band does not move. I run on the treadmill and lift weights, and it doesn't lift or slide. No white glue residue. Scalp hygiene is so much better now that I can take it off at night."</p>
+      </div>
+    </div>
+
+    <div class="section-shop-wrap">
+      <a href="#product-purchase" class="section-shop-cta" onclick="handleShopNow(event)">
+        <span>Shop Now</span>
+        <span class="cta-arrow">↑</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <p>&copy; 2026 Laced Baddies Co. All Rights Reserved. Designed with Love.</p>
+  </footer>
+
+  <!-- Simple Vanilla JS for gallery toggling and purchase selection -->
+  <script>
+    function switchImage(src, element, fit = 'cover') {
+      const activeImage = document.getElementById('active-gallery-img');
+      activeImage.src = src;
+      activeImage.classList.toggle('fit-contain', fit === 'contain');
+      
+      // Update active thumbnail borders
+      const thumbnails = document.querySelectorAll('.thumbnail');
+      thumbnails.forEach(thumb => thumb.classList.remove('active'));
+      element.classList.add('active');
+    }
+
+    function handleShopNow(event) {
+      if (event) event.preventDefault();
+
+      const productSection = document.getElementById('product-purchase');
+      const checkoutButton = document.getElementById('submit-btn');
+
+      productSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      window.setTimeout(() => {
+        checkoutButton.classList.remove('checkout-bounce');
+        void checkoutButton.offsetWidth;
+        checkoutButton.classList.add('checkout-bounce');
+        checkoutButton.focus({ preventScroll: true });
+      }, 650);
+    }
+
+    let currentLength = '26';
+    let currentPlan = '30-day';
+
+    function selectLength(length) {
+      currentLength = length;
+      
+      // Update selected class on length pills
+      const pills = document.querySelectorAll('.length-pill');
+      pills.forEach(pill => {
+        const input = pill.querySelector('input');
+        if (input.value === length) {
+          pill.classList.add('selected');
+          input.checked = true;
+        } else {
+          pill.classList.remove('selected');
+        }
+      });
+      
+      updatePricing();
+    }
+
+    function selectPlan(planId) {
+      currentPlan = planId;
+      
+      // Update selected class on plan labels
+      document.getElementById('plan-30-label').classList.remove('selected');
+      document.getElementById('plan-onetime-label').classList.remove('selected');
+      
+      if (planId === '30-day') {
+        document.getElementById('plan-30-label').classList.add('selected');
+      } else {
+        document.getElementById('plan-onetime-label').classList.add('selected');
+      }
+      
+      updatePricing();
+    }
+
+    function updatePricing() {
+      // Pricing details matching hair length upgrades
+      const prices = {
+        '30-day': { '26': 99, '28': 119, '30': 139 },
+        'onetime': { '26': 150, '28': 180, '30': 210 }
+      };
+
+      const subPrice = prices['30-day'][currentLength];
+      const oneTimePrice = prices['onetime'][currentLength];
+
+      // Update pricing display text
+      document.querySelector('#plan-30-label .price-value').innerText = `$${subPrice}`;
+      document.querySelector('#plan-onetime-label .onetime-price-val').innerText = `$${oneTimePrice}`;
+
+      // Update CTA button label
+      const activePrice = prices[currentPlan][currentLength];
+      if (currentPlan === '30-day') {
+        document.getElementById('submit-btn').innerText = `ADD TO CART (30-DAY CLUB) - $${activePrice}/mo`;
+      } else {
+        document.getElementById('submit-btn').innerText = `ADD TO CART (ONE-TIME) - $${activePrice}`;
+      }
+    }
+
+    function openVideoModal() {
+      const modal = document.getElementById('videoModal');
+      const video = document.getElementById('ugcVideoPlayer');
+      modal.classList.add('active');
+      video.play();
+    }
+
+    function closeVideoModal() {
+      const modal = document.getElementById('videoModal');
+      const video = document.getElementById('ugcVideoPlayer');
+      modal.classList.remove('active');
+      video.pause();
+      video.currentTime = 0;
+    }
+
+    async function handleCheckout(event) {
+      event.preventDefault();
+      const selectedPlan = document.querySelector('input[name="selling_plan"]:checked').value;
+      const commerce = window.LacedBaddiesCommerce;
+
+      if (!commerce) {
+        document.dispatchEvent(new CustomEvent('lacedbaddies:checkout', {
+          detail: {
+            length: currentLength,
+            plan: selectedPlan
+          }
+        }));
+        return;
+      }
+
+      await commerce.checkout({
+        length: currentLength,
+        plan: selectedPlan
+      });
+    }
+
+    function startReservationTimer() {
+      const timerElement = document.getElementById('reservation-timer');
+      let timeLimit = 10 * 60; // 10 minutes in seconds
+
+      const countdown = setInterval(() => {
+        let minutes = Math.floor(timeLimit / 60);
+        let seconds = timeLimit % 60;
+        
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+
+        timerElement.innerHTML = `✨ HURRY! YOUR CROWN IS RESERVED FOR ${minutes}:${seconds} MINS ✨`;
+
+        if (timeLimit <= 0) {
+          timeLimit = 10 * 60; // Reset timer instead of stopping
+        } else {
+          timeLimit--;
+        }
+      }, 1000);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      startReservationTimer();
+      updatePricing();
+    });
+  </script>
+</body>
+</html>

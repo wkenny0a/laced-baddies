@@ -1,0 +1,6 @@
+assets/ugc-videos/
+assets/meta-ads/
+assets/generated/
+.DS_Store
+*.log
+.*.swp
