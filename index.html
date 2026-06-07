@@ -62,6 +62,9 @@
         <div class="thumbnail" onclick="switchImage('assets/wig-human-hair-texture-themed.png', this, 'contain')">
           <img src="assets/wig-human-hair-texture-themed.png" alt="Real Human Hair Texture Comparison Thumb">
         </div>
+        <div class="thumbnail" onclick="switchImage('assets/laced-baddies-length-guide-26-28-30-v2.png', this, 'contain')">
+          <img src="assets/laced-baddies-length-guide-26-28-30-v2.png" alt="Laced Baddies Length Guide Thumb">
+        </div>
       </div>
     </div>
 
@@ -112,6 +115,13 @@
             <span>30"</span>
           </label>
         </div>
+
+        <figure class="length-guide-card">
+          <button type="button" class="length-guide-image-button" onclick="switchImage('assets/laced-baddies-length-guide-26-28-30-v2.png', null, 'contain')" aria-label="Show 26, 28, and 30 inch length guide in the product gallery">
+            <img src="assets/laced-baddies-length-guide-26-28-30-v2.png" alt="Laced Baddies length guide comparing 26 inch, 28 inch, and 30 inch body wave wigs on three different models">
+          </button>
+          <figcaption>26", 28", and 30" shown on real body-wave crowns.</figcaption>
+        </figure>
 
         <!-- Select Plan Title -->
         <h3 class="section-sub-title">SELECT YOUR ROTATION</h3>
@@ -538,7 +548,9 @@
       // Update active thumbnail borders
       const thumbnails = document.querySelectorAll('.thumbnail');
       thumbnails.forEach(thumb => thumb.classList.remove('active'));
-      element.classList.add('active');
+      if (element) {
+        element.classList.add('active');
+      }
     }
 
     function handleShopNow(event) {
