@@ -530,15 +530,10 @@
         <div id="cart-cross-sell-list"></div>
       </div>
 
-      <!-- Price Subtotal Summary -->
       <div class="cart-summary-section" id="cart-summary-box"></div>
     </div>
     <div class="cart-drawer-footer">
-      <div class="checkout-agreement-row">
-        <input type="checkbox" id="checkout-agree-checkbox" onchange="toggleCheckoutButton()">
-        <label for="checkout-agree-checkbox">I confirm my wig length and selections are correct.</label>
-      </div>
-      <button type="button" class="btn-cart-checkout" id="cart-checkout-btn" onclick="window.LacedBaddiesCommerce.checkout()" disabled>
+      <button type="button" class="btn-cart-checkout" id="cart-checkout-btn" onclick="window.LacedBaddiesCommerce.checkout()">
         PROCEED TO SECURE CHECKOUT
       </button>
       <p class="checkout-trust-notice">🔒 Secure 256-bit SSL encrypted transaction</p>
@@ -1217,13 +1212,6 @@
       }
     }
 
-    function toggleCheckoutButton() {
-      const checkbox = document.getElementById("checkout-agree-checkbox");
-      const button = document.getElementById("cart-checkout-btn");
-      if (checkbox && button) {
-        button.disabled = !checkbox.checked;
-      }
-    }
 
     function startReservationTimer() {
       const timerElement = document.getElementById('reservation-timer');

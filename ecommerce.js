@@ -55,10 +55,9 @@
     state.isLoading = isLoading;
     const button = getElement("cart-checkout-btn");
     const mainButton = getElement("submit-btn");
-    const checkbox = getElement("checkout-agree-checkbox");
 
     if (button) {
-      button.disabled = isLoading || (checkbox ? !checkbox.checked : false);
+      button.disabled = isLoading;
       button.innerText = isLoading ? "PROCESSING..." : "PROCEED TO SECURE CHECKOUT";
     }
     if (mainButton) {
@@ -158,10 +157,6 @@
 
     if (open) {
       renderDrawer();
-      const checkbox = getElement("checkout-agree-checkbox");
-      if (checkbox) checkbox.checked = false;
-      const button = getElement("cart-checkout-btn");
-      if (button) button.disabled = true;
 
       drawer.classList.add("active");
       overlay.classList.add("active");
@@ -305,12 +300,6 @@
 
     if (state.isLoading) return false;
 
-    // Check agreement checkbox
-    const checkbox = getElement("checkout-agree-checkbox");
-    if (checkbox && !checkbox.checked) {
-      window.alert("Please check the agreement box to proceed to checkout.");
-      return false;
-    }
 
     // Save cart state to localStorage so the custom checkout page can read it easily
     const currentCartData = {
