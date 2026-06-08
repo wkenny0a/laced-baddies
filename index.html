@@ -889,6 +889,60 @@
     </div>
   </section>
 
+  <!-- Section 4: FAQ / Q&A Accordion -->
+  <section class="faq-section" id="faq">
+    <div class="faq-container">
+      <h2 class="section-title">Baddie Q&A</h2>
+      <p class="section-desc">Got questions about your crown? We've got answers to help you slay.</p>
+      
+      <div class="faq-list">
+        <!-- Question 1 -->
+        <div class="faq-item">
+          <button class="faq-question-btn" onclick="toggleFaq(this)">
+            <span>Is there really such a thing as a pre-cut 13x6 frontal wig?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Yes, absolutely! It is the ultimate "Wear & Go" innovation. Our 13x6 wig features a pre-cut, scalloped lace edge that sits flat against your forehead with zero scissors needed. Combined with a massive 13x6 ear-to-ear frontal, you get a full 6 inches of deep parting space to part your hair anywhere you want (middle part, deep side part, or half-up styles) for a completely realistic look.</p>
+          </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="faq-item">
+          <button class="faq-question-btn" onclick="toggleFaq(this)">
+            <span>What does "pre-plucked" mean?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Standard wigs come with a thick, straight, unnatural "wall" of hair along the forehead. A "pre-plucked" wig has its hairline hand-customized before it ships to you. Individual strands are plucked out to create a soft, natural gradient density—thin at the very edge and gradually getting thicker. This replicates how a real human hairline grows, giving you instant scalp realism straight out of the box.</p>
+          </div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="faq-item">
+          <button class="faq-question-btn" onclick="toggleFaq(this)">
+            <span>How often do I need to take the wig off?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>We recommend taking it off <strong>every night before bed</strong>. Since our wigs are 100% glueless and secured by our comfortable, adjustable CrownGrip™ velvet band, it takes only <strong>2 seconds</strong> to slide it off. Taking it off nightly lets your scalp breathe, prevents sweat and moisture buildup (avoiding itchy scalps and odors), and makes it easy to massage your natural hair before sliding it back on in the morning.</p>
+          </div>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="faq-item">
+          <button class="faq-question-btn" onclick="toggleFaq(this)">
+            <span>Do I need to wear a bald cap under the wig?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>It is optional, but highly recommended for the best "melt"! Wearing our nude nylon bald cap (which comes FREE in your Welcome Kit) holds your natural braids or wraps flat and creates a uniform, skin-toned foundation. This hides the dark contrast of your natural hair underneath, making the micro-bleached knots of our Ultra-HD Lace™ look completely invisible against your skin.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Footer -->
   <footer class="main-footer">
     <p>&copy; 2026 Laced Baddies Co. All Rights Reserved. Designed with Love.</p>
@@ -1144,6 +1198,30 @@
         }, { passive: true });
       }
     });
+
+    // FAQ Accordion Toggle Function
+    function toggleFaq(btn) {
+      const item = btn.parentElement;
+      const icon = btn.querySelector('.faq-icon');
+      const allItems = document.querySelectorAll('.faq-item');
+      
+      // Close other items
+      allItems.forEach(i => {
+        if (i !== item) {
+          i.classList.remove('active');
+          const otherIcon = i.querySelector('.faq-icon');
+          if (otherIcon) otherIcon.innerText = '+';
+        }
+      });
+      
+      // Toggle current item
+      item.classList.toggle('active');
+      if (item.classList.contains('active')) {
+        icon.innerText = '−';
+      } else {
+        icon.innerText = '+';
+      }
+    }
   </script>
 </body>
 </html>

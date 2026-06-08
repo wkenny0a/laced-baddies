@@ -1702,6 +1702,106 @@ section {
 }
 
 
+/* Section 4: FAQ / Accordion Section */
+.faq-section {
+  padding: 80px 8%;
+  background-color: #0a0403; /* Slightly darker brown to break up sections */
+  border-top: 1px solid rgba(255, 248, 240, 0.05);
+}
+
+.faq-container {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.faq-list {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+}
+
+.faq-item {
+  background-color: var(--card-bg);
+  border: 1px solid rgba(255, 248, 240, 0.05);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.faq-item:hover {
+  border-color: rgba(255, 0, 127, 0.2);
+}
+
+.faq-question-btn {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-headers);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-cream);
+  cursor: pointer;
+  text-align: left;
+  gap: 15px;
+}
+
+.faq-icon {
+  font-size: 1.5rem;
+  color: var(--accent-mango);
+  font-weight: 400;
+  line-height: 1;
+  transition: var(--transition);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), padding 0.35s ease;
+  padding: 0 24px;
+  opacity: 0;
+}
+
+.faq-item.active .faq-answer {
+  max-height: 200px; /* High enough to contain the answer text */
+  padding-bottom: 24px;
+  opacity: 1;
+}
+
+.faq-answer p {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+.faq-answer strong {
+  color: var(--accent-mango);
+}
+
+@media (max-width: 640px) {
+  .faq-section {
+    padding: 56px 6%;
+  }
+  .faq-question-btn {
+    padding: 16px 20px;
+    font-size: 0.95rem;
+  }
+  .faq-answer {
+    padding: 0 20px;
+  }
+  .faq-item.active .faq-answer {
+    padding-bottom: 20px;
+  }
+}
+
 /* Footer */
 .main-footer {
   text-align: center;
