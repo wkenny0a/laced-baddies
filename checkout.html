@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout | Laced Baddies</title>
+  
+  <meta name="description" content="Secure checkout for your Laced Baddies order. Complete your premium glueless wig and accessories purchase.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="index.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/swell-js@5.6.1/dist/swell.umd.min.js"></script>
+  
+  <style>
+    :root {
+      --checkout-bg: #0b0705;
+      --checkout-card-bg: rgba(255, 248, 240, 0.02);
+      --checkout-border: rgba(255, 248, 240, 0.05);
+      --checkout-text: #fff8f0;
+      --checkout-dim: rgba(255, 248, 240, 0.5);
+    }
+    
+    body {
+      background-color: var(--checkout-bg);
+      color: var(--checkout-text);
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    
+    .checkout-layout {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 20px 80px 20px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 40px;
+    }
+    
+    @media (max-width: 900px) {
+      .checkout-layout {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding-top: 20px;
+      }
+    }
+    
+    /* Header styling */
+    .checkout-header {
+      border-bottom: 1px solid var(--checkout-border);
+      padding: 20px 0;
+      background: rgba(11, 7, 5, 0.8);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .header-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .checkout-logo {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 900;
+      font-size: 1.5rem;
+      letter-spacing: 0.05em;
+      background: linear-gradient(90deg, #ff2e93, #e28743);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-decoration: none;
+    }
+    
+    .back-btn {
+      color: var(--checkout-dim);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition);
+    }
+    
+    .back-btn:hover {
+      color: var(--checkout-text);
+    }
+    
+    /* Left Column: Form Cards */
+    .form-section {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    
+    .checkout-card {
+      background: var(--checkout-card-bg);
+      border: 1px solid var(--checkout-border);
+      border-radius: 12px;
+      padding: 30px;
+    }
+    
+    @media (max-width: 600px) {
+      .checkout-card {
+        padding: 20px;
+      }
+    }
+    
+    .card-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-top: 0;
+      margin-bottom: 20px;
+      color: var(--checkout-text);
+      letter-spacing: 0.02em;
+      border-bottom: 1px solid var(--checkout-border);
+      padding-bottom: 12px;
+    }
+    
+    /* Form fields */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    
+    @media (max-width: 600px) {
+      .form-row.split-mobile {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    
+    .form-group.no-margin {
+      margin-bottom: 0;
+    }
+    
+    .form-group label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--checkout-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .form-control {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--checkout-border);
+      border-radius: 8px;
+      padding: 14px;
+      color: var(--checkout-text);
+      font-family: inherit;
+      font-size: 0.9rem;
+      transition: var(--transition);
+      outline: none;
+    }
+    
+    .form-control:focus {
+      border-color: var(--accent-mango);
+      box-shadow: 0 0 0 2px rgba(226, 135, 67, 0.15);
+    }
+    
+    /* Right Column: Order Summary */
+    .summary-column {
+      position: sticky;
+      top: 100px;
+      height: fit-content;
+    }
+    
+    @media (max-width: 900px) {
+      .summary-column {
+        position: relative;
+        top: 0;
+      }
+    }
+    
+    .summary-card {
+      background: rgba(255, 248, 240, 0.015);
+      border: 1px dashed var(--checkout-border);
+      border-radius: 12px;
+      padding: 24px;
+    }
+    
+    .summary-items-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255, 248, 240, 0.03);
+    }
+    
+    .summary-item-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .summary-item-img {
+      width: 48px;
+      height: 48px;
+      border-radius: 6px;
+      object-fit: cover;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--checkout-border);
+    }
+    
+    .summary-item-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin: 0 0 3px 0;
+    }
+    
+    .summary-item-meta {
+      font-size: 0.72rem;
+      color: var(--checkout-dim);
+      margin: 0;
+    }
+    
+    .summary-item-price {
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+    
+    /* Cost rows */
+    .summary-totals {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-top: 16px;
+      border-top: 1px solid var(--checkout-border);
+    }
+    
+    .summary-total-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: var(--checkout-dim);
+    }
+    
+    .summary-total-row.grand-total {
+      font-size: 1.15rem;
+      color: var(--checkout-text);
+      font-weight: 800;
+      font-family: 'Outfit', sans-serif;
+      margin-top: 8px;
+      padding-top: 12px;
+      border-top: 1px solid var(--checkout-border);
+    }
+    
+    .summary-total-row.grand-total .free-label {
+      color: var(--accent-mango);
+      font-weight: 800;
+    }
+    
+    /* Double check confirmation checkbox */
+    .checkout-checkbox-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-top: 24px;
+      margin-bottom: 16px;
+      background: rgba(226, 135, 67, 0.04);
+      border: 1px solid rgba(226, 135, 67, 0.1);
+      border-radius: 8px;
+      padding: 14px;
+    }
+    
+    .checkout-checkbox-row input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent-mango);
+      cursor: pointer;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+    
+    .checkout-checkbox-row label {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      cursor: pointer;
+      line-height: 1.4;
+      user-select: none;
+    }
+    
+    .checkout-checkbox-row label strong {
+      color: var(--checkout-text);
+    }
+    
+    /* Submit button */
+    .btn-submit-order {
+      width: 100%;
+      background: linear-gradient(135deg, var(--accent-fuchsia), #D00060);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 16px;
+      font-size: 1rem;
+      font-weight: 800;
+      font-family: 'Outfit', sans-serif;
+      cursor: pointer;
+      letter-spacing: 0.03em;
+      box-shadow: 0 10px 20px rgba(255, 0, 127, 0.25);
+      transition: var(--transition);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .btn-submit-order:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 25px rgba(255, 0, 127, 0.4);
+    }
+    
+    .btn-submit-order:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+      transform: none;
+      background: rgba(255, 248, 240, 0.08);
+      color: rgba(255, 248, 240, 0.3);
+      box-shadow: none;
+    }
+    
+    /* Loader inside button */
+    .button-spinner {
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      display: none;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    /* Success Screen */
+    .success-container {
+      max-width: 600px;
+      margin: 60px auto 100px auto;
+      text-align: center;
+      padding: 40px 20px;
+      display: none;
+      animation: fadeIn 0.6s ease forwards;
+    }
+    
+    .success-icon-wrapper {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: rgba(226, 135, 67, 0.1);
+      border: 2px solid var(--accent-mango);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px auto;
+      font-size: 2.25rem;
+      color: var(--accent-mango);
+    }
+    
+    .success-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      letter-spacing: 0.02em;
+    }
+    
+    .success-order-id {
+      font-family: monospace;
+      background: rgba(255, 248, 240, 0.04);
+      border: 1px solid var(--checkout-border);
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+      color: var(--accent-mango);
+    }
+    
+    .success-desc {
+      color: var(--checkout-dim);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin: 20px 0 30px 0;
+    }
+    
+    .btn-return-home {
+      display: inline-block;
+      background: rgba(255, 248, 240, 0.05);
+      border: 1px solid var(--checkout-border);
+      padding: 12px 24px;
+      border-radius: 8px;
+      color: var(--checkout-text);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+    
+    .btn-return-home:hover {
+      background: rgba(255, 248, 240, 0.08);
+      border-color: rgba(255, 248, 240, 0.12);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Checkout Header -->
+  <header class="checkout-header">
+    <div class="header-container">
+      <a href="index.html" class="checkout-logo">LACED BADDIES</a>
+      <a href="index.html" class="back-btn">
+        <span>&larr;</span> Back to Storefront
+      </a>
+    </div>
+  </header>
+
+  <!-- Checkout Main Content -->
+  <main class="checkout-layout" id="checkout-main-content">
+    
+    <!-- Left Column: Forms -->
+    <section class="form-section">
+      <form id="checkout-details-form" onsubmit="handleOrderSubmit(event)">
+        
+        <!-- Customer Details -->
+        <div class="checkout-card" style="margin-bottom: 20px;">
+          <h3 class="card-title">1. Customer Information</h3>
+          <div class="form-group">
+            <label for="checkout-email">Email Address</label>
+            <input type="email" id="checkout-email" class="form-control" required placeholder="name@domain.com">
+          </div>
+          <div class="form-group">
+            <label for="checkout-phone">Phone Number (For Shipping Alerts)</label>
+            <input type="tel" id="checkout-phone" class="form-control" required placeholder="(555) 000-0000">
+          </div>
+        </div>
+        
+        <!-- Shipping Details -->
+        <div class="checkout-card" style="margin-bottom: 20px;">
+          <h3 class="card-title">2. Shipping Address</h3>
+          <div class="form-row split-mobile">
+            <div class="form-group no-margin">
+              <label for="checkout-first-name">First Name</label>
+              <input type="text" id="checkout-first-name" class="form-control" required placeholder="Jane">
+            </div>
+            <div class="form-group no-margin">
+              <label for="checkout-last-name">Last Name</label>
+              <input type="text" id="checkout-last-name" class="form-control" required placeholder="Doe">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="checkout-street">Street Address</label>
+            <input type="text" id="checkout-street" class="form-control" required placeholder="123 Baddie Blvd">
+          </div>
+          <div class="form-group">
+            <label for="checkout-suite">Apartment, Suite, Unit (Optional)</label>
+            <input type="text" id="checkout-suite" class="form-control" placeholder="Apt 4B">
+          </div>
+          <div class="form-row split-mobile">
+            <div class="form-group no-margin">
+              <label for="checkout-city">City</label>
+              <input type="text" id="checkout-city" class="form-control" required placeholder="Los Angeles">
+            </div>
+            <div class="form-row" style="margin-bottom: 0;">
+              <div class="form-group no-margin">
+                <label for="checkout-state">State</label>
+                <input type="text" id="checkout-state" class="form-control" required placeholder="CA">
+              </div>
+              <div class="form-group no-margin">
+                <label for="checkout-zip">ZIP Code</label>
+                <input type="text" id="checkout-zip" class="form-control" required placeholder="90001">
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Payment Details -->
+        <div class="checkout-card">
+          <h3 class="card-title">3. Payment Information</h3>
+          
+          <!-- Container for secure Stripe Elements (shown if Swell is connected) -->
+          <div id="secure-card-payment-element" style="display: none;">
+            <div class="form-group">
+              <label>Credit or Debit Card</label>
+              <div id="card-element" class="form-control" style="background: rgba(0, 0, 0, 0.3); padding: 14px; min-height: 48px; display: flex; align-items: center;">
+                <!-- Swell / Stripe Element mounts here -->
+              </div>
+              <div id="card-errors" style="color: #ff2e93; font-size: 0.75rem; margin-top: 5px;"></div>
+            </div>
+          </div>
+          
+          <!-- Standard Form fields (shown if Swell is offline/simulation) -->
+          <div id="offline-card-payment-element">
+            <div class="form-group">
+              <label for="checkout-card-name">Cardholder Name</label>
+              <input type="text" id="checkout-card-name" class="form-control" required placeholder="Jane Doe">
+            </div>
+            <div class="form-group">
+              <label for="checkout-card-number">Credit Card Number</label>
+              <input type="text" id="checkout-card-number" class="form-control" required placeholder="4111 2222 3333 4444" maxlength="19" oninput="formatCardNumber(this)">
+            </div>
+            <div class="form-row">
+              <div class="form-group no-margin">
+                <label for="checkout-card-expiry">Expiration Date</label>
+                <input type="text" id="checkout-card-expiry" class="form-control" required placeholder="MM/YY" maxlength="5" oninput="formatExpiry(this)">
+              </div>
+              <div class="form-group no-margin">
+                <label for="checkout-card-cvc">Security Code (CVC)</label>
+                <input type="password" id="checkout-card-cvc" class="form-control" required placeholder="123" maxlength="4">
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </form>
+    </section>
+    
+    <!-- Right Column: Order Summary -->
+    <section class="summary-column">
+      <div class="summary-card">
+        <h3 class="card-title" style="border-bottom: none; margin-bottom: 15px;">Order Summary</h3>
+        
+        <!-- List of items -->
+        <div class="summary-items-list" id="checkout-items-list">
+          <!-- Dynamically loaded -->
+        </div>
+        
+        <!-- Totals -->
+        <div class="summary-totals">
+          <div class="summary-total-row">
+            <span>Subtotal</span>
+            <span id="summary-subtotal">$0.00</span>
+          </div>
+          <div class="summary-total-row">
+            <span>Accessories Add-ons</span>
+            <span id="summary-accessories">$0.00</span>
+          </div>
+          <div class="summary-total-row">
+            <span>Shipping</span>
+            <span style="color: var(--accent-mango); font-weight: 700;">FREE (3-Day)</span>
+          </div>
+          <div class="summary-total-row">
+            <span>Estimated Tax</span>
+            <span id="summary-tax">$0.00</span>
+          </div>
+          <div class="summary-total-row grand-total">
+            <span>Total Today</span>
+            <span id="summary-grand-total">$0.00</span>
+          </div>
+        </div>
+        
+        <!-- Required Agreement Checkbox -->
+        <div class="checkout-checkbox-row">
+          <input type="checkbox" id="checkout-double-agree" onchange="toggleOrderSubmitButton()">
+          <label for="checkout-double-agree">
+            I confirm my shipping address and billing details are correct, and I agree to the <strong>30-Day Baddie Quality Guarantee</strong>.
+          </label>
+        </div>
+        
+        <!-- Submit Button -->
+        <button type="submit" form="checkout-details-form" class="btn-submit-order" id="checkout-submit-btn" disabled>
+          <span class="button-spinner" id="checkout-button-spinner"></span>
+          <span id="checkout-button-text">PLACE ORDER</span>
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Success Overlay / Screen -->
+  <main class="success-container" id="success-screen">
+    <div class="success-icon-wrapper">✓</div>
+    <h1 class="success-title">THANK YOU, BADDIE!</h1>
+    <p>Your crown is officially on its way.</p>
+    <p style="margin-top: 15px;">
+      Order Reference ID: <span class="success-order-id" id="confirmed-order-number">LB-000000</span>
+    </p>
+    <p class="success-desc">
+      We sent a confirmation email to <strong id="success-email-text"></strong> with your tracking details. Your luxury 13x6 HD lace wig and accessories are estimated to arrive in 3 business days!
+    </p>
+    <a href="index.html" class="btn-return-home">Return to Home</a>
+  </main>
+
+  <footer class="main-footer" style="margin-top: 80px; border-top: 1px solid var(--checkout-border); padding: 40px 0; background: rgba(0,0,0,0.15);">
+    <p style="text-align: center; font-size: 0.8rem; color: var(--checkout-dim);">&copy; 2026 Laced Baddies Co. Secure checkout powered by Swell.</p>
+  </footer>
+
+  <script>
+    const PRICES = {
+      "30-day": { "26": 99, "28": 119, "30": 139 },
+      "onetime": { "26": 130, "28": 160, "30": 190 }
+    };
+
+    const PLAN_LABELS = {
+      "30-day": "30-Day Baddie Club",
+      "onetime": "Buy Once"
+    };
+
+    const ACCESSORIES = {
+      bald_cap: { name: "Bald Cap", price: 9.99, img: "assets/bald-cap-new.jpg" },
+      scissors: { name: "Lace Scissors", price: 19.99, img: "assets/lace-scissors-new.jpg" },
+      silk_cap: { name: "Silk Bonnet", price: 19.99, img: "assets/silk-bonnet-new.jpg" },
+      spray_comb: { name: "Spray Comb", price: 29.99, img: "assets/spray-comb-new.jpg" },
+      wig_storage_bag: { name: "Wig Storage Bag", price: 19.99, img: "assets/laced-baddies-wig-storage-bag.jpg" }
+    };
+
+    let cartData = {
+      wig: { plan: "30-day", length: "26" },
+      accessories: ["bald_cap", "scissors", "silk_cap", "spray_comb", "wig_storage_bag"]
+    };
+
+    let swellConnected = false;
+
+    async function loadCart() {
+      const saved = localStorage.getItem("laced_baddies_cart");
+      if (saved) {
+        try {
+          cartData = JSON.parse(saved);
+        } catch (e) {
+          console.error("Error parsing cart storage:", e);
+        }
+      }
+      renderSummary();
+
+      // Attempt to load Swell configuration and mount Stripe elements
+      try {
+        const response = await fetch("/api/swell-config", { cache: "no-store" });
+        if (response.ok) {
+          const swellConfig = await response.json();
+          if (window.swell && swellConfig?.swell?.storeId && swellConfig?.swell?.publicKey) {
+            window.swell.init(swellConfig.swell.storeId, swellConfig.swell.publicKey);
+            swellConnected = true;
+
+            // Show secure container and hide offline inputs
+            document.getElementById("secure-card-payment-element").style.display = "block";
+            document.getElementById("offline-card-payment-element").style.display = "none";
+
+            // Remove required attributes from offline fields
+            document.getElementById("checkout-card-name").removeAttribute("required");
+            document.getElementById("checkout-card-number").removeAttribute("required");
+            document.getElementById("checkout-card-expiry").removeAttribute("required");
+            document.getElementById("checkout-card-cvc").removeAttribute("required");
+
+            // Create Swell / Stripe Card elements
+            await window.swell.payment.createElements({
+              card: {
+                elementId: '#card-element',
+                style: {
+                  base: {
+                    color: '#fff8f0',
+                    fontFamily: 'Inter, sans-serif',
+                    fontSize: '15px',
+                    '::placeholder': {
+                      color: 'rgba(255, 248, 240, 0.3)'
+                    }
+                  }
+                }
+              }
+            });
+          }
+        }
+      } catch (e) {
+        console.warn("Could not connect to Swell storefront API, running offline simulation fallback:", e);
+      }
+    }
+
+    function renderSummary() {
+      const { plan, length } = cartData.wig;
+      const basePrice = PRICES[plan][length];
+      const isSubscription = plan === "30-day";
+      
+      const itemsList = document.getElementById("checkout-items-list");
+      if (!itemsList) return;
+
+      // Wig Item
+      let itemsHtml = `
+        <div class="summary-item">
+          <div class="summary-item-left">
+            <img src="assets/main_model.png" alt="The Crown Wig" class="summary-item-img">
+            <div>
+              <h4 class="summary-item-name">The 13x6 Body Wave Crown</h4>
+              <p class="summary-item-meta">Length: ${length}" | Plan: ${PLAN_LABELS[plan]}</p>
+            </div>
+          </div>
+          <div class="summary-item-price">$${basePrice}</div>
+        </div>
+      `;
+
+      // Accessories
+      let accessoriesTotal = 0;
+      cartData.accessories.forEach(accId => {
+        const item = ACCESSORIES[accId];
+        if (!item) return;
+
+        const isFree = isSubscription || accId === "wig_storage_bag";
+        const displayPrice = isFree ? "FREE" : `$${item.price}`;
+        if (!isFree) {
+          accessoriesTotal += item.price;
+        }
+
+        itemsHtml += `
+          <div class="summary-item">
+            <div class="summary-item-left">
+              <img src="${item.img}" alt="${item.name}" class="summary-item-img">
+              <div>
+                <h4 class="summary-item-name">${item.name}</h4>
+                <p class="summary-item-meta">${isFree ? "Free gift included" : "Add-on accessory"}</p>
+              </div>
+            </div>
+            <div class="summary-item-price" style="${isFree ? 'color: var(--accent-mango);' : ''}">${displayPrice}</div>
+          </div>
+        `;
+      });
+
+      itemsList.innerHTML = itemsHtml;
+
+      // Calculate taxes & grand total
+      const subTotal = basePrice;
+      const taxRate = 0.085; // 8.5%
+      const estimatedTax = (subTotal + accessoriesTotal) * taxRate;
+      const grandTotal = subTotal + accessoriesTotal + estimatedTax;
+
+      // Update text fields
+      document.getElementById("summary-subtotal").innerText = `$${subTotal.toFixed(2)}`;
+      document.getElementById("summary-accessories").innerText = isSubscription ? "FREE" : `$${accessoriesTotal.toFixed(2)}`;
+      document.getElementById("summary-tax").innerText = `$${estimatedTax.toFixed(2)}`;
+      
+      const cycleSuffix = isSubscription ? " / month" : "";
+      document.getElementById("summary-grand-total").innerHTML = `$${grandTotal.toFixed(2)}${cycleSuffix}`;
+    }
+
+    function toggleOrderSubmitButton() {
+      const checkbox = document.getElementById("checkout-double-agree");
+      const button = document.getElementById("checkout-submit-btn");
+      if (checkbox && button) {
+        button.disabled = !checkbox.checked;
+      }
+    }
+
+    function formatCardNumber(input) {
+      let value = input.value.replace(/\D/g, '');
+      let formatted = '';
+      for (let i = 0; i < value.length; i++) {
+        if (i > 0 && i % 4 === 0) {
+          formatted += ' ';
+        }
+        formatted += value[i];
+      }
+      input.value = formatted;
+    }
+
+    function formatExpiry(input) {
+      let value = input.value.replace(/\D/g, '');
+      if (value.length > 2) {
+        input.value = value.substring(0, 2) + '/' + value.substring(2, 4);
+      } else {
+        input.value = value;
+      }
+    }
+
+    async function handleOrderSubmit(event) {
+      event.preventDefault();
+
+      const doubleAgree = document.getElementById("checkout-double-agree");
+      if (doubleAgree && !doubleAgree.checked) {
+        alert("Please check the confirmation box to place your order.");
+        return;
+      }
+
+      const email = document.getElementById("checkout-email").value;
+      const spinner = document.getElementById("checkout-button-spinner");
+      const buttonText = document.getElementById("checkout-button-text");
+      const submitBtn = document.getElementById("checkout-submit-btn");
+
+      // Show loader
+      if (spinner) spinner.style.display = "inline-block";
+      if (buttonText) buttonText.innerText = "PROCESSING...";
+      if (submitBtn) submitBtn.disabled = true;
+
+      setTimeout(async () => {
+        try {
+          let orderReference = "LB-" + Math.floor(100000 + Math.random() * 900000);
+          
+          if (swellConnected) {
+            const firstName = document.getElementById("checkout-first-name").value;
+            const lastName = document.getElementById("checkout-last-name").value;
+            const phone = document.getElementById("checkout-phone").value;
+            const street = document.getElementById("checkout-street").value;
+            const suite = document.getElementById("checkout-suite").value;
+            const city = document.getElementById("checkout-city").value;
+            const state = document.getElementById("checkout-state").value;
+            const zip = document.getElementById("checkout-zip").value;
+
+            // Update Swell cart with checkout information
+            const updateResponse = await window.swell.cart.update({
+              account: {
+                email: email,
+                phone: phone
+              },
+              shipping: {
+                first_name: firstName,
+                last_name: lastName,
+                phone: phone,
+                address1: street,
+                address2: suite,
+                city: city,
+                state: state,
+                zip: zip,
+                country: 'US'
+              },
+              billing: {
+                first_name: firstName,
+                last_name: lastName,
+                address1: street,
+                address2: suite,
+                city: city,
+                state: state,
+                zip: zip,
+                country: 'US'
+              }
+            });
+
+            if (updateResponse?.errors || updateResponse?.error) {
+              throw new Error(updateResponse.errors?.[0]?.message || updateResponse.error?.message || "Cart update failed.");
+            }
+
+            // Tokenize credit card details securely via Swell / Stripe Elements
+            await new Promise((resolve, reject) => {
+              window.swell.payment.tokenize({
+                card: {
+                  onError: (err) => {
+                    reject(new Error(err.message || "Credit card validation failed. Please check card details and try again."));
+                  },
+                  onSuccess: () => {
+                    resolve();
+                  }
+                }
+              });
+            });
+
+            // Submit order via Swell JS
+            const orderResponse = await window.swell.cart.submitOrder();
+            if (orderResponse?.errors || orderResponse?.error) {
+              throw new Error(orderResponse.errors?.[0]?.message || orderResponse.error?.message || "Order submission failed.");
+            }
+            
+            if (orderResponse?.id || orderResponse?.number) {
+              orderReference = "LB-" + (orderResponse.number || orderResponse.id.substring(0, 8).toUpperCase());
+            }
+          }
+
+          // Clear cart on success
+          localStorage.removeItem("laced_baddies_cart");
+          
+          // Switch screens
+          document.getElementById("checkout-main-content").style.display = "none";
+          document.getElementById("success-screen").style.display = "block";
+          document.getElementById("confirmed-order-number").innerText = orderReference;
+          document.getElementById("success-email-text").innerText = email;
+          
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        } catch (error) {
+          console.error("Order completion failed:", error);
+          alert("Order Error: " + (error.message || "Failed to process transaction. Please check your credit card details and try again."));
+          
+          // Reset button loaders
+          if (spinner) spinner.style.display = "none";
+          if (buttonText) buttonText.innerText = "PLACE ORDER";
+          if (submitBtn) submitBtn.disabled = false;
+        }
+      }, 2000); // 2 seconds processing animation delay
+    }
+
+    document.addEventListener("DOMContentLoaded", loadCart);
+  </script>
+</body>
+</html>

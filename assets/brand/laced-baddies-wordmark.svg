@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 420" role="img" aria-labelledby="title desc">
+  <title id="title">Laced Baddies Wordmark</title>
+  <desc id="desc">Horizontal Laced Baddies wordmark with the LB crown icon.</desc>
+  <defs>
+    <linearGradient id="wordGradient" x1="160" x2="1300" y1="54" y2="360" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ff007f"/>
+      <stop offset="0.58" stop-color="#ff4779"/>
+      <stop offset="1" stop-color="#ffa62b"/>
+    </linearGradient>
+    <linearGradient id="creamGradient" x1="0" x2="520" y1="0" y2="420" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff8f0"/>
+      <stop offset="1" stop-color="#ffd48d"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(54 52)">
+    <rect width="316" height="316" rx="82" fill="#120704"/>
+    <circle cx="158" cy="158" r="126" fill="#220f0a" stroke="url(#wordGradient)" stroke-width="12"/>
+    <path d="M102 86l17 28 25-42 14 42 25-42 14 42 17-28 6 54H96l6-54z" fill="url(#wordGradient)"/>
+    <path d="M103 150c34-22 65-30 95-25 31 6 57 25 77 57-30-15-58-20-84-15-25 5-51 19-79 43-11 9-24-7-15-18 19-23 40-36 64-41-19-7-38-4-58 8z" fill="url(#wordGradient)"/>
+    <text x="158" y="236" text-anchor="middle" fill="url(#creamGradient)" font-family="Syne, Arial Black, Arial, sans-serif" font-size="104" font-weight="900" letter-spacing="-8">LB</text>
+  </g>
+  <text x="424" y="180" fill="#fff8f0" font-family="Syne, Arial Black, Arial, sans-serif" font-size="122" font-weight="900" letter-spacing="-2">LACED</text>
+  <text x="424" y="304" fill="url(#wordGradient)" font-family="Syne, Arial Black, Arial, sans-serif" font-size="112" font-weight="900" letter-spacing="4">BADDIES</text>
+  <path d="M424 334h706c54 0 101-14 141-42l38-27c-20 59-73 99-158 120H424z" fill="url(#wordGradient)" opacity="0.9"/>
+</svg>

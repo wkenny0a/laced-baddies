@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">Laced Baddies LB Crown Mark</title>
+  <desc id="desc">A compact LB monogram with a crown and hair wave in the Laced Baddies fuchsia and mango palette.</desc>
+  <defs>
+    <linearGradient id="lbGradient" x1="150" x2="874" y1="164" y2="860" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ff007f"/>
+      <stop offset="0.52" stop-color="#ff4f77"/>
+      <stop offset="1" stop-color="#ffa62b"/>
+    </linearGradient>
+    <linearGradient id="creamGradient" x1="322" x2="722" y1="300" y2="710" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff8f0"/>
+      <stop offset="1" stop-color="#ffd48d"/>
+    </linearGradient>
+    <filter id="softGlow" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="18" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 1  0 0.12 0 0 0.13  0 0 0.28 0 0.55  0 0 0 0.7 0"/>
+      <feBlend in="SourceGraphic" mode="screen"/>
+    </filter>
+  </defs>
+  <rect width="1024" height="1024" fill="#120704"/>
+  <circle cx="512" cy="512" r="397" fill="#220f0a"/>
+  <circle cx="512" cy="512" r="410" fill="none" stroke="url(#lbGradient)" stroke-width="28"/>
+  <circle cx="512" cy="512" r="350" fill="none" stroke="rgba(255,248,240,0.14)" stroke-width="4"/>
+  <path d="M330 328l52 78 76-118 54 118 76-118 54 118 52-78 18 158H312l18-158z" fill="url(#lbGradient)" filter="url(#softGlow)"/>
+  <path d="M332 513c83-55 161-76 235-63 77 14 139 60 190 139-73-38-142-51-207-38-62 13-126 49-194 107-26 22-59-16-37-43 47-57 99-91 158-102-47-17-95-10-145 20z" fill="url(#lbGradient)" opacity="0.9"/>
+  <text x="512" y="702" text-anchor="middle" fill="url(#creamGradient)" font-family="Syne, Arial Black, Arial, sans-serif" font-size="280" font-weight="900" letter-spacing="-20">LB</text>
+</svg>

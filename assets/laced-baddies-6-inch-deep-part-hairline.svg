@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1254 1254" role="img" aria-labelledby="title desc">
+  <title id="title">Laced Baddies Body Wave Parting And Hairline Technology</title>
+  <desc id="desc">A modern two-panel Laced Baddies education graphic showing body-wave parting space, a pre-plucked hairline, bleached knots, and Ultra-HD Lace technology.</desc>
+  <defs>
+    <linearGradient id="accent" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#ff007f"/>
+      <stop offset="1" stop-color="#ffa62b"/>
+    </linearGradient>
+    <filter id="softShadow" x="-10%" y="-20%" width="120%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.42"/>
+    </filter>
+    <style>
+      .brand { font-family: "Syne", "Arial Black", Arial, sans-serif; font-weight: 800; letter-spacing: .08em; fill: #fff8f0; }
+      .headline { font-family: "Syne", "Arial Black", Arial, sans-serif; font-weight: 800; fill: #fff8f0; }
+      .copy { font-family: "Outfit", Arial, sans-serif; font-weight: 600; fill: #e2d3cb; }
+      .card { fill: rgba(18, 7, 5, .72); stroke: rgba(255, 248, 240, .42); stroke-width: 1; }
+      .line { stroke: rgba(255, 248, 240, .86); stroke-width: 2; fill: none; }
+    </style>
+  </defs>
+
+  <image href="laced-baddies-6-inch-deep-part-hairline-base.png" width="1254" height="1254" preserveAspectRatio="xMidYMid slice"/>
+  <rect x="8" y="8" width="1238" height="1238" rx="28" fill="none" stroke="rgba(255, 248, 240, .18)" stroke-width="2"/>
+
+  <line x1="62" y1="64" x2="230" y2="64" stroke="#ff007f" stroke-width="3"/>
+  <line x1="230" y1="64" x2="342" y2="64" stroke="#ffa62b" stroke-width="3"/>
+  <text x="64" y="109" class="brand" font-size="25">LACED BADDIES</text>
+
+  <g>
+    <line x1="628" y1="78" x2="628" y2="278" class="line"/>
+    <path d="M628 60l12 18h-24z" fill="#fff8f0" opacity=".88"/>
+    <path d="M628 296l-12-18h24z" fill="#fff8f0" opacity=".88"/>
+    <g filter="url(#softShadow)">
+      <rect x="652" y="170" width="114" height="40" rx="16" class="card"/>
+      <text x="670" y="195" class="copy" font-size="17" font-weight="800">6 inches</text>
+      <line x1="724" y1="195" x2="820" y2="195" stroke="url(#accent)" stroke-width="2"/>
+    </g>
+  </g>
+
+  <g filter="url(#softShadow)">
+    <rect x="58" y="404" width="690" height="190" rx="24" class="card"/>
+    <text x="82" y="451" class="headline" font-size="29">13x6 Multi-Directional Parting</text>
+    <text x="82" y="481" class="copy" font-size="19">6 inches of deep parting space allowing you to switch between middle</text>
+    <text x="82" y="506" class="copy" font-size="19">parts, deep side parts, and half-up styles.</text>
+    <line x1="82" y1="580" x2="164" y2="580" stroke="#ff007f" stroke-width="2"/>
+    <line x1="164" y1="580" x2="226" y2="580" stroke="#ffa62b" stroke-width="2"/>
+  </g>
+
+  <g>
+    <line x1="774" y1="773" x2="492" y2="776" class="line"/>
+    <circle cx="492" cy="776" r="5" fill="#ff007f" stroke="#fff8f0" stroke-width="1"/>
+    <g filter="url(#softShadow)">
+      <rect x="756" y="744" width="354" height="58" rx="16" class="card"/>
+      <text x="772" y="778" class="copy" font-size="18" font-weight="800">Laid with Ultra-HD Lace™</text>
+      <line x1="772" y1="787" x2="858" y2="787" stroke="#ff007f" stroke-width="2"/>
+      <line x1="858" y1="787" x2="924" y2="787" stroke="#ffa62b" stroke-width="2"/>
+    </g>
+  </g>
+
+  <g filter="url(#softShadow)">
+    <rect x="58" y="1006" width="768" height="196" rx="24" class="card"/>
+    <text x="82" y="1049" class="headline" font-size="27">Pre-Plucked Hairline &amp; Bleached Knots</text>
+    <text x="82" y="1079" class="copy" font-size="19">Hand-plucked transition with pre-bleached micro-knots for an undetectable,</text>
+    <text x="82" y="1104" class="copy" font-size="19">glue-free scalp look.</text>
+    <line x1="82" y1="1188" x2="164" y2="1188" stroke="#ff007f" stroke-width="2"/>
+    <line x1="164" y1="1188" x2="226" y2="1188" stroke="#ffa62b" stroke-width="2"/>
+  </g>
+</svg>

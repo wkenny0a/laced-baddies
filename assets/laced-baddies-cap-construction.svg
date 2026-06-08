@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1254 1254" role="img" aria-labelledby="title desc">
+  <title id="title">Laced Baddies Cap Construction Graphic</title>
+  <desc id="desc">A branded product education graphic explaining the lace frontal, Swiss lace, elastic cap, combs, adjustable strap, and front back side construction details.</desc>
+  <defs>
+    <linearGradient id="brandGradient" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#ff007f"/>
+      <stop offset="1" stop-color="#ffa62b"/>
+    </linearGradient>
+    <linearGradient id="creamGradient" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#fff8f0"/>
+      <stop offset="1" stop-color="#ffd48d"/>
+    </linearGradient>
+    <filter id="panelShadow" x="-20%" y="-30%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#000000" flood-opacity="0.55"/>
+    </filter>
+    <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 1  0 0.12 0 0 0.1  0 0 0.24 0 0.4  0 0 0 0.75 0"/>
+      <feBlend in="SourceGraphic" mode="screen"/>
+    </filter>
+    <marker id="arrow" markerHeight="16" markerWidth="16" orient="auto" refX="13" refY="8">
+      <path d="M1 1l14 7-14 7 4-7z" fill="#fff8f0"/>
+      <path d="M1 1l14 7-14 7 4-7z" fill="url(#brandGradient)" opacity="0.88"/>
+    </marker>
+    <style>
+      .brand { font-family: "Syne", "Arial Black", Arial, sans-serif; font-weight: 900; letter-spacing: 0.08em; }
+      .headline { font-family: "Syne", "Arial Black", Arial, sans-serif; font-weight: 900; letter-spacing: 0.02em; }
+      .label-title { font-family: "Syne", "Arial Black", Arial, sans-serif; font-weight: 900; letter-spacing: 0.02em; fill: #fff8f0; }
+      .label-copy { font-family: "Outfit", Arial, sans-serif; font-weight: 700; fill: #d1c5c0; }
+      .small-label { font-family: "Syne", "Arial Black", Arial, sans-serif; font-weight: 900; fill: #fff8f0; letter-spacing: 0.02em; }
+      .callout-line { fill: none; stroke: #fff8f0; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrow); filter: url(#softGlow); }
+      .callout-line-hot { fill: none; stroke: url(#brandGradient); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 10 9; }
+    </style>
+  </defs>
+
+  <image href="laced-baddies-cap-construction-base.png" width="1254" height="1254" preserveAspectRatio="xMidYMid slice"/>
+  <rect width="1254" height="1254" fill="#120704" opacity="0.12"/>
+  <rect width="1254" height="1254" fill="url(#brandGradient)" opacity="0.05"/>
+  <rect x="0" y="0" width="1254" height="1254" fill="none" stroke="url(#brandGradient)" stroke-width="16"/>
+
+  <g filter="url(#panelShadow)">
+    <rect x="42" y="42" width="620" height="138" rx="22" fill="#220f0a" opacity="0.88" stroke="url(#brandGradient)" stroke-width="4"/>
+    <text x="72" y="91" class="brand" font-size="26" fill="#fff8f0">LACED BADDIES</text>
+    <text x="72" y="146" class="headline" font-size="40" fill="url(#creamGradient)">CAP CONSTRUCTION</text>
+  </g>
+
+  <g filter="url(#panelShadow)">
+    <rect x="58" y="258" width="444" height="96" rx="18" fill="#220f0a" opacity="0.86" stroke="url(#brandGradient)" stroke-width="3"/>
+    <text x="82" y="298" class="label-title" font-size="28">13x6 LACE FRONTAL</text>
+    <text x="82" y="329" class="label-copy" font-size="22">Wider parting space</text>
+    <path class="callout-line" d="M500 315 C525 300 548 247 596 134"/>
+    <path class="callout-line-hot" d="M500 315 C525 300 548 247 596 134"/>
+  </g>
+
+  <g filter="url(#panelShadow)">
+    <rect x="48" y="470" width="398" height="108" rx="18" fill="#220f0a" opacity="0.86" stroke="url(#brandGradient)" stroke-width="3"/>
+    <text x="72" y="512" class="label-title" font-size="30">FINE SWISS LACE</text>
+    <text x="72" y="544" class="label-copy" font-size="23">Soft melted finish</text>
+    <path class="callout-line" d="M444 526 C464 512 466 454 488 398"/>
+    <path class="callout-line-hot" d="M444 526 C464 512 466 454 488 398"/>
+  </g>
+
+  <g filter="url(#panelShadow)">
+    <rect x="820" y="82" width="360" height="100" rx="18" fill="#220f0a" opacity="0.86" stroke="url(#brandGradient)" stroke-width="3"/>
+    <text x="846" y="123" class="label-title" font-size="34">ELASTIC CAP</text>
+    <text x="846" y="155" class="label-copy" font-size="23">Breathable comfort</text>
+    <path class="callout-line" d="M820 139 C758 130 718 130 656 154"/>
+    <path class="callout-line-hot" d="M820 139 C758 130 718 130 656 154"/>
+  </g>
+
+  <g filter="url(#panelShadow)">
+    <rect x="724" y="302" width="316" height="100" rx="18" fill="#220f0a" opacity="0.86" stroke="url(#brandGradient)" stroke-width="3"/>
+    <text x="750" y="343" class="label-title" font-size="34">3 COMBS</text>
+    <text x="750" y="375" class="label-copy" font-size="23">Left, right &amp; back</text>
+    <path class="callout-line" d="M724 360 C662 350 644 332 618 310"/>
+    <path class="callout-line-hot" d="M724 360 C662 350 644 332 618 310"/>
+  </g>
+
+  <g filter="url(#panelShadow)">
+    <rect x="826" y="468" width="388" height="112" rx="18" fill="#220f0a" opacity="0.86" stroke="url(#brandGradient)" stroke-width="3"/>
+    <text x="850" y="511" class="label-title" font-size="30">ADJUSTABLE STRAP</text>
+    <text x="850" y="543" class="label-copy" font-size="23">Secure custom fit</text>
+    <path class="callout-line" d="M826 535 C810 532 798 520 790 492"/>
+    <path class="callout-line-hot" d="M826 535 C810 532 798 520 790 492"/>
+  </g>
+
+  <g filter="url(#panelShadow)">
+    <rect x="216" y="720" width="838" height="86" rx="28" fill="#220f0a" opacity="0.86" stroke="url(#brandGradient)" stroke-width="4"/>
+    <text x="627" y="776" text-anchor="middle" class="headline" font-size="48" fill="url(#creamGradient)">GLUELESS WIG CAP BUILD</text>
+  </g>
+
+  <g filter="url(#panelShadow)">
+    <rect x="118" y="1130" width="250" height="62" rx="31" fill="#220f0a" opacity="0.9" stroke="url(#brandGradient)" stroke-width="3"/>
+    <text x="243" y="1171" text-anchor="middle" class="small-label" font-size="30">FRONT LACE</text>
+    <rect x="505" y="1130" width="250" height="62" rx="31" fill="#220f0a" opacity="0.9" stroke="url(#brandGradient)" stroke-width="3"/>
+    <text x="630" y="1171" text-anchor="middle" class="small-label" font-size="30">BACK STRAP</text>
+    <rect x="886" y="1130" width="250" height="62" rx="31" fill="#220f0a" opacity="0.9" stroke="url(#brandGradient)" stroke-width="3"/>
+    <text x="1011" y="1171" text-anchor="middle" class="small-label" font-size="30">SIDE COMB</text>
+  </g>
+</svg>

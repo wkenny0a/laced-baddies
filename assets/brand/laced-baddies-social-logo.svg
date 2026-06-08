@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" role="img" aria-labelledby="title desc">
+  <title id="title">Laced Baddies Social Logo</title>
+  <desc id="desc">Square social profile logo for Laced Baddies with the LB crown mark and brand wordmark.</desc>
+  <defs>
+    <linearGradient id="bgGlow" x1="142" x2="968" y1="98" y2="1002" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2a0b1a"/>
+      <stop offset="0.48" stop-color="#120704"/>
+      <stop offset="1" stop-color="#2a1507"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="50%" cy="36%" r="58%">
+      <stop offset="0" stop-color="#ff007f" stop-opacity="0.42"/>
+      <stop offset="0.42" stop-color="#ffa62b" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#120704" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="brandGradient" x1="211" x2="870" y1="156" y2="878" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ff007f"/>
+      <stop offset="0.54" stop-color="#ff4779"/>
+      <stop offset="1" stop-color="#ffa62b"/>
+    </linearGradient>
+    <linearGradient id="letterGradient" x1="362" x2="724" y1="348" y2="732" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff8f0"/>
+      <stop offset="1" stop-color="#ffd48d"/>
+    </linearGradient>
+    <filter id="glow" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="16" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 1  0 0.08 0 0 0.16  0 0 0.24 0 0.55  0 0 0 0.7 0"/>
+      <feBlend in="SourceGraphic" mode="screen"/>
+    </filter>
+  </defs>
+  <rect width="1080" height="1080" fill="url(#bgGlow)"/>
+  <rect width="1080" height="1080" fill="url(#halo)"/>
+  <circle cx="540" cy="444" r="318" fill="#220f0a" stroke="url(#brandGradient)" stroke-width="24"/>
+  <circle cx="540" cy="444" r="262" fill="none" stroke="rgba(255,248,240,0.13)" stroke-width="4"/>
+  <path d="M395 286l41 62 60-94 44 94 60-94 44 94 41-62 14 126H381l14-126z" fill="url(#brandGradient)" filter="url(#glow)"/>
+  <path d="M397 433c67-44 130-61 190-51 62 11 112 48 153 112-59-31-115-41-167-30-50 10-102 39-157 86-21 18-48-13-30-35 38-46 80-73 128-82-38-14-77-8-117 16z" fill="url(#brandGradient)" opacity="0.95"/>
+  <text x="540" y="589" text-anchor="middle" fill="url(#letterGradient)" font-family="Syne, Arial Black, Arial, sans-serif" font-size="224" font-weight="900" letter-spacing="-16">LB</text>
+  <text x="540" y="843" text-anchor="middle" fill="#fff8f0" font-family="Syne, Arial Black, Arial, sans-serif" font-size="84" font-weight="900" letter-spacing="4">LACED</text>
+  <text x="540" y="928" text-anchor="middle" fill="url(#brandGradient)" font-family="Syne, Arial Black, Arial, sans-serif" font-size="76" font-weight="900" letter-spacing="8">BADDIES</text>
+</svg>
