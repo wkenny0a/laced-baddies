@@ -12,6 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="index.css">
+  <script src="https://js.stripe.com/v3/"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/swell-js@5.6.1/dist/swell.umd.min.js"></script>
   
   <style>
@@ -671,13 +672,15 @@
             await window.swell.payment.createElements({
               card: {
                 elementId: '#card-element',
-                style: {
-                  base: {
-                    color: '#fff8f0',
-                    fontFamily: 'Inter, sans-serif',
-                    fontSize: '15px',
-                    '::placeholder': {
-                      color: 'rgba(255, 248, 240, 0.3)'
+                options: {
+                  style: {
+                    base: {
+                      color: '#fff8f0',
+                      fontFamily: 'Inter, sans-serif',
+                      fontSize: '15px',
+                      '::placeholder': {
+                        color: 'rgba(255, 248, 240, 0.3)'
+                      }
                     }
                   }
                 }
