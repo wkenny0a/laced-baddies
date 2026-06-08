@@ -1769,7 +1769,7 @@ section {
 }
 
 .faq-item.active .faq-answer {
-  max-height: 200px; /* High enough to contain the answer text */
+  max-height: 400px; /* Increased to support longer answer descriptions on mobile */
   padding-bottom: 24px;
   opacity: 1;
 }
