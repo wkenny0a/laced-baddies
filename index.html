@@ -898,6 +898,27 @@
       }
       startReservationTimer();
       updatePricing();
+
+      // Mobile Touch Swipe support for main image gallery
+      let touchstartX = 0;
+      let touchendX = 0;
+      const mainImageWrapper = document.querySelector('.main-image-wrapper');
+      
+      if (mainImageWrapper) {
+        mainImageWrapper.addEventListener('touchstart', (e) => {
+          touchstartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        mainImageWrapper.addEventListener('touchend', (e) => {
+          touchendX = e.changedTouches[0].screenX;
+          const swipeThreshold = 50; // min distance in px
+          if (touchendX < touchstartX - swipeThreshold) {
+            navigateGallery(1); // Swipe left -> next image
+          } else if (touchendX > touchstartX + swipeThreshold) {
+            navigateGallery(-1); // Swipe right -> prev image
+          }
+        }, { passive: true });
+      }
     });
   </script>
 </body>

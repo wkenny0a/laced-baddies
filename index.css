@@ -2429,11 +2429,13 @@ section {
   padding: 0 40px;
 }
 
+/* Thumbnail row scroll area */
 .thumbnail-row {
   display: flex;
   flex-wrap: nowrap;
   overflow-x: auto;
   scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; /* Momentum scrolling on iOS */
   gap: 12px;
   max-width: 540px; /* Exactly (6 * 80px) + (5 * 12px) = 540px, limits viewport to 6 images */
   margin: 0 auto;
@@ -2504,10 +2506,13 @@ section {
   }
   .thumbnail-row {
     max-width: calc(100vw - 120px);
+    -webkit-overflow-scrolling: touch; /* Momentum scroll for iOS */
+    scroll-snap-type: x proximity; /* Snap when near a thumbnail */
   }
   .thumbnail {
     flex: 0 0 72px;
     height: 72px;
+    scroll-snap-align: start;
   }
   .thumb-nav-btn {
     width: 28px;
