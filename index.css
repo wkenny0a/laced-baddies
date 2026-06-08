@@ -1432,7 +1432,7 @@ section {
   color: var(--text-dim);
 }
 
-/* Section 3: Reviews */
+/* Section 3: Reviews (Trustpilot Inspired & CRO Optimized) */
 .reviews-section {
   padding: 80px 8%;
   background-color: var(--bg-color);
@@ -1440,73 +1440,267 @@ section {
   border-top: 1px solid rgba(255, 248, 240, 0.05);
 }
 
-.reviews-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-  max-width: 1200px;
-  margin: 40px auto 0;
+.reviews-header-block {
+  margin-bottom: 24px;
 }
 
-.review-card {
+.reviews-main-title {
+  font-family: var(--font-headers);
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: var(--text-cream);
+  line-height: 1.2;
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+}
+
+.reviews-sub-title {
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.6rem;
+  color: var(--accent-mango);
+  margin-top: 0;
+}
+
+/* Trustpilot Widget styling */
+.trustpilot-widget {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 40px;
+}
+
+.trustpilot-rating-line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.trustpilot-label {
+  font-family: var(--font-headers);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-cream);
+}
+
+.trustpilot-stars-wrap {
+  display: flex;
+  gap: 4px;
+}
+
+.tp-star {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #00b67a; /* Trustpilot Green */
+  color: white;
+  width: 22px;
+  height: 22px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  border-radius: 2px;
+  line-height: 1;
+}
+
+.trustpilot-meta {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-dim);
+}
+
+.trustpilot-meta .bold {
+  font-weight: 700;
+  color: var(--text-cream);
+}
+
+.trustpilot-meta .underlined {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.tp-logo-text {
+  font-weight: 800;
+  color: var(--text-cream);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 4px;
+}
+
+.tp-logo-star {
+  color: #00b67a;
+  font-size: 1.05rem;
+}
+
+.showing-five-stars {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  opacity: 0.7;
+}
+
+/* Reviews Grid */
+.reviews-grid-new {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  max-width: 1300px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.review-card-new {
   background-color: var(--card-bg);
   border: 1px solid rgba(255, 248, 240, 0.05);
   border-radius: var(--border-radius);
-  padding: 30px;
-  text-align: left;
+  padding: 24px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  transition: var(--transition);
-}
-
-.review-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(255, 0, 127, 0.2);
-}
-
-.review-image-wrapper {
-  width: 100%;
-  height: 260px;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.review-user-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: var(--transition);
-  display: block;
-}
-
-.review-card:hover .review-user-img {
-  transform: scale(1.05);
-}
-
-.review-header {
-  display: flex;
   justify-content: space-between;
-  align-items: center;
+  gap: 14px;
+  transition: var(--transition);
 }
 
-.review-stars {
-  color: var(--accent-mango);
-  font-size: 1rem;
-  letter-spacing: 1px;
+.review-card-new:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 0, 127, 0.25);
+  box-shadow: 0 12px 30px rgba(255, 0, 127, 0.08);
+}
+
+.review-card-top {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.review-card-stars {
+  display: flex;
+  gap: 3px;
+}
+
+.review-card-stars .tp-star {
+  width: 18px;
+  height: 18px;
+  font-size: 0.72rem;
+}
+
+.review-card-meta {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: var(--text-dim);
 }
 
 .reviewer-name {
   font-weight: 700;
   color: var(--text-cream);
-  font-size: 0.9rem;
 }
 
-.review-card p {
-  font-size: 0.95rem;
-  color: var(--text-dim);
-  font-style: italic;
+.review-card-title {
+  font-family: var(--font-headers);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-cream);
+  line-height: 1.25;
+  margin: 4px 0 0 0;
 }
+
+.review-card-text {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  color: var(--text-dim);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.review-photo-wrapper {
+  width: 100%;
+  aspect-ratio: 1.15;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 248, 240, 0.05);
+}
+
+.review-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: var(--transition);
+}
+
+.review-card-new:hover .review-photo {
+  transform: scale(1.04);
+}
+
+/* Reply Block */
+.review-reply {
+  padding: 10px 12px;
+  background-color: rgba(255, 248, 240, 0.012);
+  border-left: 3px solid var(--accent-fuchsia);
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
+  font-size: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.reply-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 700;
+}
+
+.reply-icon {
+  color: var(--accent-fuchsia);
+}
+
+.reply-author {
+  color: var(--text-cream);
+}
+
+.reply-time {
+  color: var(--text-dim);
+  opacity: 0.6;
+  font-size: 0.72rem;
+  margin-left: auto;
+}
+
+.reply-text {
+  color: var(--text-dim);
+  line-height: 1.4;
+  margin: 0;
+}
+
+@media (max-width: 1024px) {
+  .reviews-grid-new {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .reviews-grid-new {
+    display: flex;
+    overflow-x: auto;
+    gap: 16px;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 20px;
+    -webkit-overflow-scrolling: touch;
+    margin-left: -5%;
+    margin-right: -5%;
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+  .review-card-new {
+    flex: 0 0 290px;
+    scroll-snap-align: start;
+    padding: 20px;
+  }
+}
+
 
 /* Footer */
 .main-footer {
@@ -1619,8 +1813,7 @@ section {
 
   .lace-tech-section, #lace-tech,
   .hair-texture-section, #hair-texture,
-  .how-it-works-section, #how-it-works,
-  .reviews-section, #reviews {
+  .how-it-works-section, #how-it-works {
     display: none !important;
   }
 
