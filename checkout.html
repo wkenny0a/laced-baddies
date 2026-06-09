@@ -177,6 +177,17 @@
       border-color: var(--accent-mango);
       box-shadow: 0 0 0 2px rgba(226, 135, 67, 0.15);
     }
+
+    .stripe-card-element {
+      min-height: 48px;
+      width: 100%;
+      box-sizing: border-box;
+      display: block;
+    }
+
+    .stripe-card-element > div {
+      width: 100% !important;
+    }
     
     /* Right Column: Order Summary */
     .summary-column {
@@ -510,7 +521,7 @@
           <div id="secure-card-payment-element" style="display: none;">
             <div class="form-group">
               <label>Credit or Debit Card</label>
-              <div id="card-element" class="form-control" style="background: rgba(0, 0, 0, 0.3); padding: 14px; min-height: 48px; display: flex; align-items: center;">
+              <div id="card-element" class="form-control stripe-card-element">
                 <!-- Swell / Stripe Element mounts here -->
               </div>
               <div id="card-errors" style="color: #ff2e93; font-size: 0.75rem; margin-top: 5px;"></div>
@@ -638,7 +649,48 @@
 
     let swellConnected = false;
 
+    function setOfflinePaymentRequired(isRequired) {
+      ["checkout-card-name", "checkout-card-number", "checkout-card-expiry", "checkout-card-cvc"].forEach((id) => {
+        const field = document.getElementById(id);
+        if (!field) return;
+
+        if (isRequired) {
+          field.setAttribute("required", "");
+        } else {
+          field.removeAttribute("required");
+        }
+      });
+    }
+
+    function showOfflinePayment(message = "") {
+      swellConnected = false;
+
+      const securePayment = document.getElementById("secure-card-payment-element");
+      const offlinePayment = document.getElementById("offline-card-payment-element");
+      const cardErrors = document.getElementById("card-errors");
+
+      if (securePayment) securePayment.style.display = "none";
+      if (offlinePayment) offlinePayment.style.display = "block";
+      if (cardErrors) cardErrors.textContent = message;
+
+      setOfflinePaymentRequired(true);
+    }
+
+    function showSecurePayment() {
+      const securePayment = document.getElementById("secure-card-payment-element");
+      const offlinePayment = document.getElementById("offline-card-payment-element");
+      const cardErrors = document.getElementById("card-errors");
+
+      if (securePayment) securePayment.style.display = "block";
+      if (offlinePayment) offlinePayment.style.display = "none";
+      if (cardErrors) cardErrors.textContent = "";
+
+      setOfflinePaymentRequired(false);
+    }
+
     async function loadCart() {
+      showOfflinePayment();
+
       const saved = localStorage.getItem("laced_baddies_cart");
       if (saved) {
         try {
@@ -656,22 +708,12 @@
           const swellConfig = await response.json();
           if (window.swell && swellConfig?.swell?.storeId && swellConfig?.swell?.publicKey) {
             window.swell.init(swellConfig.swell.storeId, swellConfig.swell.publicKey);
-            swellConnected = true;
-
-            // Show secure container and hide offline inputs
-            document.getElementById("secure-card-payment-element").style.display = "block";
-            document.getElementById("offline-card-payment-element").style.display = "none";
-
-            // Remove required attributes from offline fields
-            document.getElementById("checkout-card-name").removeAttribute("required");
-            document.getElementById("checkout-card-number").removeAttribute("required");
-            document.getElementById("checkout-card-expiry").removeAttribute("required");
-            document.getElementById("checkout-card-cvc").removeAttribute("required");
+            showSecurePayment();
 
             // Create Swell / Stripe Card elements
             await window.swell.payment.createElements({
               card: {
-                elementId: '#card-element',
+                elementId: 'card-element',
                 options: {
                   style: {
                     base: {
@@ -686,10 +728,13 @@
                 }
               }
             });
+
+            swellConnected = true;
           }
         }
       } catch (e) {
         console.warn("Could not connect to Swell storefront API, running offline simulation fallback:", e);
+        showOfflinePayment("Secure payment is temporarily unavailable. Use the checkout fields below or try again.");
       }
     }
 
