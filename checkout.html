@@ -665,6 +665,128 @@
     };
 
     let swellConnected = false;
+    let swellConfig = null;
+
+    function hasSwellCredentials(config) {
+      return Boolean(config?.swell?.storeId && config?.swell?.publicKey);
+    }
+
+    function hasProductConfig(config) {
+      return Boolean(
+        config?.defaultProductId ||
+          Object.values(config?.productIds || {}).some((products) =>
+            Object.values(products || {}).some(Boolean)
+          )
+      );
+    }
+
+    function resolveProductId(plan, length) {
+      const productsByPlan = swellConfig?.productIds?.[plan] || {};
+      return productsByPlan[length] || swellConfig?.defaultProductId || "";
+    }
+
+    function getCartItems(cart) {
+      if (Array.isArray(cart?.items)) return cart.items;
+      if (Array.isArray(cart?.line_items)) return cart.line_items;
+      if (Array.isArray(cart?.cart_items)) return cart.cart_items;
+      return [];
+    }
+
+    function hasCartItems(cart) {
+      return getCartItems(cart).length > 0;
+    }
+
+    function assertSwellResponse(response, fallbackMessage) {
+      if (response?.errors || response?.error) {
+        throw new Error(response.errors?.[0]?.message || response.error?.message || fallbackMessage);
+      }
+    }
+
+    function buildWigCartItem() {
+      const { plan, length } = cartData.wig;
+      const productId = resolveProductId(plan, length);
+
+      if (!productId) {
+        throw new Error("This product is not configured in Swell. Please refresh and try again.");
+      }
+
+      const item = {
+        product_id: productId,
+        quantity: 1,
+        metadata: {
+          source: "laced-baddies-checkout",
+          selected_length: `${length}"`,
+          selected_plan: PLAN_LABELS[plan] || plan,
+          accessories: cartData.accessories.map((id) => ACCESSORIES[id]?.name).filter(Boolean)
+        }
+      };
+
+      const lengthOptionName = swellConfig?.optionNames?.length;
+      const planOptionName = swellConfig?.optionNames?.plan;
+      const purchaseOption = swellConfig?.purchaseOptions?.[plan];
+
+      if (lengthOptionName || planOptionName) {
+        item.options = {};
+        if (lengthOptionName) item.options[lengthOptionName] = `${length}"`;
+        if (planOptionName) item.options[planOptionName] = PLAN_LABELS[plan] || plan;
+      }
+
+      if (purchaseOption?.type) {
+        item.purchase_option = purchaseOption;
+      }
+
+      return item;
+    }
+
+    function buildSwellCartItems() {
+      const items = [buildWigCartItem()];
+      const isSubscription = cartData.wig.plan === "30-day";
+
+      if (!isSubscription) {
+        cartData.accessories.forEach((accId) => {
+          if (accId === "wig_storage_bag") return;
+
+          const productId = swellConfig?.accessoryProductIds?.[accId];
+          if (!productId) return;
+
+          items.push({
+            product_id: productId,
+            quantity: 1,
+            metadata: {
+              source: "laced-baddies-checkout-accessory"
+            }
+          });
+        });
+      }
+
+      return items;
+    }
+
+    async function syncSwellCart() {
+      if (!window.swell || !swellConfig) {
+        throw new Error("Secure checkout is not connected. Please refresh and try again.");
+      }
+
+      const items = buildSwellCartItems();
+      if (!items.length) {
+        throw new Error("Your cart is missing the selected wig. Please return to the product page and add it again.");
+      }
+
+      await window.swell.cart.setItems([]);
+
+      let cart = null;
+      for (const item of items) {
+        cart = await window.swell.cart.addItem(item);
+        assertSwellResponse(cart, "Swell could not add this item to your cart.");
+      }
+
+      cart = await window.swell.cart.get();
+      if (!hasCartItems(cart)) {
+        throw new Error("Swell did not save your cart items. Please refresh and try again before paying.");
+      }
+
+      return cart;
+    }
 
     function setOfflinePaymentRequired(isRequired) {
       ["checkout-card-name", "checkout-card-number", "checkout-card-expiry", "checkout-card-cvc"].forEach((id) => {
@@ -691,6 +813,7 @@
       if (cardErrors) cardErrors.textContent = message;
 
       setOfflinePaymentRequired(true);
+      toggleOrderSubmitButton();
     }
 
     function showSecurePayment() {
@@ -722,36 +845,42 @@
       try {
         const response = await fetch("/api/swell-config", { cache: "no-store" });
         if (response.ok) {
-          const swellConfig = await response.json();
-          if (window.swell && swellConfig?.swell?.storeId && swellConfig?.swell?.publicKey) {
-            window.swell.init(swellConfig.swell.storeId, swellConfig.swell.publicKey);
-            showSecurePayment();
+          swellConfig = await response.json();
+          if (!window.swell || !hasSwellCredentials(swellConfig) || !hasProductConfig(swellConfig)) {
+            throw new Error("Swell checkout is not fully configured.");
+          }
 
-            // Create Swell / Stripe Card elements
-            await window.swell.payment.createElements({
-              card: {
-                elementId: 'card-element',
-                options: {
-                  style: {
-                    base: {
-                      color: '#fff8f0',
-                      fontFamily: 'Inter, sans-serif',
-                      fontSize: '15px',
-                      '::placeholder': {
-                        color: 'rgba(255, 248, 240, 0.3)'
-                      }
+          window.swell.init(swellConfig.swell.storeId, swellConfig.swell.publicKey);
+
+          await syncSwellCart();
+
+          showSecurePayment();
+
+          // Create Swell / Stripe Card elements
+          await window.swell.payment.createElements({
+            card: {
+              elementId: 'card-element',
+              options: {
+                style: {
+                  base: {
+                    color: '#fff8f0',
+                    fontFamily: 'Inter, sans-serif',
+                    fontSize: '15px',
+                    '::placeholder': {
+                      color: 'rgba(255, 248, 240, 0.3)'
                     }
                   }
                 }
               }
-            });
+            }
+          });
 
-            swellConnected = true;
-          }
+          swellConnected = true;
+          toggleOrderSubmitButton();
         }
       } catch (e) {
         console.warn("Could not connect to Swell storefront API, running offline simulation fallback:", e);
-        showOfflinePayment("Secure payment is temporarily unavailable. Use the checkout fields below or try again.");
+        showOfflinePayment("Secure payment is temporarily unavailable. Please refresh and try again before placing your order.");
       }
     }
 
@@ -824,7 +953,7 @@
       const checkbox = document.getElementById("checkout-double-agree");
       const button = document.getElementById("checkout-submit-btn");
       if (checkbox && button) {
-        button.disabled = !checkbox.checked;
+        button.disabled = !checkbox.checked || !swellConnected;
       }
     }
 
@@ -858,6 +987,11 @@
         return;
       }
 
+      if (!swellConnected) {
+        alert("Secure checkout is not connected yet. Please refresh and try again before placing your order.");
+        return;
+      }
+
       const email = document.getElementById("checkout-email").value;
       const spinner = document.getElementById("checkout-button-spinner");
       const buttonText = document.getElementById("checkout-button-text");
@@ -873,6 +1007,8 @@
           let orderReference = "LB-" + Math.floor(100000 + Math.random() * 900000);
           
           if (swellConnected) {
+            await syncSwellCart();
+
             const firstName = document.getElementById("checkout-first-name").value;
             const lastName = document.getElementById("checkout-last-name").value;
             const phone = document.getElementById("checkout-phone").value;
@@ -912,6 +1048,13 @@
 
             if (updateResponse?.errors || updateResponse?.error) {
               throw new Error(updateResponse.errors?.[0]?.message || updateResponse.error?.message || "Cart update failed.");
+            }
+
+            if (!hasCartItems(updateResponse)) {
+              const currentCart = await window.swell.cart.get();
+              if (!hasCartItems(currentCart)) {
+                throw new Error("Your Swell cart is empty. Please return to the product page and add the wig again before paying.");
+              }
             }
 
             // Tokenize credit card details securely via Swell / Stripe Elements
