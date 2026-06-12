@@ -18,7 +18,7 @@
 
   const ACCESSORIES = {
     bald_cap: { name: "Bald Cap", price: 9.99, desc: "Stocking cap for a perfect scalp foundation", img: "assets/bald-cap-new.jpg" },
-    scissors: { name: "Lace Scissors", price: 19.99, desc: "Professional shears for precise lace trimming", img: "assets/lace-scissors-new.jpg" },
+    sleep_mask: { name: "Silk Sleep Mask", price: 14.99, desc: "Soft satin sleep mask for beauty rest without friction", img: "assets/package-items/sleep-mask.png" },
     silk_cap: { name: "Silk Bonnet", price: 19.99, desc: "Premium silk cap to protect your wave pattern", img: "assets/silk-bonnet-new.jpg" },
     spray_comb: { name: "Spray Comb", price: 29.99, desc: "Detangling brush with built-in styling spray chamber", img: "assets/spray-comb-new.jpg" },
     wig_storage_bag: { name: "Wig Storage Bag", price: 19.99, desc: "Premium zipped hanging bag to keep your crown dust-free", img: "assets/laced-baddies-wig-storage-bag.jpg" }
@@ -33,7 +33,7 @@
         length: "26",
         plan: "30-day"
       },
-      accessories: new Set(["bald_cap", "scissors", "silk_cap", "spray_comb", "wig_storage_bag"]) // Default add-ons pre-selected
+      accessories: new Set(["bald_cap", "sleep_mask", "silk_cap", "spray_comb", "wig_storage_bag"]) // Default add-ons pre-selected
     }
   };
 
@@ -368,7 +368,7 @@
     updateWigSelection: (length, plan) => {
       if (state.cart.wig.plan !== plan) {
         if (plan === "30-day") {
-          state.cart.accessories = new Set(["bald_cap", "scissors", "silk_cap", "spray_comb", "wig_storage_bag"]);
+          state.cart.accessories = new Set(["bald_cap", "sleep_mask", "silk_cap", "spray_comb", "wig_storage_bag"]);
         } else {
           state.cart.accessories = new Set(["wig_storage_bag"]);
         }
