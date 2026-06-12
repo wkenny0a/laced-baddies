@@ -885,8 +885,7 @@
             // Update Swell cart with checkout information
             const updateResponse = await window.swell.cart.update({
               account: {
-                email: email,
-                phone: phone
+                email: email
               },
               shipping: {
                 first_name: firstName,
