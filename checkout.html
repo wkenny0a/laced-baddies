@@ -205,6 +205,63 @@
     .stripe-card-element > div {
       width: 100% !important;
     }
+
+    .wallet-payment-options {
+      margin-bottom: 18px;
+    }
+
+    .wallet-heading {
+      color: var(--checkout-dim);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .wallet-payment-buttons {
+      display: grid;
+      gap: 10px;
+    }
+
+    .wallet-button-slot {
+      min-height: 44px;
+    }
+
+    .wallet-button-slot:empty {
+      display: none;
+    }
+
+    .wallet-payment-status {
+      color: var(--checkout-dim);
+      font-size: 0.75rem;
+      line-height: 1.4;
+      margin-top: 10px;
+    }
+
+    .wallet-payment-status[data-tone="error"] {
+      color: #ff2e93;
+    }
+
+    .wallet-divider {
+      align-items: center;
+      color: rgba(255, 248, 240, 0.38);
+      display: flex;
+      font-size: 0.72rem;
+      font-weight: 700;
+      gap: 12px;
+      letter-spacing: 0.04em;
+      margin: 18px 0;
+      text-transform: uppercase;
+    }
+
+    .wallet-divider::before,
+    .wallet-divider::after {
+      background: var(--checkout-border);
+      content: "";
+      flex: 1;
+      height: 1px;
+    }
     
     /* Right Column: Order Summary */
     .summary-column {
@@ -536,6 +593,15 @@
           
           <!-- Container for secure Stripe Elements (shown if Swell is connected) -->
           <div id="secure-card-payment-element" style="display: none;">
+            <div id="wallet-payment-options" class="wallet-payment-options" hidden>
+              <div class="wallet-heading">Express Checkout</div>
+              <div class="wallet-payment-buttons">
+                <div id="applepay-button" class="wallet-button-slot"></div>
+                <div id="googlepay-button" class="wallet-button-slot"></div>
+              </div>
+              <div id="wallet-payment-status" class="wallet-payment-status" hidden></div>
+              <div class="wallet-divider"><span>or pay by card</span></div>
+            </div>
             <div class="form-group">
               <label>Credit or Debit Card</label>
               <div id="card-element" class="form-control stripe-card-element">
@@ -658,6 +724,7 @@
 
     let swellConnected = false;
     let swellConfig = null;
+    let walletPaymentFinalizing = false;
 
     function hasSwellCredentials(config) {
       return Boolean(config?.swell?.storeId && config?.swell?.publicKey);
@@ -760,6 +827,131 @@
       assertSwellResponse(shippingResponse, "Swell could not select a shipping service.");
 
       return shippingResponse;
+    }
+
+    function setWalletPaymentStatus(message = "", tone = "muted") {
+      const status = document.getElementById("wallet-payment-status");
+      if (!status) return;
+
+      status.hidden = !message;
+      status.textContent = message;
+      status.dataset.tone = tone;
+    }
+
+    function prepareWalletPaymentOptions() {
+      const walletOptions = document.getElementById("wallet-payment-options");
+      const applePay = document.getElementById("applepay-button");
+      const googlePay = document.getElementById("googlepay-button");
+
+      if (walletOptions) walletOptions.hidden = false;
+      if (applePay) applePay.hidden = false;
+      if (googlePay) googlePay.hidden = false;
+      setWalletPaymentStatus();
+    }
+
+    function updateWalletPaymentVisibility() {
+      const walletOptions = document.getElementById("wallet-payment-options");
+      const applePay = document.getElementById("applepay-button");
+      const googlePay = document.getElementById("googlepay-button");
+      const hasApplePay = Boolean(applePay?.children.length);
+      const hasGooglePay = Boolean(googlePay?.children.length);
+
+      if (applePay) applePay.hidden = !hasApplePay;
+      if (googlePay) googlePay.hidden = !hasGooglePay;
+      if (walletOptions) walletOptions.hidden = !(hasApplePay || hasGooglePay);
+    }
+
+    function handleWalletPaymentError(method, error) {
+      console.warn(`${method} Pay is unavailable:`, error);
+      const slot = document.getElementById(`${method.toLowerCase()}pay-button`);
+      if (slot) slot.hidden = true;
+      updateWalletPaymentVisibility();
+    }
+
+    function showOrderSuccess(orderReference) {
+      localStorage.removeItem("laced_baddies_cart");
+
+      document.getElementById("checkout-main-content").style.display = "none";
+      document.getElementById("success-screen").style.display = "block";
+      document.getElementById("confirmed-order-number").innerText = orderReference;
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    async function finalizeWalletOrder() {
+      if (walletPaymentFinalizing) return;
+      walletPaymentFinalizing = true;
+      setWalletPaymentStatus("Finalizing your order...");
+
+      try {
+        const currentCart = await window.swell.cart.get();
+        if (!hasCartItems(currentCart)) {
+          throw new Error("Your Swell cart is empty. Please return to the product page and add the wig again before paying.");
+        }
+
+        await applyDefaultShippingService(currentCart);
+
+        const orderResponse = await window.swell.cart.submitOrder();
+        assertSwellResponse(orderResponse, "Order submission failed.");
+
+        let orderReference = "LB-" + Math.floor(100000 + Math.random() * 900000);
+        if (orderResponse?.id || orderResponse?.number) {
+          orderReference = "LB-" + (orderResponse.number || orderResponse.id.substring(0, 8).toUpperCase());
+        }
+
+        showOrderSuccess(orderReference);
+      } catch (error) {
+        walletPaymentFinalizing = false;
+        console.error("Wallet order completion failed:", error);
+        setWalletPaymentStatus(error.message || "Wallet checkout could not finish. Please use the card form below.", "error");
+        alert("Order Error: " + (error.message || "Failed to process wallet payment. Please try again or use a card."));
+      }
+    }
+
+    function getWalletPaymentConfig(method) {
+      const isApplePay = method === "apple";
+
+      return {
+        elementId: isApplePay ? "applepay-button" : "googlepay-button",
+        require: {
+          email: true,
+          phone: true,
+          shipping: true,
+          ...(isApplePay ? { name: true } : {})
+        },
+        style: isApplePay
+          ? { type: "buy", theme: "dark", height: "44px" }
+          : { type: "buy", color: "dark", height: "44px" },
+        onSuccess: finalizeWalletOrder,
+        onError: (error) => handleWalletPaymentError(method, error)
+      };
+    }
+
+    async function mountSecurePaymentElements() {
+      prepareWalletPaymentOptions();
+      await syncSwellCart();
+
+      await window.swell.payment.createElements({
+        apple: getWalletPaymentConfig("apple"),
+        google: getWalletPaymentConfig("google"),
+        card: {
+          elementId: 'card-element',
+          options: {
+            style: {
+              base: {
+                color: '#fff8f0',
+                fontFamily: 'Inter, sans-serif',
+                fontSize: '15px',
+                '::placeholder': {
+                  color: 'rgba(255, 248, 240, 0.3)'
+                }
+              }
+            }
+          }
+        }
+      });
+
+      updateWalletPaymentVisibility();
     }
 
     function buildWigCartItem() {
@@ -914,24 +1106,7 @@
 
           showSecurePayment();
 
-          // Create Swell / Stripe Card elements
-          await window.swell.payment.createElements({
-            card: {
-              elementId: 'card-element',
-              options: {
-                style: {
-                  base: {
-                    color: '#fff8f0',
-                    fontFamily: 'Inter, sans-serif',
-                    fontSize: '15px',
-                    '::placeholder': {
-                      color: 'rgba(255, 248, 240, 0.3)'
-                    }
-                  }
-                }
-              }
-            }
-          });
+          await mountSecurePaymentElements();
 
           swellConnected = true;
           toggleOrderSubmitButton();
