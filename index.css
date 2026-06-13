@@ -795,6 +795,35 @@ section {
   transform: none;
 }
 
+.floating-shop-cta:disabled,
+.floating-shop-cta.is-loading {
+  cursor: wait;
+  opacity: 0.78;
+  animation: none;
+  transform: none;
+}
+
+/* Spinner inside buttons */
+.button-spinner {
+  display: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.is-loading .button-spinner {
+  display: inline-block;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 .btn-checkout:active {
   transform: translateY(1px);
 }

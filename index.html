@@ -74,7 +74,8 @@
   </header>
 
   <button type="button" class="floating-shop-cta" onclick="handleCheckout(event)" aria-label="Start checkout">
-    <span>Start 30-Day Club</span>
+    <span class="button-spinner"></span>
+    <span class="floating-cta-text">Start 30-Day Club</span>
   </button>
 
   <!-- Main Container: 2-Column Product Section -->
@@ -351,7 +352,8 @@
 
         <!-- Buy Button -->
         <button type="submit" class="btn-checkout" id="submit-btn">
-          Start My 30-Day Club
+          <span class="button-spinner"></span>
+          <span class="btn-text">Start My 30-Day Club</span>
         </button>
       </form>
 
@@ -1154,16 +1156,22 @@
 
       // Update CTA button label
       const activePrice = prices[currentPlan][currentLength];
-      if (currentPlan === '30-day') {
-        document.getElementById('submit-btn').innerText = 'Start My 30-Day Club';
+      const btnTextEl = document.querySelector('#submit-btn .btn-text');
+      if (btnTextEl) {
+        btnTextEl.innerText = currentPlan === '30-day' ? 'Start My 30-Day Club' : 'Add Crown to Cart';
       } else {
-        document.getElementById('submit-btn').innerText = 'Add Crown to Cart';
+        document.getElementById('submit-btn').innerText = currentPlan === '30-day' ? 'Start My 30-Day Club' : 'Add Crown to Cart';
       }
 
       // Update floating mobile CTA text
-      const floatingCtaSpan = document.querySelector('.floating-shop-cta span');
+      const floatingCtaSpan = document.querySelector('.floating-shop-cta .floating-cta-text');
       if (floatingCtaSpan) {
         floatingCtaSpan.innerText = currentPlan === '30-day' ? 'Start 30-Day Club' : 'Add Crown to Cart';
+      } else {
+        const fallbackSpan = document.querySelector('.floating-shop-cta span');
+        if (fallbackSpan) {
+          fallbackSpan.innerText = currentPlan === '30-day' ? 'Start 30-Day Club' : 'Add Crown to Cart';
+        }
       }
     }
 
@@ -1216,12 +1224,38 @@
     async function handleCheckout(event) {
       event.preventDefault();
       if (window.LacedBaddiesCommerce) {
-        window.LacedBaddiesCommerce.updateWigSelection(currentLength, currentPlan, true);
+        const btn = document.getElementById('submit-btn');
+        const floatBtn = document.querySelector('.floating-shop-cta');
+        
+        // Add loading state
+        if (btn) {
+          btn.classList.add('is-loading');
+          btn.disabled = true;
+        }
+        if (floatBtn) {
+          floatBtn.classList.add('is-loading');
+          floatBtn.disabled = true;
+        }
+
+        // Wait 800ms for loading animation to feel responsive and natural
+        await new Promise(resolve => setTimeout(resolve, 800));
+
+        // Restore button states
+        if (btn) {
+          btn.classList.remove('is-loading');
+          btn.disabled = false;
+        }
+        if (floatBtn) {
+          floatBtn.classList.remove('is-loading');
+          floatBtn.disabled = false;
+        }
+
+        window.LacedBaddiesCommerce.updateWigSelection(currentLength, currentPlan);
 
         if (window.LacedBaddiesMeta) {
           const prices = {
-            '30-day': { '26': 99, '28': 99, '30': 99 },
-            'onetime': { '26': 130, '28': 130, '30': 130 }
+            '30-day': { '26': 99, '28': 119, '30': 139 },
+            'onetime': { '26': 130, '28': 160, '30': 190 }
           };
           const activePrice = prices[currentPlan][currentLength];
           window.LacedBaddiesMeta.track('AddToCart', {}, {
