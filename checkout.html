@@ -717,6 +717,51 @@
       return window.swell.cart.addItem(item);
     }
 
+    function getShipmentRating(cart) {
+      return cart?.shipment_rating || cart?.shipmentRating || null;
+    }
+
+    function getShipmentServices(cartOrRating) {
+      const rating = cartOrRating?.services ? cartOrRating : getShipmentRating(cartOrRating);
+      return Array.isArray(rating?.services) ? rating.services.filter((service) => service?.id) : [];
+    }
+
+    function getShipmentRatingError(cartOrRating) {
+      const rating = cartOrRating?.errors ? cartOrRating : getShipmentRating(cartOrRating);
+      if (!Array.isArray(rating?.errors)) return "";
+      return rating.errors.find((error) => error?.message)?.message || "";
+    }
+
+    async function applyDefaultShippingService(cart) {
+      let services = getShipmentServices(cart);
+
+      if (!services.length && typeof window.swell?.cart?.getShippingRates === "function") {
+        const rating = await window.swell.cart.getShippingRates();
+        services = getShipmentServices(rating);
+        if (!services.length) {
+          throw new Error(getShipmentRatingError(rating) || "No shipping service is available for this address.");
+        }
+      }
+
+      const service = services.find((option) => option.id === cart?.shipping?.service) || services[0];
+      if (!service?.id) {
+        throw new Error(getShipmentRatingError(cart) || "Please select a shipping service.");
+      }
+
+      if (cart?.shipping?.service === service.id) {
+        return cart;
+      }
+
+      const shippingResponse = await window.swell.cart.update({
+        shipping: {
+          service: service.id
+        }
+      });
+      assertSwellResponse(shippingResponse, "Swell could not select a shipping service.");
+
+      return shippingResponse;
+    }
+
     function buildWigCartItem() {
       const { plan, length } = cartData.wig;
       const productId = resolveProductId(plan, length);
@@ -1038,8 +1083,10 @@
                 city: city,
                 state: state,
                 zip: zip,
-                country: 'US'
+                country: 'US',
+                service: null
               },
+              shipment_rating: null,
               billing: {
                 first_name: firstName,
                 last_name: lastName,
@@ -1062,6 +1109,8 @@
                 throw new Error("Your Swell cart is empty. Please return to the product page and add the wig again before paying.");
               }
             }
+
+            await applyDefaultShippingService(updateResponse);
 
             // Tokenize credit card details securely via Swell / Stripe Elements
             await new Promise((resolve, reject) => {
