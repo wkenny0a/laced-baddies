@@ -12,8 +12,8 @@
   };
 
   const PRICES = {
-    "30-day": { "26": 99, "28": 119, "30": 139 },
-    "onetime": { "26": 130, "28": 160, "30": 190 }
+    "30-day": { "26": 99, "28": 99, "30": 99 },
+    "onetime": { "26": 130, "28": 130, "30": 130 }
   };
 
   const ACCESSORIES = {
@@ -28,12 +28,13 @@
     config: null,
     isConfigured: false,
     isLoading: false,
+    hasAddedToCart: false, // track whether item is in cart
     cart: {
       wig: {
         length: "26",
         plan: "30-day"
       },
-      accessories: new Set(["bald_cap", "sleep_mask", "silk_cap", "spray_comb", "wig_storage_bag"]) // Default add-ons pre-selected
+      accessories: new Set(["bald_cap", "sleep_mask", "wig_storage_bag", "spray_comb"]) // Default Welcome Kit items
     }
   };
 
@@ -220,104 +221,153 @@
     const grandTotal = basePrice + accessoriesTotal;
 
     // Update badge count
-    const totalItems = 1 + state.cart.accessories.size;
     const badge = getElement("cart-badge-count");
     if (badge) {
-      badge.textContent = totalItems;
+      if (state.hasAddedToCart) {
+        const totalItems = 1 + state.cart.accessories.size;
+        badge.textContent = totalItems;
+        badge.style.display = "flex";
+      } else {
+        badge.textContent = "0";
+        badge.style.display = "none";
+      }
+    }
+
+    // Toggle cross-sell section display based on plan and whether items have been added
+    const crossSellSection = getElement("cart-cross-sell-section");
+    if (crossSellSection) {
+      crossSellSection.style.display = (isSubscription || !state.hasAddedToCart) ? "none" : "block";
+    }
+
+    // Update cart list title
+    const itemsTitle = getElement("cart-items-title");
+    if (itemsTitle) {
+      itemsTitle.textContent = isSubscription ? "Your 30-Day Baddie Club" : "Your Selections";
+      itemsTitle.style.display = state.hasAddedToCart ? "block" : "none";
     }
 
     // Render Wig and Accessories details
     const itemContainer = getElement("cart-items-list");
     if (itemContainer) {
-      const planSubtitle = plan === "30-day" ? "Billed monthly" : "Wig Only";
-      let cartItemsHtml = `
-        <div class="cart-item">
-          <img src="assets/main_model.png" alt="The Crown Wig" class="cart-item-img">
-          <div class="cart-item-info">
-            <h4 class="cart-item-name">The 13x6 Body Wave Crown</h4>
-            <p class="cart-item-meta">Length: ${length}" | Plan: ${PLAN_LABELS[plan]}</p>
-            <p class="cart-item-billing">${planSubtitle}</p>
-          </div>
-          <div class="cart-item-price">
-            $${basePrice}
-          </div>
-        </div>
-      `;
-
-      state.cart.accessories.forEach(accId => {
-        const item = ACCESSORIES[accId];
-        if (item) {
-          const isFree = isSubscription || accId === "wig_storage_bag";
-          const itemPrice = isFree ? "FREE" : `$${item.price}`;
-          const isFreeStyle = isFree ? 'style="color: var(--accent-mango); font-weight: 800;"' : '';
-          cartItemsHtml += `
-            <div class="cart-item" style="margin-top: 12px;">
-              <img src="${item.img}" alt="${item.name}" class="cart-item-img">
-              <div class="cart-item-info">
-                <h4 class="cart-item-name">${item.name}</h4>
-                <p class="cart-item-meta">${isFree ? "Free gift included" : "Add-on accessory"}</p>
-              </div>
-              <div class="cart-item-price" ${isFreeStyle}>
-                ${itemPrice}
-              </div>
+      if (state.hasAddedToCart) {
+        const planSubtitle = plan === "30-day" ? "Fresh wig every 30 days" : "Wig + free storage bag";
+        let cartItemsHtml = `
+          <div class="cart-item">
+            <img src="assets/main_model.png" alt="The Crown Wig" class="cart-item-img">
+            <div class="cart-item-info">
+              <h4 class="cart-item-name">The 13x6 Body Wave Crown</h4>
+              <p class="cart-item-meta">Length: ${length}" | Plan: ${PLAN_LABELS[plan]}</p>
+              <p class="cart-item-billing">${planSubtitle}</p>
             </div>
-          `;
-        }
-      });
+            <div class="cart-item-price">
+              $${basePrice}
+            </div>
+          </div>
+        `;
 
-      itemContainer.innerHTML = cartItemsHtml;
+        state.cart.accessories.forEach(accId => {
+          const item = ACCESSORIES[accId];
+          if (item) {
+            const isFree = isSubscription || accId === "wig_storage_bag";
+            const itemPrice = isFree ? "FREE" : `$${item.price}`;
+            const isFreeStyle = isFree ? 'style="color: var(--accent-mango); font-weight: 800;"' : '';
+            cartItemsHtml += `
+              <div class="cart-item" style="margin-top: 12px;">
+                <img src="${item.img}" alt="${item.name}" class="cart-item-img">
+                <div class="cart-item-info">
+                  <h4 class="cart-item-name">${item.name}</h4>
+                  <p class="cart-item-meta">${isSubscription ? "Free Welcome Kit included" : (isFree ? "Free gift included" : "Paid extra")}</p>
+                </div>
+                <div class="cart-item-price" ${isFreeStyle}>
+                  ${itemPrice}
+                </div>
+              </div>
+            `;
+          }
+        });
+
+        itemContainer.innerHTML = cartItemsHtml;
+      } else {
+        itemContainer.innerHTML = `
+          <div style="text-align: center; padding: 40px 20px; color: #aaa; font-family: var(--font-body);">
+            <p style="font-size: 1.1rem; margin-bottom: 20px; color: #fff;">Your cart is empty</p>
+            <button type="button" class="btn-checkout" onclick="window.LacedBaddiesCommerce.closeDrawer()" style="width: auto; display: inline-block; padding: 10px 20px; font-size: 0.9rem; background: linear-gradient(135deg, var(--accent-fuchsia), #D00060); border: none; border-radius: 6px; color: #fff; cursor: pointer; font-weight: 600;">
+              Keep Browsing
+            </button>
+          </div>
+        `;
+      }
     }
 
     const crossSellContainer = getElement("cart-cross-sell-list");
     if (crossSellContainer) {
-      crossSellContainer.innerHTML = Object.entries(ACCESSORIES).map(([id, item]) => {
-        const isSelected = state.cart.accessories.has(id);
-        const isFree = isSubscription || id === "wig_storage_bag";
-        const displayPrice = isFree ? `<span class="free-badge">FREE</span>` : `$${item.price}`;
-        
-        // Wig storage bag is always included free, so we can disable removing it if it's the free gift
-        const isDisabled = id === "wig_storage_bag";
-        const buttonText = isSelected ? "Included" : "Add";
-        const buttonClass = isSelected ? "btn-cross-sell-toggle selected" : "btn-cross-sell-toggle";
-        const clickHandler = isDisabled ? "" : `onclick="window.LacedBaddiesCommerce.toggleAccessory('${id}')"`;
-        const disableAttribute = isDisabled ? "disabled" : "";
+      if (state.hasAddedToCart && !isSubscription) {
+        // For Buy Once, only show non-wig_storage_bag items as paid extras in the list
+        crossSellContainer.innerHTML = Object.entries(ACCESSORIES).map(([id, item]) => {
+          const isSelected = state.cart.accessories.has(id);
+          const isFree = isSubscription || id === "wig_storage_bag";
+          const displayPrice = isFree ? `<span class="free-badge">FREE</span>` : `$${item.price}`;
+          
+          const isDisabled = id === "wig_storage_bag";
+          const buttonText = isSelected ? "Included" : "Add";
+          const buttonClass = isSelected ? "btn-cross-sell-toggle selected" : "btn-cross-sell-toggle";
+          const clickHandler = isDisabled ? "" : `onclick="window.LacedBaddiesCommerce.toggleAccessory('${id}')"`;
+          const disableAttribute = isDisabled ? "disabled" : "";
 
-        return `
-          <div class="cross-sell-item ${isSelected ? 'selected' : ''}">
-            <div class="cross-sell-info">
-              <h5 class="cross-sell-name">${item.name}</h5>
-              <p class="cross-sell-desc">${item.desc}</p>
-              <div class="cross-sell-pricing">${displayPrice}</div>
+          return `
+            <div class="cross-sell-item ${isSelected ? 'selected' : ''}">
+              <div class="cross-sell-info">
+                <h5 class="cross-sell-name">${item.name}</h5>
+                <p class="cross-sell-desc">${item.desc}</p>
+                <div class="cross-sell-pricing">${displayPrice}</div>
+              </div>
+              <button type="button" class="${buttonClass}" ${clickHandler} ${disableAttribute}>
+                ${buttonText}
+              </button>
             </div>
-            <button type="button" class="${buttonClass}" ${clickHandler} ${disableAttribute}>
-              ${buttonText}
-            </button>
-          </div>
-        `;
-      }).join("");
+          `;
+        }).join("");
+      } else {
+        crossSellContainer.innerHTML = "";
+      }
     }
 
     // Render Subtotal & Summary
     const summaryContainer = getElement("cart-summary-box");
     if (summaryContainer) {
-      const billingCycleText = plan === "30-day" ? " / month" : "";
-      summaryContainer.innerHTML = `
-        <div class="summary-line">
-          <span>Subtotal</span>
-          <span>$${basePrice}</span>
-        </div>
-        ${!isSubscription && accessoriesTotal > 0 ? `
+      if (state.hasAddedToCart) {
+        summaryContainer.style.display = "block";
+        const billingCycleText = plan === "30-day" ? " / month" : "";
+        summaryContainer.innerHTML = `
           <div class="summary-line">
-            <span>Accessories Add-on</span>
-            <span>+$${accessoriesTotal}</span>
+            <span>Subtotal</span>
+            <span>$${basePrice}</span>
           </div>
-        ` : ""}
-        <div class="summary-line total">
-          <span>Total Today</span>
-          <span>$${grandTotal}${billingCycleText}</span>
-        </div>
-        ${isSubscription ? `<p class="billing-disclosure-text">By checking out, you agree to automatic deliveries based on your selected rotation plan. Cancel or edit your cycle anytime in your customer portal.</p>` : ""}
-      `;
+          ${!isSubscription && accessoriesTotal > 0 ? `
+            <div class="summary-line">
+              <span>Accessories Add-on</span>
+              <span>+$${accessoriesTotal}</span>
+            </div>
+          ` : ""}
+          <div class="summary-line total">
+            <span>Total Today</span>
+            <span>$${grandTotal}${billingCycleText}</span>
+          </div>
+          ${isSubscription ? `<p class="billing-disclosure-text">Billed monthly at $99 plus applicable tax. Cancel or pause anytime.</p>` : ""}
+        `;
+      } else {
+        summaryContainer.style.display = "none";
+      }
+    }
+
+    // Hide/show checkout button in footer
+    const checkoutBtn = getElement("cart-checkout-btn");
+    if (checkoutBtn) {
+      checkoutBtn.style.display = state.hasAddedToCart ? "block" : "none";
+    }
+    const trustNotice = document.querySelector(".checkout-trust-notice");
+    if (trustNotice) {
+      trustNotice.style.display = state.hasAddedToCart ? "block" : "none";
     }
   }
 
@@ -412,16 +462,29 @@
     openDrawer: () => toggleDrawer(true),
     closeDrawer: () => toggleDrawer(false),
     toggleAccessory: (id) => toggleAccessory(id),
-    updateWigSelection: (length, plan) => {
+    updateWigSelection: (length, plan, addToCart = false) => {
       if (state.cart.wig.plan !== plan) {
         if (plan === "30-day") {
-          state.cart.accessories = new Set(["bald_cap", "sleep_mask", "silk_cap", "spray_comb", "wig_storage_bag"]);
+          state.cart.accessories = new Set(["bald_cap", "sleep_mask", "wig_storage_bag", "spray_comb"]);
         } else {
           state.cart.accessories = new Set(["wig_storage_bag"]);
         }
       }
       state.cart.wig.length = length;
       state.cart.wig.plan = plan;
+
+      if (addToCart) {
+        state.hasAddedToCart = true;
+      }
+
+      if (state.hasAddedToCart) {
+        const currentCartData = {
+          wig: { plan, length },
+          accessories: Array.from(state.cart.accessories)
+        };
+        localStorage.setItem("laced_baddies_cart", JSON.stringify(currentCartData));
+      }
+
       renderDrawer();
     },
     checkout,
@@ -429,6 +492,20 @@
   };
 
   document.addEventListener("DOMContentLoaded", () => {
+    const saved = localStorage.getItem("laced_baddies_cart");
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (parsed?.wig) {
+          state.cart.wig = parsed.wig;
+          state.cart.accessories = new Set(parsed.accessories || []);
+          state.hasAddedToCart = true;
+        }
+      } catch (e) {
+        console.error("Error loading cart:", e);
+      }
+    }
+
     initSwell().catch((error) => {
       console.error(error);
       setStatus(STATUS.error, "error");

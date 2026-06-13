@@ -726,6 +726,14 @@
     
     <!-- Left Column: Forms -->
     <section class="form-section">
+      <!-- 30-Day Baddie Club Notice -->
+      <div id="checkout-subscription-notice" class="checkout-card" style="margin-bottom: 20px; border: 1px solid var(--accent-fuchsia); background: rgba(255, 0, 127, 0.05); display: none;">
+        <p style="margin: 0; font-size: 0.95rem; color: #fff; line-height: 1.5; font-family: var(--font-body);">
+          <strong style="color: var(--accent-mango);">You are starting the 30-Day Baddie Club.</strong> Your first order includes The Crown and your Free Welcome Kit. You can cancel or pause anytime.
+          <span style="display: block; margin-top: 6px; color: var(--checkout-dim);">Billed monthly at $99 plus applicable tax.</span>
+        </p>
+      </div>
+
       <form id="checkout-details-form" onsubmit="handleOrderSubmit(event)">
         
         <!-- Customer Details -->
@@ -899,6 +907,9 @@
             <span>Total Today</span>
             <span id="summary-grand-total">$0.00</span>
           </div>
+          <div id="checkout-billing-cycle-notice" style="text-align: right; margin-top: 5px; font-size: 0.85rem; color: var(--accent-mango); font-family: var(--font-body); display: none;">
+            Billed monthly at $99 plus applicable tax.
+          </div>
         </div>
         
         <!-- Submit Button -->
@@ -978,8 +989,8 @@
 
   <script>
     const PRICES = {
-      "30-day": { "26": 99, "28": 119, "30": 139 },
-      "onetime": { "26": 130, "28": 160, "30": 190 }
+      "30-day": { "26": 99, "28": 99, "30": 99 },
+      "onetime": { "26": 130, "28": 130, "30": 130 }
     };
 
     const PLAN_LABELS = {
@@ -997,7 +1008,7 @@
 
     let cartData = {
       wig: { plan: "30-day", length: "26" },
-      accessories: ["bald_cap", "sleep_mask", "silk_cap", "spray_comb", "wig_storage_bag"]
+      accessories: ["bald_cap", "sleep_mask", "wig_storage_bag", "spray_comb"]
     };
 
     let swellConnected = false;
@@ -1414,7 +1425,7 @@
             <img src="assets/main_model.png" alt="The Crown Wig" class="summary-item-img">
             <div>
               <h4 class="summary-item-name">The 13x6 Body Wave Crown</h4>
-              <p class="summary-item-meta">Length: ${length}" | Plan: ${PLAN_LABELS[plan]}</p>
+              <p class="summary-item-meta">Length: ${length}" | ${isSubscription ? "Fresh Crown Every 30 Days" : PLAN_LABELS[plan]}</p>
             </div>
           </div>
           <div class="summary-item-price">$${basePrice}</div>
@@ -1450,7 +1461,7 @@
               <img src="${item.img}" alt="${item.name}" class="summary-item-img">
               <div>
                 <h4 class="summary-item-name">${item.name}</h4>
-                <p class="summary-item-meta">${isFree ? "Free gift included" : "Add-on accessory"}</p>
+                <p class="summary-item-meta">${isSubscription ? "Free Welcome Kit included" : (isFree ? "Free gift included" : "Paid extra")}</p>
               </div>
             </div>
             <div class="summary-item-price ${isFree ? 'is-free' : ''}">${displayPrice}</div>
@@ -1478,6 +1489,22 @@
         savingsValue.innerText = `-${formatMoney(freeSavingsTotal)}`;
       }
       
+      // Toggle subscription notices
+      const subNotice = document.getElementById("checkout-subscription-notice");
+      if (subNotice) {
+        subNotice.style.display = isSubscription ? "block" : "none";
+      }
+
+      const billingCycleNotice = document.getElementById("checkout-billing-cycle-notice");
+      if (billingCycleNotice) {
+        if (isSubscription) {
+          billingCycleNotice.style.display = "block";
+          billingCycleNotice.innerText = "Billed monthly at $99 plus applicable tax.";
+        } else {
+          billingCycleNotice.style.display = "none";
+        }
+      }
+
       const cycleSuffix = isSubscription ? " / month" : "";
       document.getElementById("summary-grand-total").innerHTML = `$${grandTotal.toFixed(2)}${cycleSuffix}`;
     }

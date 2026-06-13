@@ -53,7 +53,7 @@
 
   <!-- Announcement Bar -->
   <div class="announcement-bar" id="top-announcement">
-    <span>✨ FREE SHIPPING ON ALL ROTATION ORDERS | 100% RISK-FREE QUALITY GUARANTEE ✨</span>
+    <span>✨ 30-Day Baddie Club: Fresh Crown Every Month + Free Welcome Kit ✨</span>
   </div>
 
   <!-- Header / Navigation -->
@@ -62,19 +62,19 @@
       <span>LACED BADDIES</span>
     </div>
     <nav class="nav-links">
-      <a href="#pain-points">Struggle Solved</a>
-      <a href="#before-after">Glow Up</a>
+      <a href="#product-purchase">The Crown</a>
       <a href="#how-it-works">How It Works</a>
       <a href="#reviews">Reviews</a>
+      <a href="#faq">FAQ</a>
     </nav>
     <button type="button" class="btn-header-cart" onclick="window.LacedBaddiesCommerce.openDrawer()" aria-label="Open cart">
       <span class="cart-icon">🛒</span>
-      <span class="cart-badge" id="cart-badge-count">4</span>
+      <span class="cart-badge" id="cart-badge-count" style="display: none;">0</span>
     </button>
   </header>
 
   <button type="button" class="floating-shop-cta" onclick="handleCheckout(event)" aria-label="Add to cart">
-    <span>Add to Cart</span>
+    <span>Start 30-Day Club</span>
   </button>
 
   <!-- Main Container: 2-Column Product Section -->
@@ -128,52 +128,62 @@
       </div>
 
       <!-- Title & Tagline -->
-      <h1 class="product-title">THE 13x6 BODY WAVE CROWN</h1>
-      <p class="product-tagline">Premium HD Glueless Lace Frontal Wig</p>
-
-      <!-- CRO Hero Hook (Value Pitch & Proprietary Tech) -->
-      <p class="product-hero-pitch" style="font-size: 1.05rem; color: var(--accent-mango); font-weight: 600; line-height: 1.45; margin: 15px 0; font-family: var(--font-body);">
-        We fused a pre-plucked, 6-inch deep parting frontal with our proprietary Ultra-HD Lace™ and premium CrownGrip™ cap to deliver the ultimate 30-second glueless install.
+      <h1 class="product-title">Fresh Install Energy in 30 Seconds</h1>
+      <p class="product-tagline" style="font-size: 1.15rem; color: var(--accent-mango); font-weight: 600; line-height: 1.45; margin: 15px 0; font-family: var(--font-body);">
+        The glueless 13x6 Body Wave Crown made to slip on, adjust, and go. No glue. No scissors. No salon stress.
+      </p>
+      <p class="product-hero-pitch" style="font-size: 0.95rem; color: var(--text-dim); margin-top: 5px; margin-bottom: 20px;">
+        Join the 30-Day Baddie Club for a fresh crown every month plus your Free Welcome Kit.
       </p>
 
       <!-- Simple Pitch (High-Scanning D2C Value Bullets) -->
       <div class="kid-friendly-pitch">
         <ul class="pitch-bullets">
           <li>
-            <span class="pitch-bullet-icon">💇‍♀️</span>
+            <span class="pitch-bullet-icon">⚡</span>
             <div>
-              <strong>6-Inch Deep Parting:</strong> Massive 13x6 parting space for side parts, middle parts, and styling versatility that looks like real scalp growth.
+              No glue or lace cutting required — pre-cut and ready to wear out of the box.
+            </div>
+          </li>
+          <li>
+            <span class="pitch-bullet-icon">🌱</span>
+            <div>
+              Pre-plucked and pre-bleached for beginner-friendly, seamless scalp realism.
             </div>
           </li>
           <li>
             <span class="pitch-bullet-icon">✨</span>
             <div>
-              <strong>Pre-Plucked & Pre-Bleached:</strong> Soft-density gradient hairline with micro-bleached knots—zero tedious tweezing or customizing needed.
-            </div>
-          </li>
-          <li>
-            <span class="pitch-bullet-icon">🌬️</span>
-            <div>
-              <strong>Proprietary Ultra-HD Lace™:</strong> Our thinnest, undetectable Swiss mesh that melts instantly into any skin tone with zero glue or spray.
+              13x6 deep parting space for complete side/middle parting styling flexibility.
             </div>
           </li>
           <li>
             <span class="pitch-bullet-icon">👑</span>
             <div>
-              <strong>Ergonomic CrownGrip™ Cap:</strong> Velvet-lined, anti-slip band system that holds secure all day while protecting your natural edges.
+              Adjustable CrownGrip cap for secure, slip-free glueless wear all day.
+            </div>
+          </li>
+          <li>
+            <span class="pitch-bullet-icon">💕</span>
+            <div>
+              Edge-friendly routine that protects your natural hairline from glue damage.
+            </div>
+          </li>
+          <li>
+            <span class="pitch-bullet-icon">⏱️</span>
+            <div>
+              Slip on, adjust, and go in under 30 seconds flat.
             </div>
           </li>
         </ul>
       </div>
 
-      <!-- Key Badges removed for a cleaner visual layout and reduced cognitive friction above the buy form -->
-
-      <!-- Subscription / Purchase Selection Form (Inspired by IM8 Health Layout) -->
+      <!-- Subscription / Purchase Selection Form -->
       <form class="purchase-form" onsubmit="handleCheckout(event)">
         
         <div class="length-header-row">
-          <h3 class="section-sub-title">SELECT HAIR LENGTH</h3>
-          <a href="#" class="btn-length-guide" onclick="openLengthGuideModal(event)">Length Guide</a>
+          <h3 class="section-sub-title">Pick your crown length</h3>
+          <a href="#" class="btn-length-guide" onclick="openLengthGuideModal(event)">Not sure? View length guide</a>
         </div>
         <div class="length-selector">
           <label class="length-pill selected" onclick="selectLength('26')">
@@ -191,11 +201,11 @@
         </div>
 
         <!-- Select Plan Title -->
-        <h3 class="section-sub-title">SELECT YOUR ROTATION</h3>
+        <h3 class="section-sub-title">Select your plan</h3>
 
         <!-- Plan Option 1: 30-Day Baddie Club (Default Selected) -->
         <label class="plan-option selected" id="plan-30-label">
-          <span class="best-value-pill top-right">HERO ROTATION</span>
+          <span class="best-value-pill top-right">30-DAY CLUB</span>
           <div class="plan-option-main">
             <input type="radio" name="selling_plan" value="30-day" checked onclick="selectPlan('30-day')">
             <div class="plan-details">
@@ -208,21 +218,20 @@
                 <span class="price-period">/ month</span>
               </div>
               <div class="plan-billing-info-row">
-                <span class="billing-note">Billed $99 monthly</span>
+                <span class="billing-note">Billed monthly at $99</span>
               </div>
             </div>
           </div>
           
           <div class="plan-expanded-details" onclick="event.stopPropagation()">
             <ul class="plan-checklist">
-              <li><span class="check-icon">✓</span> Exclusive Access to Baddie Club VIP Benefits</li>
-              <li><span class="check-icon">✓</span> Free Welcome Kit (USD$74.96 in value)</li>
-              <li><span class="check-icon">✓</span> Fresh Wig Delivered Every 30 Days</li>
-              <li><span class="check-icon">✓</span> Cancel or pause anytime</li>
+              <li><span class="check-icon">✓</span> Fresh Crown Every 30 Days</li>
+              <li><span class="check-icon">✓</span> Free Welcome Kit Included</li>
+              <li><span class="check-icon">✓</span> Cancel or Pause Anytime</li>
               <li><span class="check-icon">✓</span> 30-Day Baddie Quality Guarantee</li>
             </ul>
             
-            <div class="welcome-kit-header">WELCOME KIT — ARRIVES WITH FIRST ORDER</div>
+            <div class="welcome-kit-header">YOUR FREE WELCOME KIT — ARRIVES WITH FIRST ORDER</div>
             <div class="welcome-kit-grid">
               <div class="kit-item-card">
                 <div class="kit-item-img-wrapper">
@@ -291,14 +300,14 @@
                     <span class="original-price">$19.99</span>
                     <span class="free-label">Month 6</span>
                   </div>
-                  <div class="kit-item-name">Silk Cap</div>
+                  <div class="kit-item-name">Silk Bonnet</div>
                 </div>
               </div>
             </div>
           </div>
         </label>
 
-        <!-- Plan Option 3: One-Time Purchase -->
+        <!-- Plan Option 2: Buy Once -->
         <label class="plan-option" id="plan-onetime-label">
           <div class="plan-option-main">
             <input type="radio" name="selling_plan" value="onetime" onclick="selectPlan('onetime')">
@@ -310,15 +319,17 @@
                 <span class="onetime-price-val price-value">$130</span>
               </div>
               <div class="plan-billing-info-row">
-                <span class="onetime-desc billing-note">Includes 13x6 HD Glueless Wig + Free Gift</span>
+                <span class="onetime-desc billing-note">Wig + free storage bag (one-time payment)</span>
               </div>
             </div>
           </div>
           
           <div class="plan-expanded-details" onclick="event.stopPropagation()">
             <ul class="plan-checklist">
-              <li><span class="check-icon">✓</span> Premium 13x6 Body Wave Glueless Wig</li>
-              <li><span class="check-icon">✓</span> Free Premium Wig Storage Bag ($19.99 value) included</li>
+              <li><span class="check-icon">✓</span> Wig + free storage bag</li>
+              <li><span class="check-icon" style="color: var(--accent-pink);">✕</span> No monthly refresh</li>
+              <li><span class="check-icon" style="color: var(--accent-pink);">✕</span> No full Welcome Kit</li>
+              <li><span class="check-icon" style="color: var(--accent-pink);">✕</span> No future rotation gifts</li>
               <li><span class="check-icon">✓</span> 30-Day Baddie Quality Guarantee</li>
             </ul>
             
@@ -340,7 +351,7 @@
 
         <!-- Buy Button -->
         <button type="submit" class="btn-checkout" id="submit-btn">
-          ADD TO CART (30-DAY CLUB) - $99/mo
+          Start My 30-Day Club
         </button>
       </form>
 
@@ -349,62 +360,49 @@
         <span>📦 Free Shipping</span>
         <span>🤎 Black-Owned</span>
         <span>🔒 Secure Checkout</span>
+        <span>🔄 Cancel or Pause Anytime</span>
       </div>
 
       <!-- Guarantee Box -->
       <div class="guarantee-box">
         <span class="guarantee-icon">🤎</span>
         <div class="guarantee-info">
-          <h5 class="guarantee-title">THE 100% BADDIE QUALITY GUARANTEE</h5>
-          <p class="guarantee-desc">Inspect your crown at home. If you're not in love with the hairline or texture, exchange it free before you cut the lace.</p>
+          <h5 class="guarantee-title">30-DAY BADDIE QUALITY GUARANTEE</h5>
+          <p class="guarantee-desc">Inspect your crown at home. If the hairline or texture is not right, contact us before cutting or wearing it so we can help with an exchange.</p>
         </div>
       </div>
-
-      <div class="storefront-status" id="storefront-status" data-tone="muted" role="status">
-        <span class="storefront-status-dot"></span>
-        <span id="storefront-status-text">Preparing headless checkout...</span>
-      </div>
-
 
       <!-- Sleek Specifications Table (A-List Inspired conversion booster) -->
       <div class="product-specs-box">
         <h4 class="box-subtitle">Product Specifications:</h4>
         <table class="specs-table">
           <tr>
-            <td class="spec-label">Hair Texture</td>
-            <td class="spec-value">Luxury Body Wave</td>
+            <td class="spec-label">Texture</td>
+            <td class="spec-value">Body Wave</td>
           </tr>
           <tr>
-            <td class="spec-label">Hair Type</td>
-            <td class="spec-value">100% Virgin Brazilian Human Hair</td>
+            <td class="spec-label">Lace</td>
+            <td class="spec-value">Ultra-HD transparent lace</td>
           </tr>
           <tr>
-            <td class="spec-label">Hair Density</td>
-            <td class="spec-value">180% (Full & Voluminous)</td>
-          </tr>
-          <tr>
-            <td class="spec-label">Lace Type</td>
-            <td class="spec-value">Proprietary Ultra-HD Lace™ (Pre-Cut & Undetectable)</td>
+            <td class="spec-label">Parting</td>
+            <td class="spec-value">13x6 frontal</td>
           </tr>
           <tr>
             <td class="spec-label">Hairline</td>
-            <td class="spec-value">Pre-Plucked & Pre-Bleached</td>
+            <td class="spec-value">Pre-plucked and pre-bleached</td>
           </tr>
           <tr>
-            <td class="spec-label">Glueless?</td>
-            <td class="spec-value">Yes, 100% Glueless (CrownGrip™ System)</td>
+            <td class="spec-label">Install</td>
+            <td class="spec-value">Glueless</td>
           </tr>
           <tr>
-            <td class="spec-label">Cap Size</td>
-            <td class="spec-value">Standard Medium (22.5" circumference)</td>
+            <td class="spec-label">Cap</td>
+            <td class="spec-value">Adjustable CrownGrip band</td>
           </tr>
           <tr>
-            <td class="spec-label">Elastic Strap</td>
-            <td class="spec-value">2-inch Adjustable CrownGrip™ Velvet Band</td>
-          </tr>
-          <tr>
-            <td class="spec-label">Can it be dyed?</td>
-            <td class="spec-value">Yes, 100% dye-friendly</td>
+            <td class="spec-label">Lengths</td>
+            <td class="spec-value">26, 28, 30 inches</td>
           </tr>
         </table>
       </div>
@@ -416,52 +414,51 @@
 
   <!-- Section: Pain Points We Solve -->
   <section class="pain-points-section" id="pain-points">
-    <h2 class="section-title">The Frontal Struggle is Over</h2>
-    <p class="section-desc">Traditional lace frontals require glue, hours of customization, and destroy your edges. Here's how Laced Baddies solves all of your hair pain points:</p>
+    <h2 class="section-title">Built for Real Hair Days</h2>
     
     <div class="pain-points-grid">
       <!-- Pain Point 1 -->
       <div class="pain-card">
-        <div class="pain-badge traditional">THE TRADITIONAL STRUGGLE</div>
-        <h3>Traction Alopecia & Broken Edges</h3>
-        <p class="pain-issue">Heavy glues and tapes rip out delicate baby hairs, thinning your hairline and damaging hair follicles permanently.</p>
+        <div class="pain-badge traditional">PROBLEM MOMENT</div>
+        <h3>When your hair is not done but you have to leave</h3>
+        <p class="pain-issue">You wake up late, your natural hair is unstyled, and you have to leave the house in 10 minutes.</p>
         <div class="solution-divider"></div>
-        <div class="pain-badge solved">THE LACED BADDIES WAY</div>
-        <h3 class="sol-title">🌱 100% Glueless Protection</h3>
-        <p class="pain-sol">Secured by our adjustable Velvet-Grip Band. Sits comfortably behind your ears. Zero glue, zero damage, maximum safety for your edges.</p>
+        <div class="pain-badge solved">THE CROWN SOLUTION</div>
+        <h3 class="sol-title">⚡ Ready in Seconds</h3>
+        <p class="pain-sol">Slip on the pre-styled Body Wave Crown and adjust the velvet CrownGrip band. Walk out looking salon-ready instantly.</p>
       </div>
 
       <!-- Pain Point 2 -->
       <div class="pain-card">
-        <div class="pain-badge traditional">THE TRADITIONAL STRUGGLE</div>
-        <h3>Hours of Plucking & Bleaching</h3>
-        <p class="pain-issue">Wigs look fake straight out of the box. You have to bleach the dark knots and pluck the hairline for hours to make it look like a scalp.</p>
+        <div class="pain-badge traditional">PROBLEM MOMENT</div>
+        <h3>When your edges need a break</h3>
+        <p class="pain-issue">Months of heavy adhesives, tapes, and tight sewing have left your hairline thin, tender, and damaged.</p>
         <div class="solution-divider"></div>
-        <div class="pain-badge solved">THE LACED BADDIES WAY</div>
-        <h3 class="sol-title">✨ Pre-Customized Scalp Realism</h3>
-        <p class="pain-sol">We do the work for you. Knots are pre-bleached, the gradient hairline is pre-plucked, and the HD lace is pre-cut in a natural wave. Open and wear!</p>
+        <div class="pain-badge solved">THE CROWN SOLUTION</div>
+        <h3 class="sol-title">🌱 Edge-Friendly Wear</h3>
+        <p class="pain-sol">Switch to a 100% glueless velvet band system that sits comfortably behind your hairline. Let your natural edges recover.</p>
       </div>
 
       <!-- Pain Point 3 -->
       <div class="pain-card">
-        <div class="pain-badge traditional">THE TRADITIONAL STRUGGLE</div>
-        <h3>Sweat & Humidity "Lifting"</h3>
-        <p class="pain-issue">One workout session or a hot summer day turns wig glue white, sticky, and makes your frontal slide backward in public.</p>
+        <div class="pain-badge traditional">PROBLEM MOMENT</div>
+        <h3>When you do not want to fight glue</h3>
+        <p class="pain-issue">Dealing with sticky white glue lifting in humidity, messy cleanup before bed, and skin irritation from chemical solvents.</p>
         <div class="solution-divider"></div>
-        <div class="pain-badge solved">THE LACED BADDIES WAY</div>
-        <h3 class="sol-title">🏃‍♀️ Sweat-Proof Grip Security</h3>
-        <p class="pain-sol">No glue means nothing to melt! Our velvet grip uses friction to stay locked in place. Run, dance, sweat—your lace stays flat and invisible.</p>
+        <div class="pain-badge solved">THE CROWN SOLUTION</div>
+        <h3 class="sol-title">🛡️ Glueless Security</h3>
+        <p class="pain-sol">A true wear-and-go crown with a scalloped pre-cut HD lace edge that lies flat on your skin naturally. Slip off in seconds.</p>
       </div>
 
       <!-- Pain Point 4 -->
       <div class="pain-card">
-        <div class="pain-badge traditional">THE TRADITIONAL STRUGGLE</div>
-        <h3>Trapped Sweat & Itchy Scalps</h3>
-        <p class="pain-issue">Sewn-in or glued frontals trap moisture and sweat underneath for weeks, causing severe itchiness, product buildup, and scalp odor.</p>
+        <div class="pain-badge traditional">PROBLEM MOMENT</div>
+        <h3>When your old wig is tired</h3>
+        <p class="pain-issue">Your current wig is shedding, dry, losing its bounce, and you're spending hours trying to revive old hair.</p>
         <div class="solution-divider"></div>
-        <div class="pain-badge solved">THE LACED BADDIES WAY</div>
-        <h3 class="sol-title">🌬️ 2-Second Nightly Removal</h3>
-        <p class="pain-sol">Slide the wig off in 2 seconds before bed. Let your scalp breathe, massage your natural hair, wash your head, and slip it back on in the morning.</p>
+        <div class="pain-badge solved">THE CROWN SOLUTION</div>
+        <h3 class="sol-title">🔄 Always Fresh Hair</h3>
+        <p class="pain-sol">Get a fresh, premium body wave crown delivered automatically on the 30-Day Baddie Club. Always look ready and confident.</p>
       </div>
     </div>
 
@@ -475,8 +472,8 @@
 
   <!-- Section: Baddies in Action (UGC Video) -->
   <section class="ugc-video-section" id="ugc-video">
-    <h2 class="section-title">Baddies in Action</h2>
-    <p class="section-desc">See why over 10,000 girls transitioned to Laced Baddies. Pre-plucked. Pre-cut lace. Ultra HD melt in 30 seconds.</p>
+    <h2 class="section-title">See The Crown In Action</h2>
+    <p class="section-desc">Real installs, lace checks, and emergency hair day moments from The Crown.</p>
     
     <div class="ugc-container">
       <div class="ugc-grid">
@@ -497,7 +494,7 @@
           <img src="assets/baddies-in-action/02-natural-lace-poster.jpeg" alt="Laced Baddies Ultra HD lace UGC video thumbnail" class="ugc-thumb">
           <div class="play-overlay">
             <div class="play-btn-circle"><span class="play-arrow">▶</span></div>
-            <span class="play-label">Natural Lace</span>
+            <span class="play-label">Natural Lace Check</span>
           </div>
           <div class="ugc-card-info">
             <span class="ugc-creator">@lacecheck</span>
@@ -513,7 +510,7 @@
           </div>
           <div class="ugc-card-info">
             <span class="ugc-creator">@quickcrown</span>
-            <span class="ugc-views">pre-cut lace</span>
+            <span class="ugc-views">emergency ready</span>
           </div>
         </div>
       </div>
@@ -551,13 +548,13 @@
     <div class="cart-drawer-body">
       <!-- Active items list -->
       <div class="cart-items-section">
-        <h4 class="cart-section-title">Your Selections</h4>
+        <h4 class="cart-section-title" id="cart-items-title">Your Selections</h4>
         <div id="cart-items-list"></div>
       </div>
 
       <!-- Accessory Cross-sells -->
-      <div class="cart-cross-sell-section">
-        <h4 class="cart-section-title">✨ Upgrade Your Install (Optional Add-ons)</h4>
+      <div class="cart-cross-sell-section" id="cart-cross-sell-section">
+        <h4 class="cart-section-title">Paid Extras</h4>
         <div id="cart-cross-sell-list"></div>
       </div>
 
@@ -585,24 +582,24 @@
 
   <!-- Section 2: How It Works -->
   <section class="how-it-works-section" id="how-it-works">
-    <h2 class="section-title">A Flawless Install in 3 Easy Steps</h2>
-    <p class="section-desc">Get the ultimate 13x6 frontal look in under a minute. No stylist, no messy glue, and no salon bills:</p>
+    <h2 class="section-title">How It Works</h2>
+    <p class="section-desc">Get the 13x6 frontal look in under a minute. No stylist, no messy glue, and no salon stress.</p>
     
     <div class="steps-grid">
       <div class="step-card">
         <div class="step-number">1</div>
-        <h3>Position & Slip On</h3>
-        <p>Cornrow or wrap your natural hair flat. Place the velvet grip band around your hairline, then slide the 13x6 cap over your head from front to back.</p>
+        <h3>Prep your base</h3>
+        <p>Braid or wrap your natural hair flat. Place a stocking bald cap over your head to create a smooth, clean foundation for your crown.</p>
       </div>
       <div class="step-card">
         <div class="step-number">2</div>
-        <h3>Adjust the Band</h3>
-        <p>Tighten the inner elastic strap in the back for a customized, snug fit. Position the pre-cut HD lace along your forehead so it sits flat.</p>
+        <h3>Slip on The Crown</h3>
+        <p>Align the front pre-cut HD lace edge with your natural hairline, then slide the CrownGrip cap over your head from front to back.</p>
       </div>
       <div class="step-card">
         <div class="step-number">3</div>
-        <h3>Melt & Style</h3>
-        <p>Pat the front down with your fingers. The ultra-thin Ultra-HD Lace™ melts seamlessly into your skin. Part the body waves anywhere you want and step out!</p>
+        <h3>Adjust, smooth, and go</h3>
+        <p>Secure the adjustable velvet strap in the back for a perfect snug fit. Smooth the hairline with your fingers and walk out with confidence.</p>
       </div>
     </div>
 
@@ -616,8 +613,8 @@
 
   <!-- Section: Before & After Transformation -->
   <section class="before-after-section" id="before-after">
-    <h2 class="section-title">The Ultimate Glow Up</h2>
-    <p class="section-desc">See the 30-second transformation. From protective braids to melted scalp perfection.</p>
+    <h2 class="section-title">From Not Ready to Crowned</h2>
+    <p class="section-desc">See the 30-second transformation. From unstyled natural hair to fully installed, bouncy body waves.</p>
     
     <div class="before-after-container">
       <div class="ba-card">
@@ -625,7 +622,7 @@
         <div class="ba-image-wrapper">
           <img src="assets/before_install.png" alt="Woman holding straight HD lace frontal wig showing transparent lace" class="ba-image">
         </div>
-        <p class="ba-caption">Holding the 13x6 HD Lace Frontal (Showing natural hairline & ultra-thin lace)</p>
+        <p class="ba-caption">Before: Hair not done, no salon appointment, low time.</p>
       </div>
       
       <div class="ba-arrow">➔</div>
@@ -635,7 +632,7 @@
         <div class="ba-image-wrapper">
           <img src="assets/after_install.png" alt="Fully installed and melted straight glueless HD lace wig" class="ba-image">
         </div>
-        <p class="ba-caption">Fully installed and melted (Seamless glueless melt in 30 seconds)</p>
+        <p class="ba-caption">After: Fresh body wave look, no glue, ready to leave in 30 seconds.</p>
       </div>
     </div>
 
@@ -925,121 +922,99 @@
         <!-- Question 1 -->
         <div class="faq-item">
           <button class="faq-question-btn" onclick="toggleFaq(this)">
-            <span>Is there really such a thing as a pre-cut 13x6 frontal wig?</span>
+            <span>Can I cancel or pause the 30-Day Baddie Club?</span>
             <span class="faq-icon">+</span>
           </button>
           <div class="faq-answer">
-            <p>Yes, absolutely! It is the ultimate "Wear & Go" innovation. Our 13x6 wig features a pre-cut, scalloped lace edge that sits flat against your forehead with zero scissors needed. Combined with a massive 13x6 ear-to-ear frontal, you get a full 6 inches of deep parting space to part your hair anywhere you want (middle part, deep side part, or half-up styles) for a completely realistic look.</p>
+            <p>Yes. You can pause, skip, or cancel your subscription through your customer portal anytime before the next renewal.</p>
           </div>
         </div>
 
         <!-- Question 2 -->
         <div class="faq-item">
           <button class="faq-question-btn" onclick="toggleFaq(this)">
-            <span>What does "pre-plucked" mean?</span>
+            <span>What comes in my first box?</span>
             <span class="faq-icon">+</span>
           </button>
           <div class="faq-answer">
-            <p>Standard wigs come with a thick, straight, unnatural "wall" of hair along the forehead. A "pre-plucked" wig has its hairline hand-customized before it ships to you. Individual strands are plucked out to create a soft, natural gradient density—thin at the very edge and gradually getting thicker. This replicates how a real human hairline grows, giving you instant scalp realism straight out of the box.</p>
+            <p>Your first shipment includes The Crown (your premium 13x6 HD body wave wig) and your Free Welcome Kit containing a Bald Cap, Silk Sleep Mask, Wig Storage Bag, and Spray Comb.</p>
           </div>
         </div>
 
         <!-- Question 3 -->
         <div class="faq-item">
           <button class="faq-question-btn" onclick="toggleFaq(this)">
-            <span>Is the wig made of real human hair and HD transparent lace?</span>
+            <span>Do I need glue?</span>
             <span class="faq-icon">+</span>
           </button>
           <div class="faq-answer">
-            <p>Yes! Every single Laced Baddies crown is crafted using <strong>100% premium Virgin Human Hair</strong> and paired with our proprietary <strong>Ultra-HD Transparent Swiss Lace</strong>. Our HD lace is ultra-fine, highly breathable, extremely durable, and designed to melt completely invisibly into all skin tones for a natural look.</p>
+            <p>No glue, gel, or heavy adhesives are required. The Crown is designed with a proprietary velvet-grip band that holds the wig secure on your head naturally using friction.</p>
           </div>
         </div>
 
         <!-- Question 4 -->
         <div class="faq-item">
           <button class="faq-question-btn" onclick="toggleFaq(this)">
-            <span>How can I verify that the wig is 100% real human hair?</span>
+            <span>Do I need to cut the lace?</span>
             <span class="faq-icon">+</span>
           </button>
           <div class="faq-answer">
-            <p>You can perform a simple "burn test" on a few strands: real human hair will burn quickly, produce white smoke, and turn entirely into fine ash when crushed. Synthetic hair, by contrast, will melt, produce harsh black smoke, and leave a hard, sticky plastic ball that cannot be crushed.</p>
+            <p>No! Our wigs feature a pre-cut, scalloped Ultra-HD lace edge. It is ready to wear immediately straight out of the box with zero customizing or trimming needed.</p>
           </div>
         </div>
 
         <!-- Question 5 -->
         <div class="faq-item">
           <button class="faq-question-btn" onclick="toggleFaq(this)">
-            <span>Does the wig have a chemical smell out of the box?</span>
+            <span>How secure is it?</span>
             <span class="faq-icon">+</span>
           </button>
           <div class="faq-answer">
-            <p>No. Our hair is <strong>100% chemical-free</strong>. When you first open the box, it may have a light scent of factory-wash conditioner or shampoo. This scent will fade quickly and be replaced by the scent of your own shampoo and conditioner after your first co-wash.</p>
+            <p>Extremely secure! The adjustable velvet CrownGrip band distributes pressure evenly and locks in place. It will not slip or lift, even during workouts, dancing, or high winds.</p>
           </div>
         </div>
 
         <!-- Question 6 -->
         <div class="faq-item">
           <button class="faq-question-btn" onclick="toggleFaq(this)">
-            <span>Does the wig tangle or shed?</span>
+            <span>What if the cap does not fit?</span>
             <span class="faq-icon">+</span>
           </button>
           <div class="faq-answer">
-            <p>All Laced Baddies wigs feature double-wefted caps and aligned cuticles, meaning <strong>zero excessive shedding or tangling</strong>. You might experience a few loose static flyaway hairs initially out of the package, which resolves completely after the first wash. Like all long hair, we recommend gently brushing from the tips upwards to prevent friction tangling.</p>
+            <p>The Crown includes an adjustable CrownGrip band for a secure fit. If it does not fit comfortably, contact us before cutting or wearing it so we can help with an exchange.</p>
           </div>
         </div>
 
         <!-- Question 7 -->
         <div class="faq-item">
           <button class="faq-question-btn" onclick="toggleFaq(this)">
-            <span>Do I need to wear a bald cap under the wig?</span>
+            <span>What happens after month one?</span>
             <span class="faq-icon">+</span>
           </button>
           <div class="faq-answer">
-            <p>It is optional, but highly recommended for the best "melt"! Wearing our nude nylon bald cap (which comes FREE in your Welcome Kit) holds your natural braids or wraps flat and creates a uniform, skin-toned foundation. This hides the dark contrast of your natural hair underneath, making the micro-bleached knots of our Ultra-HD Lace™ look completely invisible against your skin.</p>
+            <p>Every 30 days, we'll automatically ship you a fresh, brand-new glueless body wave crown at your club price of $99, keeping your hair looking pristine without the high salon prices.</p>
           </div>
         </div>
 
         <!-- Question 8 -->
         <div class="faq-item">
           <button class="faq-question-btn" onclick="toggleFaq(this)">
-            <span>How often do I need to take the wig off?</span>
+            <span>How do the future gifts work?</span>
             <span class="faq-icon">+</span>
           </button>
           <div class="faq-answer">
-            <p>We recommend taking it off <strong>every night before bed</strong>. Since our wigs are 100% glueless and secured by our comfortable, adjustable CrownGrip™ velvet band, it takes only <strong>2 seconds</strong> to slide it off. Taking it off nightly lets your scalp breathe, prevents sweat and moisture buildup (avoiding itchy scalps and odors), and makes it easy to massage your natural hair before sliding it back on in the morning.</p>
+            <p>As a member of the club, you receive bonus gifts automatically in your packages: a free Melting Spray Duo arrives in Month 3, and a free Silk Bonnet arrives in Month 6.</p>
           </div>
         </div>
 
         <!-- Question 9 -->
         <div class="faq-item">
           <button class="faq-question-btn" onclick="toggleFaq(this)">
-            <span>How do I maintain the shape and body wave pattern?</span>
+            <span>What is the guarantee?</span>
             <span class="faq-icon">+</span>
           </button>
           <div class="faq-answer">
-            <p>When you take your wig off at night, place it on a wig stand, mannequin head, or safely inside our pink storage box. Keeping the wig resting flat on a stand prevents friction tangling, maintains the natural curve of the cap, and preserves the bouncy body wave pattern without pulling or stretching the strands.</p>
-          </div>
-        </div>
-
-        <!-- Question 10 -->
-        <div class="faq-item">
-          <button class="faq-question-btn" onclick="toggleFaq(this)">
-            <span>What is the best way to wash and dry my wig?</span>
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-answer">
-            <p>Wash gently in cool or lukewarm water with sulfate-free shampoo. After washing, pat it dry gently with a microfiber towel (never wring or rub it aggressively). Place it on a wig stand to air-dry. Always avoid brushing or styling your wig while it is wet, as wet hair strands are more fragile and susceptible to stretching or shedding.</p>
-          </div>
-        </div>
-
-        <!-- Question 11 -->
-        <div class="faq-item">
-          <button class="faq-question-btn" onclick="toggleFaq(this)">
-            <span>How often should I wash and deep-condition my wig?</span>
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-answer">
-            <p>To keep the waves shiny and soft, we recommend a deep-conditioning treatment every couple of weeks. Avoid deep-conditioning daily to prevent product buildup. You only need to wash your wig after about <strong>25 wears</strong>. Washing too frequently (daily or weekly) can dry out the natural oils of the human hair, reducing the life of your crown.</p>
+            <p>Inspect your crown at home. If the hairline or texture is not right, contact us before cutting or wearing it so we can help with an exchange. We stand behind our quality.</p>
           </div>
         </div>
       </div>
@@ -1164,10 +1139,10 @@
     }
 
     function updatePricing() {
-      // Pricing details matching hair length upgrades
+      // Keep the mock focused on one clear club offer.
       const prices = {
-        '30-day': { '26': 99, '28': 119, '30': 139 },
-        'onetime': { '26': 130, '28': 160, '30': 190 }
+        '30-day': { '26': 99, '28': 99, '30': 99 },
+        'onetime': { '26': 130, '28': 130, '30': 130 }
       };
 
       const subPrice = prices['30-day'][currentLength];
@@ -1177,15 +1152,18 @@
       document.querySelector('#plan-30-label .price-value').innerText = `$${subPrice}`;
       document.querySelector('#plan-onetime-label .onetime-price-val').innerText = `$${oneTimePrice}`;
 
-      // Update billing note dynamically
-      document.querySelector('#plan-30-label .billing-note').innerText = `Billed $${subPrice} monthly`;
-
       // Update CTA button label
       const activePrice = prices[currentPlan][currentLength];
       if (currentPlan === '30-day') {
-        document.getElementById('submit-btn').innerText = `ADD TO CART (30-DAY CLUB) - $${activePrice}/mo`;
+        document.getElementById('submit-btn').innerText = 'Start My 30-Day Club';
       } else {
-        document.getElementById('submit-btn').innerText = `ADD TO CART (ONE-TIME) - $${activePrice}`;
+        document.getElementById('submit-btn').innerText = 'Add Crown to Cart';
+      }
+
+      // Update floating mobile CTA text
+      const floatingCtaSpan = document.querySelector('.floating-shop-cta span');
+      if (floatingCtaSpan) {
+        floatingCtaSpan.innerText = currentPlan === '30-day' ? 'Start 30-Day Club' : 'Add Crown to Cart';
       }
     }
 
@@ -1238,13 +1216,13 @@
     async function handleCheckout(event) {
       event.preventDefault();
       if (window.LacedBaddiesCommerce) {
-        window.LacedBaddiesCommerce.updateWigSelection(currentLength, currentPlan);
+        window.LacedBaddiesCommerce.updateWigSelection(currentLength, currentPlan, true);
         window.LacedBaddiesCommerce.openDrawer();
 
         if (window.LacedBaddiesMeta) {
           const prices = {
-            '30-day': { '26': 99, '28': 119, '30': 139 },
-            'onetime': { '26': 130, '28': 160, '30': 190 }
+            '30-day': { '26': 99, '28': 99, '30': 99 },
+            'onetime': { '26': 130, '28': 130, '30': 130 }
           };
           const activePrice = prices[currentPlan][currentLength];
           window.LacedBaddiesMeta.track('AddToCart', {}, {
@@ -1283,9 +1261,6 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      if (window.LacedBaddiesCommerce) {
-        window.LacedBaddiesCommerce.updateWigSelection(currentLength, currentPlan);
-      }
       startReservationTimer();
       updatePricing();
 
