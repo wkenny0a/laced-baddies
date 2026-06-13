@@ -693,6 +693,10 @@
     }
 
     function hasCartItems(cart) {
+      if (Number(cart?.item_count) > 0) return true;
+      if (Number(cart?.items_count) > 0) return true;
+      if (Number(cart?.item_quantity) > 0) return true;
+      if (Number(cart?.quantity) > 0) return true;
       return getCartItems(cart).length > 0;
     }
 
@@ -851,8 +855,6 @@
           }
 
           window.swell.init(swellConfig.swell.storeId, swellConfig.swell.publicKey);
-
-          await syncSwellCart();
 
           showSecurePayment();
 
