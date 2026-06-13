@@ -514,7 +514,170 @@
       background: rgba(255, 248, 240, 0.08);
       border-color: rgba(255, 248, 240, 0.12);
     }
+    
+    /* Secure checkout footer inside Payment Information */
+    .secure-checkout-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px solid var(--checkout-border);
+    }
+    
+    .secure-lock {
+      font-size: 0.75rem;
+      color: var(--checkout-dim);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .card-icons {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .card-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 248, 240, 0.02);
+      border: 1px solid var(--checkout-border);
+      border-radius: 4px;
+      width: 38px;
+      height: 24px;
+      box-sizing: border-box;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .card-icon:hover {
+      border-color: rgba(255, 248, 240, 0.15);
+      background: rgba(255, 248, 240, 0.04);
+    }
+
+    .card-icon svg {
+      display: block;
+    }
+
+    /* Trust details inside Order Summary */
+    .checkout-trust-badges {
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      border-top: 1px solid var(--checkout-border);
+      padding-top: 20px;
+    }
+    
+    .trust-badge-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    
+    .trust-icon {
+      font-size: 1.25rem;
+      line-height: 1;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    
+    .trust-details {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .trust-details strong {
+      font-size: 0.8rem;
+      color: var(--checkout-text);
+      margin-bottom: 2px;
+    }
+    
+    .trust-details span {
+      font-size: 0.72rem;
+      color: var(--checkout-dim);
+      line-height: 1.4;
+    }
+
+    /* Reviews section below Order Summary */
+    .checkout-reviews-box {
+      margin-top: 24px;
+      background: rgba(255, 248, 240, 0.015);
+      border: 1px dashed var(--checkout-border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    
+    .reviews-box-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-top: 0;
+      margin-bottom: 16px;
+      letter-spacing: 0.02em;
+      color: var(--checkout-text);
+      border-bottom: 1px solid var(--checkout-border);
+      padding-bottom: 8px;
+    }
+    
+    .checkout-review-item {
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(255, 248, 240, 0.03);
+    }
+    
+    .checkout-review-item:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+    
+    .review-stars {
+      color: #e28743; /* accent-mango */
+      font-size: 0.75rem;
+      margin-bottom: 6px;
+      letter-spacing: 2px;
+    }
+    
+    .review-text {
+      font-size: 0.76rem;
+      color: var(--checkout-text);
+      margin: 0 0 6px 0;
+      line-height: 1.4;
+      font-style: italic;
+    }
+    
+    .review-author {
+      font-size: 0.68rem;
+      color: var(--checkout-dim);
+      display: block;
+    }
+    
+    .verified-tag {
+      color: #10B981; /* Nice emerald green */
+      font-weight: 700;
+      margin-left: 4px;
+    }
   </style>
+  <script defer src="assets/meta-capi.js"></script>
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1656782318888778');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1656782318888778&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
 </head>
 <body>
 
@@ -632,6 +795,39 @@
               </div>
             </div>
           </div>
+          <!-- Secure checkout badges -->
+          <div class="secure-checkout-footer">
+            <span class="secure-lock">🔒 SSL Secure 256-Bit Connection</span>
+            <div class="card-icons">
+              <!-- Visa -->
+              <span class="card-icon" title="Visa">
+                <svg width="28" height="18" viewBox="0 0 36 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M14.992 16.592l2.368-7.39h1.764l-2.367 7.39h-1.765zm6.576-7.14c-.382-.162-.977-.336-1.714-.336-1.888 0-3.22 1.002-3.22 2.435 0 1.06.953 1.65 1.678 2.003.743.36 1 .593.996.915-.008.491-.592.716-1.14.716-.962 0-1.478-.145-2.263-.487l-.317-.152-.338 2.1c.563.26 1.606.485 2.686.488 2.007 0 3.313-.99 3.321-2.525.008-1.776-2.222-1.875-2.222-2.673 0-.242.237-.502.75-.58a2.7 2.7 0 0 1 .978.02c.36.05.698.156.97.29l.115.05.356-2.235zm5.728.148h-1.37c-.426 0-.746.124-.93.56L23.82 16.59h1.853l.369-1.02h2.261l.214 1.02h1.633l-1.423-7.391-.03-.001zm-1.874 4.805l.764-2.1.44 2.1h-1.204zm-16.147-4.805l-1.75 5.016-.188-.958c-.328-1.115-1.345-2.327-2.492-2.934L11 16.592l1.868.001 2.775-7.391H13.82l.005-.001z" fill="var(--checkout-dim)"/>
+                </svg>
+              </span>
+              <!-- Mastercard -->
+              <span class="card-icon" title="Mastercard">
+                <svg width="28" height="18" viewBox="0 0 36 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="14.5" cy="12" r="7.5" fill="#ff2e93" fill-opacity="0.85"/>
+                  <circle cx="21.5" cy="12" r="7.5" fill="#e28743" fill-opacity="0.85"/>
+                </svg>
+              </span>
+              <!-- Amex -->
+              <span class="card-icon" title="American Express">
+                <svg width="28" height="18" viewBox="0 0 36 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="36" height="24" rx="4" fill="#1F51FF" fill-opacity="0.15" stroke="#1F51FF" stroke-width="1.5"/>
+                  <text x="50%" y="58%" dominant-baseline="middle" text-anchor="middle" fill="var(--checkout-text)" font-family="'Outfit', sans-serif" font-weight="900" font-size="8" letter-spacing="0.5">AMEX</text>
+                </svg>
+              </span>
+              <!-- Discover -->
+              <span class="card-icon" title="Discover">
+                <svg width="28" height="18" viewBox="0 0 36 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="36" height="24" rx="4" fill="#e28743" fill-opacity="0.1" stroke="#e28743" stroke-width="1.5"/>
+                  <text x="50%" y="58%" dominant-baseline="middle" text-anchor="middle" fill="var(--checkout-text)" font-family="'Outfit', sans-serif" font-weight="900" font-size="7" letter-spacing="0.2">DISC</text>
+                </svg>
+              </span>
+            </div>
+          </div>
         </div>
         
       </form>
@@ -676,6 +872,54 @@
           <span class="button-spinner" id="checkout-button-spinner"></span>
           <span id="checkout-button-text">PLACE ORDER</span>
         </button>
+        
+        <!-- Trust Badges & Shipping Info -->
+        <div class="checkout-trust-badges">
+          <div class="trust-badge-item">
+            <span class="trust-icon">🚚</span>
+            <div class="trust-details">
+              <strong>Arrives in 5–7 Business Days</strong>
+              <span>Fast trackable shipping. Tracking link sent on dispatch.</span>
+            </div>
+          </div>
+          <div class="trust-badge-item">
+            <span class="trust-icon">🛡️</span>
+            <div class="trust-details">
+              <strong>Safe & Secure Checkout</strong>
+              <span>Encrypted SSL payment processing powered by Stripe & Swell.</span>
+            </div>
+          </div>
+          <div class="trust-badge-item">
+            <span class="trust-icon">💖</span>
+            <div class="trust-details">
+              <strong>100% Quality Guarantee</strong>
+              <span>Inspect your crown at home. Return it free before you cut the lace.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Verified Baddie Reviews -->
+      <div class="checkout-reviews-box">
+        <h4 class="reviews-box-title">What Other Baddies Say</h4>
+        
+        <div class="checkout-review-item">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Literally the easiest wig install of my life. The pre-cut Ultra-HD lace melted into my scalp instantly!"</p>
+          <span class="review-author">— Jasmine T. <span class="verified-tag">✓ Verified Buyer</span></span>
+        </div>
+        
+        <div class="checkout-review-item">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Knots were already bleached perfectly and the 6-inch parting space is huge. Looks exactly like real scalp."</p>
+          <span class="review-author">— Nia W. <span class="verified-tag">✓ Verified Buyer</span></span>
+        </div>
+
+        <div class="checkout-review-item">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"My edges were completely thinned out from glue. The CrownGrip cap has saved my hairline and fits so securely."</p>
+          <span class="review-author">— Tanesha M. <span class="verified-tag">✓ Verified Buyer</span></span>
+        </div>
       </div>
     </section>
   </main>
@@ -1312,6 +1556,36 @@
             }
           }
 
+          // Trigger Purchase Meta CAPI event
+          if (window.LacedBaddiesMeta) {
+            const email = document.getElementById("checkout-email").value;
+            const phone = document.getElementById("checkout-phone").value;
+            const firstName = document.getElementById("checkout-first-name").value;
+            const lastName = document.getElementById("checkout-last-name").value;
+            const city = document.getElementById("checkout-city").value;
+            const stateVal = document.getElementById("checkout-state").value;
+            const zip = document.getElementById("checkout-zip").value;
+
+            const totalText = document.getElementById("summary-grand-total").innerText;
+            const numericValue = parseFloat(totalText.replace(/[^0-9.]/g, '')) || 0;
+
+            window.LacedBaddiesMeta.track('Purchase', {
+              email: email,
+              phone: phone,
+              first_name: firstName,
+              last_name: lastName,
+              city: city,
+              state: stateVal,
+              zip: zip,
+              country: 'us'
+            }, {
+              value: numericValue,
+              currency: 'USD',
+              content_name: 'The 13x6 Body Wave Crown',
+              content_type: 'product'
+            });
+          }
+
           // Clear cart on success
           localStorage.removeItem("laced_baddies_cart");
           
@@ -1334,7 +1608,12 @@
       }, 2000); // 2 seconds processing animation delay
     }
 
-    document.addEventListener("DOMContentLoaded", loadCart);
+    document.addEventListener("DOMContentLoaded", () => {
+      loadCart();
+      if (window.LacedBaddiesMeta) {
+        window.LacedBaddiesMeta.track('PageView');
+      }
+    });
   </script>
 </body>
 </html>

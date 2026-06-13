@@ -1,6 +1,6 @@
 (function () {
   const STATUS = {
-    ready: "Headless checkout connected to Swell.",
+    ready: "",
     missingConfig: "Swell checkout is ready. Add your Swell store ID, public key, and product ID in environment variables.",
     loading: "Preparing your checkout...",
     error: "Checkout could not start. Check your Swell settings and try again."
@@ -47,6 +47,13 @@
 
     if (!status || !text) return;
 
+    if (!message) {
+      status.hidden = true;
+      text.textContent = "";
+      return;
+    }
+
+    status.hidden = false;
     status.dataset.tone = tone;
     text.textContent = message;
   }
@@ -372,6 +379,27 @@
           setCheckoutLoading(false);
         }
       }
+    }
+
+    // Trigger InitiateCheckout Meta event
+    if (window.LacedBaddiesMeta) {
+      const basePrice = PRICES[plan][length];
+      const isSubscription = plan === "30-day";
+      let accessoriesTotal = 0;
+      if (!isSubscription) {
+        state.cart.accessories.forEach(id => {
+          if (id !== "wig_storage_bag") {
+            accessoriesTotal += ACCESSORIES[id].price;
+          }
+        });
+      }
+      const grandTotal = basePrice + accessoriesTotal;
+      window.LacedBaddiesMeta.track('InitiateCheckout', {}, {
+        content_name: 'The 13x6 Body Wave Crown',
+        content_category: 'Wigs',
+        value: grandTotal,
+        currency: 'USD'
+      });
     }
 
     // Redirect to the custom checkout page

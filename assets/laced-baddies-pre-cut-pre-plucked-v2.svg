@@ -1,0 +1,109 @@
+<svg width="1254" height="1254" viewBox="0 0 1254 1254" xmlns="http://www.w3.org/2000/svg">
+  <title>Laced Baddies pre-cut lace and pre-plucked hairline product graphic v2</title>
+  <desc>A second warm editorial product image using the real wig photo with feature cards for pre-cut lace and pre-plucked hairline.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f4e4da"/>
+      <stop offset=".45" stop-color="#d6a98f"/>
+      <stop offset="1" stop-color="#8c5e47"/>
+    </linearGradient>
+    <linearGradient id="brandGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FF007F"/>
+      <stop offset="1" stop-color="#FFA62B"/>
+    </linearGradient>
+    <radialGradient id="warmLight" cx="20%" cy="20%" r="68%">
+      <stop offset="0" stop-color="#fff7f0" stop-opacity=".88"/>
+      <stop offset=".56" stop-color="#f3d8ca" stop-opacity=".3"/>
+      <stop offset="1" stop-color="#f3d8ca" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="shadow" x="-18%" y="-18%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="16" stdDeviation="22" flood-color="#120704" flood-opacity=".2"/>
+    </filter>
+    <filter id="smallShadow" x="-15%" y="-15%" width="130%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#120704" flood-opacity=".28"/>
+    </filter>
+    <clipPath id="photoClip">
+      <rect x="54" y="266" width="818" height="842" rx="34"/>
+    </clipPath>
+    <clipPath id="zoomClip">
+      <circle cx="903" cy="270" r="132"/>
+    </clipPath>
+    <marker id="arrowHead" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto">
+      <path d="M1 1 12 7 1 13Z" fill="#ff4d8f"/>
+    </marker>
+    <style>
+      .headline { font-family: "Arial Black", Impact, Helvetica, Arial, sans-serif; letter-spacing: 0; }
+      .body { font-family: Helvetica, Arial, sans-serif; letter-spacing: 0; }
+      .cream { fill: #FFF8F0; }
+      .muted { fill: #D1C5C0; }
+      .panel { fill: #220F0A; fill-opacity: .91; }
+      .glass { fill: #220F0A; fill-opacity: .78; stroke: rgba(255,248,240,.24); stroke-width: 1.5; }
+    </style>
+  </defs>
+
+  <rect width="1254" height="1254" fill="url(#bg)"/>
+  <rect width="1254" height="1254" fill="url(#warmLight)"/>
+  <path d="M0 1030 C220 930 430 1010 610 930 C850 824 1020 872 1254 748 L1254 1254 L0 1254Z" fill="#120704" opacity=".08"/>
+
+  <g filter="url(#smallShadow)">
+    <rect x="46" y="42" width="706" height="154" rx="22" class="panel"/>
+    <rect x="47.5" y="43.5" width="703" height="151" rx="20" fill="none" stroke="url(#brandGradient)" stroke-width="3"/>
+    <text x="76" y="87" class="headline cream" font-size="31">LACED BADDIES</text>
+    <text x="76" y="141" class="headline" font-size="48" fill="url(#brandGradient)">WEAR-READY FRONTAL</text>
+    <text x="78" y="177" class="body muted" font-size="25">Pre-cut lace. Pre-plucked hairline.</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="54" y="266" width="818" height="842" rx="34" fill="#f6e5dc" opacity=".74"/>
+    <rect x="54" y="266" width="818" height="842" rx="34" fill="none" stroke="#fff7f0" stroke-opacity=".82" stroke-width="2"/>
+  </g>
+  <g clip-path="url(#photoClip)">
+    <image href="laced-baddies-pre-cut-pre-plucked-base.jpeg" x="54" y="266" width="818" height="842" preserveAspectRatio="xMidYMid meet"/>
+  </g>
+
+  <g filter="url(#smallShadow)">
+    <circle cx="903" cy="270" r="139" fill="#220F0A" fill-opacity=".16"/>
+    <g clip-path="url(#zoomClip)">
+      <image href="laced-baddies-pre-cut-pre-plucked-base.jpeg" x="650" y="38" width="486" height="486" preserveAspectRatio="xMidYMid slice"/>
+    </g>
+    <circle cx="903" cy="270" r="132" fill="none" stroke="url(#brandGradient)" stroke-width="5"/>
+    <circle cx="903" cy="270" r="139" fill="none" stroke="#fff4ec" stroke-opacity=".78" stroke-width="2"/>
+  </g>
+
+  <g filter="url(#smallShadow)">
+    <rect x="906" y="450" width="300" height="146" rx="24" class="glass"/>
+    <rect x="907.5" y="451.5" width="297" height="143" rx="22" fill="none" stroke="url(#brandGradient)" stroke-width="2"/>
+    <text x="934" y="496" class="headline cream" font-size="26">PRE-CUT LACE</text>
+    <text x="934" y="529" class="body muted" font-size="21">Scalloped edge</text>
+    <text x="934" y="556" class="body muted" font-size="21">with no scissors.</text>
+  </g>
+
+  <g filter="url(#smallShadow)">
+    <rect x="906" y="630" width="300" height="164" rx="24" class="glass"/>
+    <rect x="907.5" y="631.5" width="297" height="161" rx="22" fill="none" stroke="url(#brandGradient)" stroke-width="2"/>
+    <text x="934" y="676" class="headline cream" font-size="24">PRE-PLUCKED</text>
+    <text x="934" y="706" class="headline" font-size="24" fill="url(#brandGradient)">HAIRLINE</text>
+    <text x="934" y="740" class="body muted" font-size="21">Soft density</text>
+    <text x="934" y="767" class="body muted" font-size="21">straight out the box.</text>
+  </g>
+
+  <g filter="url(#smallShadow)">
+    <rect x="906" y="828" width="300" height="126" rx="24" fill="url(#brandGradient)"/>
+    <text x="1056" y="878" text-anchor="middle" class="headline" fill="#120704" font-size="25">READY TO WEAR</text>
+    <text x="1056" y="913" text-anchor="middle" class="body" fill="#220F0A" font-size="21">Open, place, go.</text>
+  </g>
+
+  <g filter="url(#smallShadow)">
+    <path d="M904 522 C824 548 744 582 636 613" fill="none" stroke="#ff4d8f" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowHead)"/>
+    <circle cx="636" cy="613" r="9" fill="#FFF8F0"/>
+    <circle cx="636" cy="613" r="15" fill="none" stroke="url(#brandGradient)" stroke-width="3"/>
+    <path d="M904 690 C798 648 708 608 564 566" fill="none" stroke="#ff4d8f" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowHead)"/>
+    <circle cx="564" cy="566" r="9" fill="#FFF8F0"/>
+    <circle cx="564" cy="566" r="15" fill="none" stroke="url(#brandGradient)" stroke-width="3"/>
+  </g>
+
+  <g filter="url(#smallShadow)">
+    <rect x="82" y="1138" width="670" height="54" rx="27" class="panel"/>
+    <text x="417" y="1174" text-anchor="middle" class="headline cream" font-size="22">PRE-CUSTOMIZED FOR A 30-SECOND GLUELESS INSTALL</text>
+  </g>
+</svg>

@@ -29,30 +29,26 @@ This angle should sell the transformation first:
 
 ### Primary Offer
 
-VIP Crown Rotation
+30-Day Baddie Club
 
-A fresh glueless wig delivered on a schedule, with the tools that make the experience feel complete.
+A fresh glueless wig delivered every month, with the tools that make the experience feel complete.
 
-Use the 90-day plan as the hero offer:
+Use the 30-day Baddie Club as the hero offer:
 
-- $50 per month
-- Billed $150 every 90 days
-- Fresh wig every 90 days
-- Includes storage box, lace melting spray, styling brush, and compact mirror
-- Free 3-day shipping
-
-Use the 30-day plan for higher-frequency buyers:
-
-- $60 per month
+- $99 per month
+- Billed $99 monthly
 - Fresh wig every 30 days
-- Includes the same styling kit
+- Includes the Free Welcome Kit: bald cap, silk sleep mask, wig storage bag, and spray comb
+- Future rotation gifts include the melting spray duo in month 3 and silk bonnet in month 6
+- Cancel or pause anytime
+- 30-Day Baddie Quality Guarantee
 
 Use the one-time purchase as the comparison anchor:
 
-- $70 once
-- Wig only
+- $130 once for the 26-inch crown
+- Wig plus free wig storage bag
 - No subscription
-- No styling accessories included
+- No full Welcome Kit or future rotation gifts included
 
 ## Core Principle
 
