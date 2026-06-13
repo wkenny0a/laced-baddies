@@ -73,7 +73,7 @@
     </button>
   </header>
 
-  <button type="button" class="floating-shop-cta" onclick="handleCheckout(event)" aria-label="Add to cart">
+  <button type="button" class="floating-shop-cta" onclick="handleCheckout(event)" aria-label="Start checkout">
     <span>Start 30-Day Club</span>
   </button>
 
@@ -1217,7 +1217,6 @@
       event.preventDefault();
       if (window.LacedBaddiesCommerce) {
         window.LacedBaddiesCommerce.updateWigSelection(currentLength, currentPlan, true);
-        window.LacedBaddiesCommerce.openDrawer();
 
         if (window.LacedBaddiesMeta) {
           const prices = {
@@ -1234,6 +1233,13 @@
             currency: 'USD'
           });
         }
+
+        if (currentPlan === '30-day') {
+          await window.LacedBaddiesCommerce.checkout();
+          return;
+        }
+
+        window.LacedBaddiesCommerce.openDrawer();
       }
     }
 
