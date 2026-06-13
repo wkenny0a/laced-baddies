@@ -304,6 +304,7 @@
       display: flex;
       align-items: center;
       gap: 12px;
+      min-width: 0;
     }
     
     .summary-item-img {
@@ -330,6 +331,30 @@
     .summary-item-price {
       font-size: 0.9rem;
       font-weight: 700;
+      flex-shrink: 0;
+      text-align: right;
+    }
+
+    .summary-item-price.is-free {
+      align-items: flex-end;
+      color: var(--accent-mango);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      line-height: 1.2;
+    }
+
+    .summary-item-value {
+      color: var(--checkout-dim);
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-decoration: line-through;
+    }
+
+    .summary-item-savings {
+      color: var(--accent-mango);
+      font-size: 0.68rem;
+      font-weight: 800;
     }
     
     /* Cost rows */
@@ -346,6 +371,11 @@
       justify-content: space-between;
       font-size: 0.85rem;
       color: var(--checkout-dim);
+    }
+
+    .summary-total-row.savings-row {
+      color: var(--accent-mango);
+      font-weight: 800;
     }
     
     .summary-total-row.grand-total {
@@ -853,6 +883,10 @@
             <span>Accessories Add-ons</span>
             <span id="summary-accessories">$0.00</span>
           </div>
+          <div class="summary-total-row savings-row" id="summary-free-savings-row" hidden>
+            <span>Free Gift Savings</span>
+            <span id="summary-free-savings">-$0.00</span>
+          </div>
           <div class="summary-total-row">
             <span>Shipping</span>
             <span style="color: var(--accent-mango); font-weight: 700;">FREE</span>
@@ -1324,6 +1358,10 @@
       setOfflinePaymentRequired(false);
     }
 
+    function formatMoney(value) {
+      return `$${Number(value || 0).toFixed(2)}`;
+    }
+
     async function loadCart() {
       showOfflinePayment();
 
@@ -1385,14 +1423,25 @@
 
       // Accessories
       let accessoriesTotal = 0;
+      let freeSavingsTotal = 0;
       cartData.accessories.forEach(accId => {
         const item = ACCESSORIES[accId];
         if (!item) return;
 
         const isFree = isSubscription || accId === "wig_storage_bag";
-        const displayPrice = isFree ? "FREE" : `$${item.price}`;
+        const itemValue = formatMoney(item.price);
+        const displayPrice = isFree
+          ? `
+            <span>FREE</span>
+            <span class="summary-item-value">${itemValue} value</span>
+            <span class="summary-item-savings">You save ${itemValue}</span>
+          `
+          : itemValue;
+
         if (!isFree) {
           accessoriesTotal += item.price;
+        } else {
+          freeSavingsTotal += item.price;
         }
 
         itemsHtml += `
@@ -1404,7 +1453,7 @@
                 <p class="summary-item-meta">${isFree ? "Free gift included" : "Add-on accessory"}</p>
               </div>
             </div>
-            <div class="summary-item-price" style="${isFree ? 'color: var(--accent-mango);' : ''}">${displayPrice}</div>
+            <div class="summary-item-price ${isFree ? 'is-free' : ''}">${displayPrice}</div>
           </div>
         `;
       });
@@ -1421,6 +1470,13 @@
       document.getElementById("summary-subtotal").innerText = `$${subTotal.toFixed(2)}`;
       document.getElementById("summary-accessories").innerText = isSubscription ? "FREE" : `$${accessoriesTotal.toFixed(2)}`;
       document.getElementById("summary-tax").innerText = `$${estimatedTax.toFixed(2)}`;
+
+      const savingsRow = document.getElementById("summary-free-savings-row");
+      const savingsValue = document.getElementById("summary-free-savings");
+      if (savingsRow && savingsValue) {
+        savingsRow.hidden = freeSavingsTotal <= 0;
+        savingsValue.innerText = `-${formatMoney(freeSavingsTotal)}`;
+      }
       
       const cycleSuffix = isSubscription ? " / month" : "";
       document.getElementById("summary-grand-total").innerHTML = `$${grandTotal.toFixed(2)}${cycleSuffix}`;
