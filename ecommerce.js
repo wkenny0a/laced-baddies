@@ -114,6 +114,25 @@
     return item;
   }
 
+  function getSwellErrorMessage(response) {
+    if (response?.error?.message) return response.error.message;
+    if (Array.isArray(response?.errors)) {
+      return response.errors.find((error) => error?.message)?.message || "";
+    }
+    if (response?.errors && typeof response.errors === "object") {
+      return Object.values(response.errors).find((error) => error?.message)?.message || "";
+    }
+    return "";
+  }
+
+  function addSwellCartItem(item) {
+    if (typeof window.swell?.cart?.requestStateChange === "function") {
+      return window.swell.cart.requestStateChange("post", "/cart/items", item);
+    }
+
+    return window.swell.cart.addItem(item);
+  }
+
   function getCheckoutUrl(cart) {
     return cart?.checkout_url || cart?.checkoutUrl || state.config?.checkoutUrl || "";
   }
@@ -342,9 +361,9 @@
 
           // Add items sequentially to the Swell cart
           for (const cartItem of items) {
-            const cart = await window.swell.cart.addItem(cartItem);
+            const cart = await addSwellCartItem(cartItem);
             if (cart?.errors || cart?.error) {
-              throw new Error(cart.errors?.[0]?.message || cart.error?.message || "Swell cart error.");
+              throw new Error(getSwellErrorMessage(cart) || "Swell cart error.");
             }
           }
         } catch (error) {

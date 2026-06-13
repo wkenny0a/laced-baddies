@@ -702,8 +702,27 @@
 
     function assertSwellResponse(response, fallbackMessage) {
       if (response?.errors || response?.error) {
-        throw new Error(response.errors?.[0]?.message || response.error?.message || fallbackMessage);
+        throw new Error(getSwellErrorMessage(response) || fallbackMessage);
       }
+    }
+
+    function getSwellErrorMessage(response) {
+      if (response?.error?.message) return response.error.message;
+      if (Array.isArray(response?.errors)) {
+        return response.errors.find((error) => error?.message)?.message || "";
+      }
+      if (response?.errors && typeof response.errors === "object") {
+        return Object.values(response.errors).find((error) => error?.message)?.message || "";
+      }
+      return "";
+    }
+
+    function addSwellCartItem(item) {
+      if (typeof window.swell?.cart?.requestStateChange === "function") {
+        return window.swell.cart.requestStateChange("post", "/cart/items", item);
+      }
+
+      return window.swell.cart.addItem(item);
     }
 
     function buildWigCartItem() {
@@ -780,7 +799,7 @@
 
       let cart = null;
       for (const item of items) {
-        cart = await window.swell.cart.addItem(item);
+        cart = await addSwellCartItem(item);
         assertSwellResponse(cart, "Swell could not add this item to your cart.");
       }
 
