@@ -605,14 +605,6 @@
           </div>
         </div>
         
-        <!-- Required Agreement Checkbox -->
-        <div class="checkout-checkbox-row">
-          <input type="checkbox" id="checkout-double-agree" onchange="toggleOrderSubmitButton()">
-          <label for="checkout-double-agree">
-            I confirm my shipping address and billing details are correct, and I agree to the <strong>30-Day Baddie Quality Guarantee</strong>.
-          </label>
-        </div>
-        
         <!-- Submit Button -->
         <button type="submit" form="checkout-details-form" class="btn-submit-order" id="checkout-submit-btn" disabled>
           <span class="button-spinner" id="checkout-button-spinner"></span>
@@ -971,10 +963,9 @@
     }
 
     function toggleOrderSubmitButton() {
-      const checkbox = document.getElementById("checkout-double-agree");
       const button = document.getElementById("checkout-submit-btn");
-      if (checkbox && button) {
-        button.disabled = !checkbox.checked || !swellConnected;
+      if (button) {
+        button.disabled = !swellConnected;
       }
     }
 
@@ -1001,12 +992,6 @@
 
     async function handleOrderSubmit(event) {
       event.preventDefault();
-
-      const doubleAgree = document.getElementById("checkout-double-agree");
-      if (doubleAgree && !doubleAgree.checked) {
-        alert("Please check the confirmation box to place your order.");
-        return;
-      }
 
       if (!swellConnected) {
         alert("Secure checkout is not connected yet. Please refresh and try again before placing your order.");
