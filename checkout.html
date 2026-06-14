@@ -2034,6 +2034,44 @@
       if (window.LacedBaddiesMeta) {
         window.LacedBaddiesMeta.track('PageView');
       }
+
+      // Early Email Capture Listener
+      const emailInput = document.getElementById("checkout-email");
+      if (emailInput) {
+        // Pre-fill from localStorage if available
+        const savedEmail = localStorage.getItem("checkout_captured_email");
+        if (savedEmail) {
+          emailInput.value = savedEmail;
+        }
+
+        const handleEmailCapture = () => {
+          const email = emailInput.value.trim();
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (emailRegex.test(email)) {
+            // Save to localStorage
+            localStorage.setItem("checkout_captured_email", email);
+
+            // Track Lead event in Meta CAPI and Browser Pixel
+            if (window.LacedBaddiesMeta) {
+              window.LacedBaddiesMeta.track('Lead', { email: email }, { content_name: 'Checkout Email Capture' });
+            }
+
+            // Update Swell Cart with the email immediately for cart abandonment capture
+            if (swellConnected && window.swell && typeof window.swell.cart?.update === "function") {
+              window.swell.cart.update({
+                account: { email: email }
+              }).then(cart => {
+                console.log("Swell cart email captured:", cart);
+              }).catch(err => {
+                console.warn("Swell cart email capture error:", err);
+              });
+            }
+          }
+        };
+
+        emailInput.addEventListener("change", handleEmailCapture);
+        emailInput.addEventListener("blur", handleEmailCapture);
+      }
     });
   </script>
 </body>
