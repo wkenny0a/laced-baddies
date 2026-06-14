@@ -356,6 +356,79 @@
       font-size: 0.68rem;
       font-weight: 800;
     }
+
+    .coupon-section {
+      border-top: 1px solid var(--checkout-border);
+      margin: 4px 0 18px;
+      padding-top: 18px;
+    }
+
+    .coupon-label {
+      color: var(--checkout-dim);
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .coupon-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+    }
+
+    .coupon-input {
+      min-width: 0;
+      text-transform: uppercase;
+    }
+
+    .btn-apply-coupon {
+      background: rgba(255, 248, 240, 0.06);
+      border: 1px solid var(--checkout-border);
+      border-radius: 8px;
+      color: var(--checkout-text);
+      cursor: pointer;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      padding: 0 14px;
+      text-transform: uppercase;
+      transition: var(--transition);
+    }
+
+    .btn-apply-coupon:hover:not(:disabled) {
+      border-color: var(--accent-mango);
+      color: var(--accent-mango);
+    }
+
+    .btn-apply-coupon:disabled {
+      cursor: not-allowed;
+      opacity: 0.45;
+    }
+
+    .coupon-status {
+      color: var(--checkout-dim);
+      font-size: 0.75rem;
+      line-height: 1.4;
+      margin: 9px 0 0;
+      min-height: 1.05rem;
+    }
+
+    .coupon-status[data-tone="success"] {
+      color: var(--accent-mango);
+    }
+
+    .coupon-status[data-tone="error"] {
+      color: #ff2e93;
+    }
+
+    .summary-total-row.discount-row {
+      color: var(--accent-mango);
+      font-weight: 800;
+    }
     
     /* Cost rows */
     .summary-totals {
@@ -880,6 +953,15 @@
         <div class="summary-items-list" id="checkout-items-list">
           <!-- Dynamically loaded -->
         </div>
+
+        <div class="coupon-section" id="coupon-section">
+          <label class="coupon-label" for="checkout-coupon-code">Coupon Code</label>
+          <div class="coupon-row">
+            <input type="text" id="checkout-coupon-code" class="form-control coupon-input" placeholder="Enter code" autocomplete="off">
+            <button type="button" class="btn-apply-coupon" id="apply-coupon-btn" onclick="handleApplyCoupon(event)">Apply</button>
+          </div>
+          <p class="coupon-status" id="coupon-status" aria-live="polite"></p>
+        </div>
         
         <!-- Totals -->
         <div class="summary-totals">
@@ -894,6 +976,10 @@
           <div class="summary-total-row savings-row" id="summary-free-savings-row" hidden>
             <span>Free Gift Savings</span>
             <span id="summary-free-savings">-$0.00</span>
+          </div>
+          <div class="summary-total-row discount-row" id="summary-coupon-row" hidden>
+            <span id="summary-coupon-label">Coupon Discount</span>
+            <span id="summary-coupon-discount">-$0.00</span>
           </div>
           <div class="summary-total-row">
             <span>Shipping</span>
@@ -1014,6 +1100,11 @@
     let swellConnected = false;
     let swellConfig = null;
     let walletPaymentFinalizing = false;
+    let couponState = {
+      code: "",
+      discountTotal: 0
+    };
+    let couponBusy = false;
 
     function hasSwellCredentials(config) {
       return Boolean(config?.swell?.storeId && config?.swell?.publicKey);
@@ -1063,6 +1154,164 @@
         return Object.values(response.errors).find((error) => error?.message)?.message || "";
       }
       return "";
+    }
+
+    function normalizeCouponCode(value) {
+      return String(value || "").trim().toUpperCase();
+    }
+
+    function getCartDiscountTotal(cart) {
+      const directDiscountFields = [
+        cart?.discount_total,
+        cart?.discountTotal,
+        cart?.discounts_total,
+        cart?.discountsTotal
+      ];
+
+      const directDiscount = directDiscountFields.find((value) => Number(value) > 0);
+      if (Number(directDiscount) > 0) {
+        return Number(directDiscount);
+      }
+
+      if (Array.isArray(cart?.discounts)) {
+        const discountTotal = cart.discounts.reduce((total, discount) => {
+          return total + Number(discount?.amount || discount?.value || discount?.total || discount?.price || 0);
+        }, 0);
+        if (discountTotal > 0) return discountTotal;
+      }
+
+      return getCartItems(cart).reduce((total, item) => {
+        return total + Number(item?.discount_total || item?.discountTotal || 0);
+      }, 0);
+    }
+
+    function getCartCouponCode(cart, fallback = "") {
+      return normalizeCouponCode(
+        cart?.coupon_code ||
+        cart?.couponCode ||
+        cart?.coupon?.code ||
+        cart?.discounts?.find((discount) => discount?.code)?.code ||
+        fallback
+      );
+    }
+
+    function setCouponStatus(message = "", tone = "muted") {
+      const status = document.getElementById("coupon-status");
+      if (!status) return;
+
+      status.textContent = message;
+      status.dataset.tone = tone;
+    }
+
+    function updateCouponControls() {
+      const input = document.getElementById("checkout-coupon-code");
+      const button = document.getElementById("apply-coupon-btn");
+      const hasCoupon = Boolean(couponState.code);
+
+      if (input) {
+        input.disabled = couponBusy || hasCoupon;
+      }
+
+      if (button) {
+        button.disabled = couponBusy || (!swellConnected && !hasCoupon);
+        button.textContent = couponBusy ? "..." : (hasCoupon ? "Remove" : "Apply");
+      }
+    }
+
+    function setCouponFromCart(cart, code) {
+      couponState = {
+        code: getCartCouponCode(cart, code),
+        discountTotal: getCartDiscountTotal(cart)
+      };
+
+      const input = document.getElementById("checkout-coupon-code");
+      if (input) input.value = couponState.code;
+    }
+
+    async function applyCouponCodeToCart(code) {
+      const normalizedCode = normalizeCouponCode(code);
+
+      if (typeof window.swell?.cart?.applyCoupon === "function") {
+        const response = await window.swell.cart.applyCoupon(normalizedCode);
+        assertSwellResponse(response, "Coupon could not be applied.");
+        return response;
+      }
+
+      const response = await window.swell.cart.update({ coupon_code: normalizedCode });
+      assertSwellResponse(response, "Coupon could not be applied.");
+      return response;
+    }
+
+    async function removeCouponCodeFromCart() {
+      if (typeof window.swell?.cart?.removeCoupon === "function") {
+        const response = await window.swell.cart.removeCoupon();
+        assertSwellResponse(response, "Coupon could not be removed.");
+        return response;
+      }
+
+      const response = await window.swell.cart.update({ coupon_code: null });
+      assertSwellResponse(response, "Coupon could not be removed.");
+      return response;
+    }
+
+    async function handleApplyCoupon(event) {
+      if (event) event.preventDefault();
+
+      const input = document.getElementById("checkout-coupon-code");
+
+      if (couponState.code) {
+        couponBusy = true;
+        updateCouponControls();
+
+        try {
+          await removeCouponCodeFromCart();
+          couponState = { code: "", discountTotal: 0 };
+          if (input) input.value = "";
+          setCouponStatus("Coupon removed.", "muted");
+          renderSummary();
+        } catch (error) {
+          console.error("Coupon remove failed:", error);
+          setCouponStatus(error.message || "Could not remove this coupon.", "error");
+        } finally {
+          couponBusy = false;
+          updateCouponControls();
+        }
+        return;
+      }
+
+      const code = normalizeCouponCode(input?.value);
+      if (!code) {
+        setCouponStatus("Enter a coupon code first.", "error");
+        return;
+      }
+
+      if (!swellConnected) {
+        setCouponStatus("Secure checkout is still loading. Try the code again in a moment.", "error");
+        return;
+      }
+
+      couponBusy = true;
+      updateCouponControls();
+      setCouponStatus("Checking code...", "muted");
+
+      try {
+        await syncSwellCart({ preserveCoupon: false });
+        const cart = await applyCouponCodeToCart(code);
+        setCouponFromCart(cart, code);
+
+        const savingsText = couponState.discountTotal > 0 ? ` You saved ${formatMoney(couponState.discountTotal)}.` : "";
+        setCouponStatus(`Coupon ${couponState.code} applied.${savingsText}`, "success");
+        renderSummary();
+      } catch (error) {
+        console.error("Coupon apply failed:", error);
+        couponState = { code: "", discountTotal: 0 };
+        if (input) input.value = code;
+        setCouponStatus(error.message || "That coupon code is not valid for this cart.", "error");
+        renderSummary();
+      } finally {
+        couponBusy = false;
+        updateCouponControls();
+      }
     }
 
     function addSwellCartItem(item) {
@@ -1303,7 +1552,9 @@
       return items;
     }
 
-    async function syncSwellCart() {
+    async function syncSwellCart(options = {}) {
+      const { preserveCoupon = true } = options;
+
       if (!window.swell || !swellConfig) {
         throw new Error("Secure checkout is not connected. Please refresh and try again.");
       }
@@ -1324,6 +1575,11 @@
       cart = await window.swell.cart.get();
       if (!hasCartItems(cart)) {
         throw new Error("Swell did not save your cart items. Please refresh and try again before paying.");
+      }
+
+      if (preserveCoupon && couponState.code) {
+        cart = await applyCouponCodeToCart(couponState.code);
+        setCouponFromCart(cart, couponState.code);
       }
 
       return cart;
@@ -1354,6 +1610,7 @@
       if (cardErrors) cardErrors.textContent = message;
 
       setOfflinePaymentRequired(true);
+      updateCouponControls();
       toggleOrderSubmitButton();
     }
 
@@ -1367,6 +1624,7 @@
       if (cardErrors) cardErrors.textContent = "";
 
       setOfflinePaymentRequired(false);
+      updateCouponControls();
     }
 
     function formatMoney(value) {
@@ -1473,9 +1731,12 @@
 
       // Calculate taxes & grand total
       const subTotal = basePrice;
+      const discountableTotal = subTotal + accessoriesTotal;
+      const couponDiscount = Math.min(Number(couponState.discountTotal || 0), discountableTotal);
+      const discountedTotal = Math.max(0, discountableTotal - couponDiscount);
       const taxRate = 0.085; // 8.5%
-      const estimatedTax = (subTotal + accessoriesTotal) * taxRate;
-      const grandTotal = subTotal + accessoriesTotal + estimatedTax;
+      const estimatedTax = discountedTotal * taxRate;
+      const grandTotal = discountedTotal + estimatedTax;
 
       // Update text fields
       document.getElementById("summary-subtotal").innerText = `$${subTotal.toFixed(2)}`;
@@ -1487,6 +1748,15 @@
       if (savingsRow && savingsValue) {
         savingsRow.hidden = freeSavingsTotal <= 0;
         savingsValue.innerText = `-${formatMoney(freeSavingsTotal)}`;
+      }
+
+      const couponRow = document.getElementById("summary-coupon-row");
+      const couponLabel = document.getElementById("summary-coupon-label");
+      const couponDiscountText = document.getElementById("summary-coupon-discount");
+      if (couponRow && couponLabel && couponDiscountText) {
+        couponRow.hidden = !couponState.code;
+        couponLabel.innerText = couponState.code ? `Coupon (${couponState.code})` : "Coupon Discount";
+        couponDiscountText.innerText = `-${formatMoney(couponDiscount)}`;
       }
       
       // Toggle subscription notices
@@ -1507,6 +1777,7 @@
 
       const cycleSuffix = isSubscription ? " / month" : "";
       document.getElementById("summary-grand-total").innerHTML = `$${grandTotal.toFixed(2)}${cycleSuffix}`;
+      updateCouponControls();
     }
 
     function toggleOrderSubmitButton() {
@@ -1514,6 +1785,7 @@
       if (button) {
         button.disabled = !swellConnected;
       }
+      updateCouponControls();
     }
 
     function formatCardNumber(input) {
@@ -1693,6 +1965,14 @@
 
     document.addEventListener("DOMContentLoaded", () => {
       loadCart();
+      const couponInput = document.getElementById("checkout-coupon-code");
+      if (couponInput) {
+        couponInput.addEventListener("keydown", (event) => {
+          if (event.key === "Enter") {
+            handleApplyCoupon(event);
+          }
+        });
+      }
       if (window.LacedBaddiesMeta) {
         window.LacedBaddiesMeta.track('PageView');
       }
