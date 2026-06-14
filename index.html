@@ -200,6 +200,11 @@
 
         <!-- Select Plan Title -->
         <h3 class="section-sub-title">Select your plan</h3>
+        <div class="sale-countdown" id="reservation-timer" aria-live="polite">
+          <span class="sale-countdown-label">18-hour price drop</span>
+          <strong class="sale-countdown-time">18:00:00</strong>
+          <span class="sale-countdown-note">$99.99 now $79.99 monthly. $139.99 now $119.99 buy once.</span>
+        </div>
 
         <!-- Plan Option 1: 30-Day Baddie Club (Default Selected) -->
         <label class="plan-option selected" id="plan-30-label">
@@ -209,12 +214,14 @@
             <div class="plan-details">
               <div class="plan-header">
                 <span class="plan-title">30-Day Baddie Club</span>
-                <span class="save-badge">SAVE 33%</span>
+                <span class="save-badge">SAVE $20</span>
               </div>
               <div class="price-row">
+                <span class="compare-price">$99.99</span>
                 <span class="price-value">$79.99</span>
                 <span class="price-period">/ month</span>
               </div>
+              <div class="price-drop-note">Price dropped from $99.99 to $79.99</div>
               <div class="plan-billing-info-row">
                 <span class="billing-note">Billed monthly at $79.99</span>
               </div>
@@ -314,8 +321,10 @@
                 <span class="plan-title">Buy Once</span>
               </div>
               <div class="price-row">
+                <span class="compare-price">$139.99</span>
                 <span class="onetime-price-val price-value">$119.99</span>
               </div>
+              <div class="price-drop-note">Price dropped from $139.99 to $119.99</div>
               <div class="plan-billing-info-row">
                 <span class="onetime-desc billing-note">Wig + free storage bag (one-time payment)</span>
               </div>
@@ -1148,13 +1157,24 @@
         '30-day': { '26': 79.99, '28': 79.99, '30': 79.99 },
         'onetime': { '26': 119.99, '28': 119.99, '30': 119.99 }
       };
+      const comparePrices = {
+        '30-day': { '26': 99.99, '28': 99.99, '30': 99.99 },
+        'onetime': { '26': 139.99, '28': 139.99, '30': 139.99 }
+      };
+      const formatPrice = value => `$${Number(value).toFixed(2)}`;
 
       const subPrice = prices['30-day'][currentLength];
       const oneTimePrice = prices['onetime'][currentLength];
+      const subComparePrice = comparePrices['30-day'][currentLength];
+      const oneTimeComparePrice = comparePrices['onetime'][currentLength];
 
       // Update pricing display text
-      document.querySelector('#plan-30-label .price-value').innerText = `$${subPrice}`;
-      document.querySelector('#plan-onetime-label .onetime-price-val').innerText = `$${oneTimePrice}`;
+      document.querySelector('#plan-30-label .price-value').innerText = formatPrice(subPrice);
+      document.querySelector('#plan-30-label .compare-price').innerText = formatPrice(subComparePrice);
+      document.querySelector('#plan-30-label .price-drop-note').innerText = `Price dropped from ${formatPrice(subComparePrice)} to ${formatPrice(subPrice)}`;
+      document.querySelector('#plan-onetime-label .onetime-price-val').innerText = formatPrice(oneTimePrice);
+      document.querySelector('#plan-onetime-label .compare-price').innerText = formatPrice(oneTimeComparePrice);
+      document.querySelector('#plan-onetime-label .price-drop-note').innerText = `Price dropped from ${formatPrice(oneTimeComparePrice)} to ${formatPrice(oneTimePrice)}`;
 
       // Update CTA button label
       const activePrice = prices[currentPlan][currentLength];
@@ -1283,23 +1303,51 @@
     function startReservationTimer() {
       const timerElement = document.getElementById('reservation-timer');
       if (!timerElement) return;
-      let timeLimit = 10 * 60; // 10 minutes in seconds
-
-      const countdown = setInterval(() => {
-        let minutes = Math.floor(timeLimit / 60);
-        let seconds = timeLimit % 60;
-        
-        seconds = seconds < 10 ? '0' + seconds : seconds;
-        minutes = minutes < 10 ? '0' + minutes : minutes;
-
-        timerElement.innerHTML = `✨ HURRY! YOUR CROWN IS RESERVED FOR ${minutes}:${seconds} MINS ✨`;
-
-        if (timeLimit <= 0) {
-          timeLimit = 10 * 60; // Reset timer instead of stopping
-        } else {
-          timeLimit--;
+      const durationMs = 18 * 60 * 60 * 1000;
+      const storageKey = 'laced_baddies_price_drop_deadline';
+      let deadline = 0;
+      const saveDeadline = value => {
+        try {
+          window.localStorage.setItem(storageKey, String(value));
+        } catch (error) {
+          // Storage can be unavailable in strict browser modes; the live timer should still run.
         }
-      }, 1000);
+      };
+
+      try {
+        deadline = Number(window.localStorage.getItem(storageKey));
+      } catch (error) {
+        deadline = 0;
+      }
+
+      if (!deadline || deadline <= Date.now()) {
+        deadline = Date.now() + durationMs;
+        saveDeadline(deadline);
+      }
+
+      const renderTimer = () => {
+        let remainingMs = deadline - Date.now();
+
+        if (remainingMs <= 0) {
+          deadline = Date.now() + durationMs;
+          saveDeadline(deadline);
+          remainingMs = durationMs;
+        }
+
+        const totalSeconds = Math.floor(remainingMs / 1000);
+        const hours = String(Math.floor(totalSeconds / 3600)).padStart(2, '0');
+        const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0');
+        const seconds = String(totalSeconds % 60).padStart(2, '0');
+
+        timerElement.innerHTML = `
+          <span class="sale-countdown-label">18-hour price drop</span>
+          <strong class="sale-countdown-time">${hours}:${minutes}:${seconds}</strong>
+          <span class="sale-countdown-note">$99.99 now $79.99 monthly. $139.99 now $119.99 buy once.</span>
+        `;
+      };
+
+      renderTimer();
+      setInterval(renderTimer, 1000);
     }
 
     window.addEventListener('DOMContentLoaded', () => {

@@ -419,6 +419,45 @@ section {
   margin-bottom: 8px;
 }
 
+.sale-countdown {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 6px 14px;
+  padding: 14px 16px;
+  border: 1px solid rgba(255, 183, 77, 0.34);
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(255, 183, 77, 0.12), rgba(255, 47, 146, 0.1));
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.16);
+}
+
+.sale-countdown-label {
+  color: var(--accent-mango);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.sale-countdown-time {
+  color: var(--text-cream);
+  font-family: var(--font-headers);
+  font-size: 1.25rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.sale-countdown-note {
+  grid-column: 1 / -1;
+  color: var(--text-dim);
+  font-size: 0.83rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
 /* Pricing Cards */
 .plan-option {
   display: flex;
@@ -496,7 +535,19 @@ section {
 .price-row {
   display: flex;
   align-items: baseline;
+  flex-wrap: wrap;
+  gap: 5px 8px;
   margin-top: 8px;
+}
+
+.compare-price {
+  color: var(--text-dim);
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1;
+  text-decoration: line-through;
+  text-decoration-color: rgba(255, 183, 77, 0.85);
+  text-decoration-thickness: 2px;
 }
 
 .price-value {
@@ -504,13 +555,20 @@ section {
   font-weight: 800;
   color: var(--accent-fuchsia);
   line-height: 1;
-  margin-right: 5px;
 }
 
 .price-period {
   font-size: 0.95rem;
   color: var(--text-dim);
   font-weight: 600;
+}
+
+.price-drop-note {
+  color: var(--accent-mango);
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.25;
+  margin-top: 4px;
 }
 
 .plan-billing-info-row {
