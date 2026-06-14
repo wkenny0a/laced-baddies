@@ -201,7 +201,7 @@
         <!-- Select Plan Title -->
         <h3 class="section-sub-title">Select your plan</h3>
         <div class="sale-countdown" id="reservation-timer" aria-live="polite">
-          <span class="sale-countdown-label">18-hour price drop</span>
+          <span class="sale-countdown-label">limited price drop</span>
           <strong class="sale-countdown-time">18:00:00</strong>
           <span class="sale-countdown-note">$99.99 now $79.99 monthly. $139.99 now $119.99 buy once.</span>
         </div>
@@ -1340,7 +1340,7 @@
         const seconds = String(totalSeconds % 60).padStart(2, '0');
 
         timerElement.innerHTML = `
-          <span class="sale-countdown-label">18-hour price drop</span>
+          <span class="sale-countdown-label">limited price drop</span>
           <strong class="sale-countdown-time">${hours}:${minutes}:${seconds}</strong>
           <span class="sale-countdown-note">$99.99 now $79.99 monthly. $139.99 now $119.99 buy once.</span>
         `;
