@@ -212,14 +212,14 @@
             <div class="plan-details">
               <div class="plan-header">
                 <span class="plan-title">30-Day Baddie Club</span>
-                <span class="save-badge">SAVE 30%</span>
+                <span class="save-badge">SAVE 33%</span>
               </div>
               <div class="price-row">
-                <span class="price-value">$99</span>
+                <span class="price-value">$79.99</span>
                 <span class="price-period">/ month</span>
               </div>
               <div class="plan-billing-info-row">
-                <span class="billing-note">Billed monthly at $99</span>
+                <span class="billing-note">Billed monthly at $79.99</span>
               </div>
             </div>
           </div>
@@ -317,7 +317,7 @@
                 <span class="plan-title">Buy Once</span>
               </div>
               <div class="price-row">
-                <span class="onetime-price-val price-value">$130</span>
+                <span class="onetime-price-val price-value">$119.99</span>
               </div>
               <div class="plan-billing-info-row">
                 <span class="onetime-desc billing-note">Wig + free storage bag (one-time payment)</span>
@@ -994,7 +994,7 @@
             <span class="faq-icon">+</span>
           </button>
           <div class="faq-answer">
-            <p>Every 30 days, we'll automatically ship you a fresh, brand-new glueless body wave crown at your club price of $99, keeping your hair looking pristine without the high salon prices.</p>
+            <p>Every 30 days, we'll automatically ship you a fresh, brand-new glueless body wave crown at your club price of $79.99, keeping your hair looking pristine without the high salon prices.</p>
           </div>
         </div>
 
@@ -1143,8 +1143,8 @@
     function updatePricing() {
       // Keep the mock focused on one clear club offer.
       const prices = {
-        '30-day': { '26': 99, '28': 99, '30': 99 },
-        'onetime': { '26': 130, '28': 130, '30': 130 }
+        '30-day': { '26': 79.99, '28': 79.99, '30': 79.99 },
+        'onetime': { '26': 119.99, '28': 119.99, '30': 119.99 }
       };
 
       const subPrice = prices['30-day'][currentLength];
@@ -1254,8 +1254,8 @@
 
         if (window.LacedBaddiesMeta) {
           const prices = {
-            '30-day': { '26': 99, '28': 119, '30': 139 },
-            'onetime': { '26': 130, '28': 160, '30': 190 }
+            '30-day': { '26': 79.99, '28': 79.99, '30': 79.99 },
+            'onetime': { '26': 119.99, '28': 119.99, '30': 119.99 }
           };
           const activePrice = prices[currentPlan][currentLength];
           window.LacedBaddiesMeta.track('AddToCart', {}, {

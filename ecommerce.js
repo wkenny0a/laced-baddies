@@ -12,8 +12,8 @@
   };
 
   const PRICES = {
-    "30-day": { "26": 99, "28": 99, "30": 99 },
-    "onetime": { "26": 130, "28": 130, "30": 130 }
+    "30-day": { "26": 79.99, "28": 79.99, "30": 79.99 },
+    "onetime": { "26": 119.99, "28": 119.99, "30": 119.99 }
   };
 
   const ACCESSORIES = {
@@ -353,7 +353,7 @@
             <span>Total Today</span>
             <span>$${grandTotal}${billingCycleText}</span>
           </div>
-          ${isSubscription ? `<p class="billing-disclosure-text">Billed monthly at $99 plus applicable tax. Cancel or pause anytime.</p>` : ""}
+          ${isSubscription ? `<p class="billing-disclosure-text">Billed monthly at $79.99 plus applicable tax. Cancel or pause anytime.</p>` : ""}
         `;
       } else {
         summaryContainer.style.display = "none";

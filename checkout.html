@@ -803,7 +803,7 @@
       <div id="checkout-subscription-notice" class="checkout-card" style="margin-bottom: 20px; border: 1px solid var(--accent-fuchsia); background: rgba(255, 0, 127, 0.05); display: none;">
         <p style="margin: 0; font-size: 0.95rem; color: #fff; line-height: 1.5; font-family: var(--font-body);">
           <strong style="color: var(--accent-mango);">You are starting the 30-Day Baddie Club.</strong> Your first order includes The Crown and your Free Welcome Kit. You can cancel or pause anytime.
-          <span style="display: block; margin-top: 6px; color: var(--checkout-dim);">Billed monthly at $99 plus applicable tax.</span>
+          <span style="display: block; margin-top: 6px; color: var(--checkout-dim);">Billed monthly at $79.99 plus applicable tax.</span>
         </p>
       </div>
 
@@ -994,7 +994,7 @@
             <span id="summary-grand-total">$0.00</span>
           </div>
           <div id="checkout-billing-cycle-notice" style="text-align: right; margin-top: 5px; font-size: 0.85rem; color: var(--accent-mango); font-family: var(--font-body); display: none;">
-            Billed monthly at $99 plus applicable tax.
+            Billed monthly at $79.99 plus applicable tax.
           </div>
         </div>
         
@@ -1075,8 +1075,8 @@
 
   <script>
     const PRICES = {
-      "30-day": { "26": 99, "28": 99, "30": 99 },
-      "onetime": { "26": 130, "28": 130, "30": 130 }
+      "30-day": { "26": 79.99, "28": 79.99, "30": 79.99 },
+      "onetime": { "26": 119.99, "28": 119.99, "30": 119.99 }
     };
 
     const PLAN_LABELS = {
@@ -1769,7 +1769,7 @@
       if (billingCycleNotice) {
         if (isSubscription) {
           billingCycleNotice.style.display = "block";
-          billingCycleNotice.innerText = "Billed monthly at $99 plus applicable tax.";
+          billingCycleNotice.innerText = "Billed monthly at $79.99 plus applicable tax.";
         } else {
           billingCycleNotice.style.display = "none";
         }
