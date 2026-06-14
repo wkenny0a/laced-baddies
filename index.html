@@ -63,6 +63,7 @@
     </div>
     <nav class="nav-links">
       <a href="#product-purchase">The Crown</a>
+      <a href="#compare">Compare</a>
       <a href="#how-it-works">How It Works</a>
       <a href="#reviews">Reviews</a>
       <a href="#faq">FAQ</a>
@@ -93,6 +94,9 @@
         <div class="thumbnail-row" id="thumbnail-row">
           <div class="thumbnail active" onclick="switchImage('assets/laced-baddies-ultra-hd-lace-tech.jpg', this)">
             <img src="assets/laced-baddies-ultra-hd-lace-tech.jpg" alt="Ultra HD Lace Tech Banner Thumb">
+          </div>
+          <div class="thumbnail" onclick="switchImage('assets/instagram-posts/same-model-variants/same-model-01-hair-fluff.png', this)">
+            <img src="assets/instagram-posts/same-model-variants/same-model-01-hair-fluff.png" alt="Laced Baddies model wearing fluffy body wave hair Thumb">
           </div>
 
           <div class="thumbnail" onclick="switchImage('assets/laced-baddies-pre-cut-pre-plucked-v2.png', this, 'contain')">
@@ -479,6 +483,69 @@
     <div class="section-shop-wrap">
       <a href="#product-purchase" class="section-shop-cta" onclick="handleShopNow(event)">
         <span>Shop Now</span>
+        <span class="cta-arrow">↑</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Section: 30-Day Club Comparison -->
+  <section class="comparison-section" id="compare">
+    <div class="comparison-eyebrow">Compare your routine</div>
+    <h2 class="section-title">Why Baddies Switch to the 30-Day Club</h2>
+    <p class="section-desc">Same fresh-install confidence, less glue stress, fewer salon appointments, and a fresh crown every month.</p>
+
+    <div class="comparison-scroll" aria-label="Comparison chart for a regular lace install and the Laced Baddies 30-Day Club">
+      <div class="comparison-chart" role="table">
+        <div class="comparison-cell comparison-feature comparison-header" role="columnheader">Routine</div>
+        <div class="comparison-cell comparison-plan comparison-header" role="columnheader">
+          <span>Regular Lace Install</span>
+        </div>
+        <div class="comparison-cell comparison-plan comparison-header comparison-recommended" role="columnheader">
+          <span class="recommended-pill">Best Option</span>
+          <span>Laced Baddies 30-Day Club</span>
+        </div>
+
+        <div class="comparison-cell comparison-feature" role="rowheader">Install Time</div>
+        <div class="comparison-cell with-mark" role="cell"><span class="comparison-mark mark-x">×</span><span>Hours in the chair</span></div>
+        <div class="comparison-cell comparison-recommended with-mark" role="cell"><span class="comparison-mark mark-check">✓</span><span>30-second glueless routine</span></div>
+
+        <div class="comparison-cell comparison-feature" role="rowheader">Glue Needed</div>
+        <div class="comparison-cell with-mark" role="cell"><span class="comparison-mark mark-x">×</span><span>Usually yes</span></div>
+        <div class="comparison-cell comparison-recommended with-mark" role="cell"><span class="comparison-mark mark-check">✓</span><span>No glue</span></div>
+
+        <div class="comparison-cell comparison-feature" role="rowheader">Lace Cutting</div>
+        <div class="comparison-cell with-mark" role="cell"><span class="comparison-mark mark-x">×</span><span>Usually yes</span></div>
+        <div class="comparison-cell comparison-recommended with-mark" role="cell"><span class="comparison-mark mark-check">✓</span><span>No scissors</span></div>
+
+        <div class="comparison-cell comparison-feature" role="rowheader">Beginner Friendly</div>
+        <div class="comparison-cell with-mark" role="cell"><span class="comparison-mark mark-x">×</span><span>Takes practice or a stylist</span></div>
+        <div class="comparison-cell comparison-recommended with-mark" role="cell"><span class="comparison-mark mark-check">✓</span><span>Pre-plucked, pre-bleached, ready to wear</span></div>
+
+        <div class="comparison-cell comparison-feature" role="rowheader">Edge-Friendly Routine</div>
+        <div class="comparison-cell with-mark" role="cell"><span class="comparison-mark mark-x">×</span><span>Can add tension over time</span></div>
+        <div class="comparison-cell comparison-recommended with-mark" role="cell"><span class="comparison-mark mark-check">✓</span><span>Built for no-glue confidence</span></div>
+
+        <div class="comparison-cell comparison-feature" role="rowheader">Fresh Wig Schedule</div>
+        <div class="comparison-cell with-mark" role="cell"><span class="comparison-mark mark-x">×</span><span>Depends on appointments</span></div>
+        <div class="comparison-cell comparison-recommended with-mark" role="cell"><span class="comparison-mark mark-check">✓</span><span>Fresh crown every 30 days</span></div>
+
+        <div class="comparison-cell comparison-feature" role="rowheader">Welcome Kit Included</div>
+        <div class="comparison-cell with-mark" role="cell"><span class="comparison-mark mark-x">×</span><span>No</span></div>
+        <div class="comparison-cell comparison-recommended with-mark" role="cell"><span class="comparison-mark mark-check">✓</span><span>Free Welcome Kit included</span></div>
+
+        <div class="comparison-cell comparison-feature" role="rowheader">Monthly Beauty Routine</div>
+        <div class="comparison-cell with-mark" role="cell"><span class="comparison-mark mark-x">×</span><span>Appointment-based upkeep</span></div>
+        <div class="comparison-cell comparison-recommended with-mark" role="cell"><span class="comparison-mark mark-check">✓</span><span>Automatic refresh without rebooking</span></div>
+
+        <div class="comparison-cell comparison-feature" role="rowheader">Best For</div>
+        <div class="comparison-cell with-mark" role="cell"><span class="comparison-mark mark-check">✓</span><span>Full salon glam when you have time</span></div>
+        <div class="comparison-cell comparison-recommended with-mark" role="cell"><span class="comparison-mark mark-check">✓</span><span>Looking done without doing the most</span></div>
+      </div>
+    </div>
+
+    <div class="section-shop-wrap">
+      <a href="#product-purchase" class="section-shop-cta comparison-cta" onclick="handleShopNow(event)">
+        <span>Start My 30-Day Club</span>
         <span class="cta-arrow">↑</span>
       </a>
     </div>
@@ -1044,6 +1111,7 @@
   <script>
     const galleryImages = [
       { src: 'assets/laced-baddies-ultra-hd-lace-tech.jpg', fit: 'cover' },
+      { src: 'assets/instagram-posts/same-model-variants/same-model-01-hair-fluff.png', fit: 'cover' },
       { src: 'assets/laced-baddies-pre-cut-pre-plucked-v2.png', fit: 'contain' },
       { src: 'assets/laced-baddies-ultra-hd-lace-tech-on-brand.jpg', fit: 'contain' },
       { src: 'assets/laced-baddies-hairline-parting-attached.jpg', fit: 'contain' },

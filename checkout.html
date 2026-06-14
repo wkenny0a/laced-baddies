@@ -335,6 +335,37 @@
       text-align: right;
     }
 
+    .summary-item-price.sale-price {
+      align-items: flex-end;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      line-height: 1.15;
+      max-width: 170px;
+    }
+
+    .summary-item-compare-price {
+      color: var(--checkout-dim);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-decoration: line-through;
+      text-decoration-color: rgba(226, 135, 67, 0.9);
+      text-decoration-thickness: 2px;
+    }
+
+    .summary-item-current-price {
+      color: var(--checkout-text);
+      font-size: 0.95rem;
+      font-weight: 800;
+    }
+
+    .summary-item-price-drop {
+      color: var(--accent-mango);
+      font-size: 0.66rem;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
     .summary-item-price.is-free {
       align-items: flex-end;
       color: var(--accent-mango);
@@ -969,6 +1000,10 @@
             <span>Subtotal</span>
             <span id="summary-subtotal">$0.00</span>
           </div>
+          <div class="summary-total-row savings-row" id="summary-price-drop-row" hidden>
+            <span>Price Drop Savings</span>
+            <span id="summary-price-drop-savings">-$0.00</span>
+          </div>
           <div class="summary-total-row">
             <span>Accessories Add-ons</span>
             <span id="summary-accessories">$0.00</span>
@@ -1077,6 +1112,11 @@
     const PRICES = {
       "30-day": { "26": 79.99, "28": 79.99, "30": 79.99 },
       "onetime": { "26": 119.99, "28": 119.99, "30": 119.99 }
+    };
+
+    const COMPARE_PRICES = {
+      "30-day": { "26": 99.99, "28": 99.99, "30": 99.99 },
+      "onetime": { "26": 139.99, "28": 139.99, "30": 139.99 }
     };
 
     const PLAN_LABELS = {
@@ -1671,7 +1711,18 @@
     function renderSummary() {
       const { plan, length } = cartData.wig;
       const basePrice = PRICES[plan][length];
+      const comparePrice = COMPARE_PRICES[plan][length];
+      const priceDropSavings = Math.max(0, comparePrice - basePrice);
       const isSubscription = plan === "30-day";
+      const wigPriceHtml = priceDropSavings > 0
+        ? `
+          <div class="summary-item-price sale-price">
+            <span class="summary-item-compare-price">${formatMoney(comparePrice)}</span>
+            <span class="summary-item-current-price">${formatMoney(basePrice)}</span>
+            <span class="summary-item-price-drop">Price dropped from ${formatMoney(comparePrice)} to ${formatMoney(basePrice)}</span>
+          </div>
+        `
+        : `<div class="summary-item-price">${formatMoney(basePrice)}</div>`;
       
       const itemsList = document.getElementById("checkout-items-list");
       if (!itemsList) return;
@@ -1686,7 +1737,7 @@
               <p class="summary-item-meta">Length: ${length}" | ${isSubscription ? "Fresh Crown Every 30 Days" : PLAN_LABELS[plan]}</p>
             </div>
           </div>
-          <div class="summary-item-price">$${basePrice}</div>
+          ${wigPriceHtml}
         </div>
       `;
 
@@ -1742,6 +1793,13 @@
       document.getElementById("summary-subtotal").innerText = `$${subTotal.toFixed(2)}`;
       document.getElementById("summary-accessories").innerText = isSubscription ? "FREE" : `$${accessoriesTotal.toFixed(2)}`;
       document.getElementById("summary-tax").innerText = `$${estimatedTax.toFixed(2)}`;
+
+      const priceDropRow = document.getElementById("summary-price-drop-row");
+      const priceDropValue = document.getElementById("summary-price-drop-savings");
+      if (priceDropRow && priceDropValue) {
+        priceDropRow.hidden = priceDropSavings <= 0;
+        priceDropValue.innerText = `-${formatMoney(priceDropSavings)}`;
+      }
 
       const savingsRow = document.getElementById("summary-free-savings-row");
       const savingsValue = document.getElementById("summary-free-savings");
