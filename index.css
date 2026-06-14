@@ -843,6 +843,38 @@ section {
   padding-bottom: 20px;
 }
 
+.guarantee-review-snippet {
+  background: rgba(255, 248, 240, 0.035);
+  border: 1px solid rgba(255, 166, 43, 0.16);
+  border-radius: var(--border-radius);
+  padding: 16px 18px;
+  margin-top: -4px;
+}
+
+.guarantee-review-stars {
+  color: var(--accent-mango);
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+
+.guarantee-review-copy {
+  color: var(--text-cream);
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1.45;
+  margin: 0 0 8px;
+}
+
+.guarantee-review-author {
+  color: var(--text-dim);
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .storefront-status {
   display: flex;
   align-items: flex-start;
