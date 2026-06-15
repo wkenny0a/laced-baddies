@@ -51,17 +51,19 @@
     }
     
     .checkout-layout {
-      max-width: 1100px;
+      box-sizing: border-box;
+      width: 100%;
+      max-width: 1160px;
       margin: 0 auto;
       padding: 40px 20px 80px 20px;
       display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 40px;
+      grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
+      gap: 34px;
     }
     
     @media (max-width: 900px) {
       .checkout-layout {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
         gap: 30px;
         padding-top: 20px;
       }
@@ -148,7 +150,7 @@
     /* Form fields */
     .form-row {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       gap: 16px;
       margin-bottom: 16px;
     }
@@ -164,6 +166,7 @@
       flex-direction: column;
       gap: 6px;
       margin-bottom: 16px;
+      min-width: 0;
     }
     
     .form-group.no-margin {
@@ -182,11 +185,14 @@
       background: rgba(0, 0, 0, 0.3);
       border: 1px solid var(--checkout-border);
       border-radius: 8px;
+      box-sizing: border-box;
       padding: 14px;
       color: var(--checkout-text);
       font-family: inherit;
       font-size: 0.9rem;
+      min-width: 0;
       transition: var(--transition);
+      width: 100%;
       outline: none;
     }
     
@@ -268,6 +274,9 @@
       position: sticky;
       top: 100px;
       height: fit-content;
+      max-width: 100%;
+      min-width: 0;
+      width: 100%;
     }
     
     @media (max-width: 900px) {
@@ -281,7 +290,11 @@
       background: rgba(255, 248, 240, 0.015);
       border: 1px dashed var(--checkout-border);
       border-radius: 12px;
+      box-sizing: border-box;
+      max-width: 100%;
+      min-width: 0;
       padding: 24px;
+      width: 100%;
     }
     
     .summary-items-list {
@@ -294,8 +307,8 @@
     .summary-item {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      gap: 12px;
+      align-items: flex-start;
+      gap: 14px;
       padding-bottom: 16px;
       border-bottom: 1px solid rgba(255, 248, 240, 0.03);
     }
@@ -304,10 +317,16 @@
       display: flex;
       align-items: center;
       gap: 12px;
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .summary-item-copy {
       min-width: 0;
     }
     
     .summary-item-img {
+      flex: 0 0 48px;
       width: 48px;
       height: 48px;
       border-radius: 6px;
@@ -319,12 +338,14 @@
     .summary-item-name {
       font-size: 0.85rem;
       font-weight: 600;
+      line-height: 1.25;
       margin: 0 0 3px 0;
     }
     
     .summary-item-meta {
       font-size: 0.72rem;
       color: var(--checkout-dim);
+      line-height: 1.35;
       margin: 0;
     }
     
@@ -332,16 +353,27 @@
       font-size: 0.9rem;
       font-weight: 700;
       flex-shrink: 0;
+      min-width: max-content;
       text-align: right;
     }
 
     .summary-item-price.sale-price {
       align-items: flex-end;
+      box-sizing: border-box;
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 4px;
       line-height: 1.15;
-      max-width: 170px;
+      max-width: none;
+      min-width: 136px;
+    }
+
+    .summary-price-line {
+      align-items: baseline;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      justify-content: flex-end;
     }
 
     .summary-item-compare-price {
@@ -355,7 +387,7 @@
 
     .summary-item-current-price {
       color: var(--checkout-text);
-      font-size: 0.95rem;
+      font-size: 1rem;
       font-weight: 800;
     }
 
@@ -364,6 +396,8 @@
       font-size: 0.66rem;
       font-weight: 800;
       line-height: 1.2;
+      max-width: 140px;
+      text-align: right;
     }
 
     .summary-item-price.is-free {
@@ -473,8 +507,14 @@
     .summary-total-row {
       display: flex;
       justify-content: space-between;
+      gap: 16px;
       font-size: 0.85rem;
       color: var(--checkout-dim);
+    }
+
+    .summary-total-row span:last-child {
+      flex-shrink: 0;
+      text-align: right;
     }
 
     .summary-total-row.savings-row {
@@ -490,6 +530,46 @@
       margin-top: 8px;
       padding-top: 12px;
       border-top: 1px solid var(--checkout-border);
+    }
+
+    @media (max-width: 520px) {
+      .summary-card {
+        padding: 18px;
+      }
+
+      .summary-item.wig-summary-item {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .summary-item.wig-summary-item .summary-item-price.sale-price {
+        align-items: flex-start;
+        background: rgba(255, 248, 240, 0.035);
+        border: 1px solid rgba(255, 248, 240, 0.06);
+        border-radius: 8px;
+        max-width: none;
+        min-width: 0;
+        padding: 10px 12px;
+        width: 100%;
+      }
+
+      .summary-item.wig-summary-item .summary-price-line {
+        justify-content: flex-start;
+      }
+
+      .summary-item.wig-summary-item .summary-item-price-drop {
+        max-width: none;
+        text-align: left;
+      }
+
+      .coupon-row {
+        grid-template-columns: 1fr;
+      }
+
+      .btn-apply-coupon {
+        min-height: 44px;
+      }
     }
     
     .summary-total-row.grand-total .free-label {
@@ -1717,9 +1797,11 @@
       const wigPriceHtml = priceDropSavings > 0
         ? `
           <div class="summary-item-price sale-price">
-            <span class="summary-item-compare-price">${formatMoney(comparePrice)}</span>
-            <span class="summary-item-current-price">${formatMoney(basePrice)}</span>
-            <span class="summary-item-price-drop">Price dropped from ${formatMoney(comparePrice)} to ${formatMoney(basePrice)}</span>
+            <span class="summary-price-line">
+              <span class="summary-item-compare-price">Was ${formatMoney(comparePrice)}</span>
+              <span class="summary-item-current-price">Now ${formatMoney(basePrice)}</span>
+            </span>
+            <span class="summary-item-price-drop">${formatMoney(priceDropSavings)} price drop applied</span>
           </div>
         `
         : `<div class="summary-item-price">${formatMoney(basePrice)}</div>`;
@@ -1729,10 +1811,10 @@
 
       // Wig Item
       let itemsHtml = `
-        <div class="summary-item">
+        <div class="summary-item wig-summary-item">
           <div class="summary-item-left">
             <img src="assets/main_model.png" alt="The Crown Wig" class="summary-item-img">
-            <div>
+            <div class="summary-item-copy">
               <h4 class="summary-item-name">The 13x6 Body Wave Crown</h4>
               <p class="summary-item-meta">Length: ${length}" | ${isSubscription ? "Fresh Crown Every 30 Days" : PLAN_LABELS[plan]}</p>
             </div>
@@ -1768,7 +1850,7 @@
           <div class="summary-item">
             <div class="summary-item-left">
               <img src="${item.img}" alt="${item.name}" class="summary-item-img">
-              <div>
+              <div class="summary-item-copy">
                 <h4 class="summary-item-name">${item.name}</h4>
                 <p class="summary-item-meta">${isSubscription ? "Free Welcome Kit included" : (isFree ? "Free gift included" : "Paid extra")}</p>
               </div>
